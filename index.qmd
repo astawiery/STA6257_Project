@@ -1,6 +1,6 @@
 ---
-title: "Report Sample"
-author: "Student name"
+title: "Generalized Estimating Equations"
+author: "Ashley Dosch, Amy Muller, Anthony Strawberry"
 date: '`r Sys.Date()`'
 format:
   html:
