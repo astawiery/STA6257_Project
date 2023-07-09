@@ -1,6 +1,6 @@
 ---
 title: "Generalized Estimating Equations"
-author: "Ashley Dosch, Amy Muller, Anthony Strawberry"
+author: "Ashley Dosch, Amy Muller, Anthony Stawiery"
 date: '`r Sys.Date()`'
 format:
   html:
