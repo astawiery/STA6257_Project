@@ -13,7 +13,7 @@ editor:
     wrap: 72
 ---
 
-Cumluative references and summaries: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing
+**(Literature Review)**: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing
 
 ## Introduction
 
