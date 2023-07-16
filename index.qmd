@@ -8,6 +8,7 @@ format:
 course: STA 6257 - Advance Statistical Modeling
 bibliography: references.bib # file contains bibtex for references
 #always_allow_html: true # this allows to get PDF with HTML features
+nocite: '@*'
 editor: 
   markdown: 
     wrap: 72
@@ -123,4 +124,4 @@ QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ## References
 
 
-#  McCulloch, Searle, S. R., & Searle, S. R. (Shayle R. . (2008). Generalized, linear, and mixed models. John Wiley & Sons, Ltd.
+
