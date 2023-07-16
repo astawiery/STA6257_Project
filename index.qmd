@@ -18,34 +18,37 @@ editor:
 
 ## Introduction
 
-  Generalized Estimating Equations (GEE) is a statistical methodology commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials. GEE extends the generalized linear model framework to account for within-cluster correlations, such as repeated observations or clustered data. GEE is used to model the marginal mean response while allowing for flexible correlation structures among observations within the same group or cluster. GEE estimates population-average effects by specifying a working correlation structure such as independence or exchangeable structures. GEE also implements an estimating equation approach to iteratively update the parameter estimates.
+  Generalized Estimating Equations (GEE) is a statistical methodology commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials @Mcculloch2008. GEE extends the generalized linear model framework to account for within-cluster correlations, such as repeated observations or clustered data @shao2023comparison. GEE is used to model the marginal mean response while allowing for flexible correlation structures among observations within the same group or cluster. GEE estimates population-average effects by specifying a working correlation structure such as independence or exchangeable structures @shao2023comparison. GEE also implements an estimating equation approach to iteratively update the parameter estimates.
     
-  This methodology provides reliable and robust estimates, even when the correlation structure is misspecified. GEE is particularly useful for longitudinal or panel data analysis, as it allows for examination of all available data in the experiment and provides statistical inference for population-level ramifications. Its ability to handle missing data makes GEE a great choice for analyzing correlated data, particularly in biostatistics or research settings.
+  This methodology provides reliable and robust estimates, even when the correlation structure is misspecified. GEE is particularly useful for longitudinal or panel data analysis, as it allows for examination of all available data in the experiment and provides statistical inference for population-level ramifications @lin2011impact. Its ability to handle missing data makes GEE a great choice for analyzing correlated data, particularly in biostatistics or research settings.
 
-
+ General mathematical formula for multivariate GEE: {insert PSU website source}
+$$
+ \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}...\beta_2+RegressorN\beta_{N-1}
+$$
 ## Methods
 
 ### Data Structure 
 GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example is repeated measures on the same patient for medicinal results over time.
 
 ### Model Specification 
-GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.
+GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables @shao2023comparison. The choice of the link function and the distribution of the response variable depends on the nature of the data @gayen2018generalized.
 
 ### Correlation Structure 
-GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
- *Seals (analysis of the 17-segment...)*
+GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations @seals2016analysis. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
+ 
 
 ### Estimating Equations 
-Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.
+Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters @d2011generalized. The estimating equations are derived based on the assumed correlation structure and the marginal mean model @d2011generalized. These equations capture the population-averaged effects of the explanatory variables.
 
 ### Iterative Algorithm 
-GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.
+GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached. {needs more sourcing / description}
 
 ### Inference 
-GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects.
+GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects @shao2023comparison.
 
 ### Model Assessment 
-After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as residual analysis, model comparison criteria, and assessing the adequacy of the assumed correlation structure.
+After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as model comparison criteria and assessing the adequacy of the assumed correlation structure @shao2023comparison.
 
 
 ## Analysis and Results
@@ -69,14 +72,19 @@ data(respiratory)
 
 # Data Information/Visual
 str(respiratory)
+head(respiratory)
 
 
 ```
+  GEE formula for the respiratory data:
+$$
+ \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
+$$
 
 ### Statistical Modeling
 ```{r}
 # GLM Model
-glm_example <- glm(outcome ~ center + treat + age + baseline, data=respiratory,                
+glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
           family = binomial())
 
 summary(glm_example)
@@ -86,8 +94,6 @@ glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + (1 | id),
                  data = respiratory, family = binomial())
 
 summary(glmm_example)
-
-
 
 
 # Mixed Markov Example
@@ -119,7 +125,9 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, i
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
 
-### Conlusion
+### Conclusion
+
+{Let's talk about quasi-likelihood and reasons why we'd choose GEE over other models?}
 
 ## References
 
