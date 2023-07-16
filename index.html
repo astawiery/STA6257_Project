@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ashley Dosch, Amy Muller, Anthony Stawiery">
-<meta name="dcterms.date" content="2023-07-09">
+<meta name="dcterms.date" content="2023-07-16">
 
 <title>Generalized Estimating Equations</title>
 <style>
@@ -127,7 +127,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 9, 2023</p>
+      <p class="date">July 16, 2023</p>
     </div>
   </div>
     
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p><strong>(Literature Review)</strong>: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing</p>
+<p><strong>Literature Review</strong>: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Generalized Estimating Equations (GEE) is a statistical methodology commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials. GEE extends the generalized linear model framework to account for within-cluster correlations, such as repeated observations or clustered data. GEE is used to model the marginal mean response while allowing for flexible correlation structures among observations within the same group or cluster. GEE estimates population-average effects by specifying a working correlation structure such as independence or exchangeable structures. GEE also implements an estimating equation approach to iteratively update the parameter estimates.</p>
@@ -144,18 +144,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p><strong>(Data Structure)</strong>: GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example is repeated measures on the same patient for medicinal results over time.</p>
-<p><strong>(Model Specification)</strong>: GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.</p>
-<p><strong>(Correlation Structure)</strong>: GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.</p>
-<p><strong>(Estimating Equations)</strong>: Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.</p>
-<p><strong>(Iterative Algorithm)</strong>: GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.</p>
-<p><strong>(Inference)</strong>: GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects.</p>
-<p><strong>(Model Assessment)</strong>: After fitting the GEE model, various model diagnostics can be performed to assess the model’s goodness of fit, such as residual analysis, model comparison criteria (e.g., Akaike Information Criterion), and assessing the adequacy of the assumed correlation structure. This can be thought of as using the Linear Regression analysis we did in previous stats class</p>
+<section id="data-structure" class="level3">
+<h3 class="anchored" data-anchor-id="data-structure">Data Structure</h3>
+<p>GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example is repeated measures on the same patient for medicinal results over time.</p>
+</section>
+<section id="model-specification" class="level3">
+<h3 class="anchored" data-anchor-id="model-specification">Model Specification</h3>
+<p>GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.</p>
+</section>
+<section id="correlation-structure" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-structure">Correlation Structure</h3>
+<p>GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence. <em>Seals (analysis of the 17-segment…)</em></p>
+</section>
+<section id="estimating-equations" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-equations">Estimating Equations</h3>
+<p>Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.</p>
+</section>
+<section id="iterative-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-algorithm">Iterative Algorithm</h3>
+<p>GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.</p>
+</section>
+<section id="inference" class="level3">
+<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<p>GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects.</p>
+</section>
+<section id="model-assessment" class="level3">
+<h3 class="anchored" data-anchor-id="model-assessment">Model Assessment</h3>
+<p>After fitting the GEE model, various model diagnostics can be performed to assess the model’s goodness of fit, such as residual analysis, model comparison criteria, and assessing the adequacy of the assumed correlation structure.</p>
+</section>
 </section>
 <section id="analysis-and-results" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-and-results">Analysis and Results</h2>
 <section id="data-and-vizualisation" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-vizualisation">Data and Vizualisation</h3>
+<p>https://cran.r-project.org/web/packages/geepack/geepack.pdf</p>
 <p>A study was conducted to determine how…</p>
 <div class="cell">
 <details>
@@ -163,103 +185,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading packages </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(respiratory)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># regular GLM</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory,                </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">family=</span><span class="fu">binomial</span>())     </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independence correlation structure</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family=</span><span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family=</span><span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family=</span><span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family=</span><span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)  </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating list data structure for all relevant correlation types (different GEE models)</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>corrStructureList <span class="ot">=</span> <span class="fu">list</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Loops through the list and performs "row binding {rbind}" to form a single batch</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply + QIC = "Quasi Information Criterion" which allows for quasi-likelihood under the independence model</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(corrStructureList, QIC))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)   <span class="co"># For fitting linear mixed models</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmmTMB)  <span class="co"># For fitting GLMMs with different distributions</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(respiratory)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Information/Visual</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(respiratory)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>          QIC     QICu Quasi Lik      CIC params     QICC
-[1,] 508.2088 497.7051 -243.8526 10.25185      5 509.4088
-[2,] 508.2088 497.7051 -243.8526 10.25185      5 509.9231
-[3,] 508.1783 497.8161 -243.9081 10.18109      5 514.1783
-[4,] 508.7130 498.0765 -244.0382 10.31825      5 510.4273</code></pre>
+<pre><code>'data.frame':   444 obs. of  8 variables:
+ $ center  : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ id      : int  1 1 1 1 2 2 2 2 3 3 ...
+ $ treat   : Factor w/ 2 levels "A","P": 2 2 2 2 2 2 2 2 1 1 ...
+ $ sex     : Factor w/ 2 levels "F","M": 2 2 2 2 2 2 2 2 2 2 ...
+ $ age     : int  46 46 46 46 28 28 28 28 23 23 ...
+ $ baseline: int  0 0 0 0 0 0 0 0 1 1 ...
+ $ visit   : int  1 2 3 4 1 2 3 4 1 2 ...
+ $ outcome : int  0 0 0 0 0 0 0 0 1 1 ...</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(corrStructureList, tidy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
-# A tibble: 5 × 5
-  term        estimate std.error statistic      p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)  -0.280     0.572      0.239 0.625       
-2 center        0.669     0.340      3.88  0.0490      
-3 treatP       -1.24      0.324     14.7   0.000127    
-4 age          -0.0178    0.0120     2.20  0.138       
-5 baseline      1.83      0.337     29.6   0.0000000544
-
-[[2]]
-# A tibble: 5 × 5
-  term        estimate std.error statistic      p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)  -0.280     0.572      0.239 0.625       
-2 center        0.669     0.340      3.88  0.0490      
-3 treatP       -1.24      0.324     14.7   0.000127    
-4 age          -0.0178    0.0120     2.20  0.138       
-5 baseline      1.83      0.337     29.6   0.0000000544
-
-[[3]]
-# A tibble: 5 × 5
-  term        estimate std.error statistic      p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)  -0.331     0.568      0.340 0.560       
-2 center        0.672     0.339      3.93  0.0475      
-3 treatP       -1.22      0.323     14.3   0.000154    
-4 age          -0.0168    0.0119     1.99  0.159       
-5 baseline      1.89      0.335     31.8   0.0000000175
-
-[[4]]
-# A tibble: 5 × 5
-  term        estimate std.error statistic      p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)  -0.496     0.571      0.755 0.385       
-2 center        0.749     0.341      4.81  0.0282      
-3 treatP       -1.17      0.326     12.8   0.000344    
-4 age          -0.0165    0.0119     1.90  0.168       
-5 baseline      1.86      0.337     30.4   0.0000000360</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://online.stat.psu.edu/stat504/lesson/12/12.1 (for correlation structure information)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="statistical-modeling" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-modeling">Statistical Modeling</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM Model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>glm_example <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory,                </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = outcome ~ center + treat + age + baseline, family = binomial(), 
+    data = respiratory)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2928  -0.8343   0.4363   0.8972   1.8961  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.279937   0.401936  -0.696  0.48613    
+center       0.668922   0.234828   2.849  0.00439 ** 
+treatP      -1.240553   0.228605  -5.427 5.74e-08 ***
+age         -0.017786   0.008555  -2.079  0.03761 *  
+baseline     1.833571   0.237564   7.718 1.18e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 609.41  on 443  degrees of freedom
+Residual deviance: 487.71  on 439  degrees of freedom
+AIC: 497.71
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLMM Model</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>glmm_example <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> respiratory, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: binomial  ( logit )
+Formula:          outcome ~ center + treat + age + baseline + (1 | id)
+Data: respiratory
+
+     AIC      BIC   logLik deviance df.resid 
+   476.2    500.8   -232.1    464.2      438 
+
+Random effects:
+
+Conditional model:
+ Groups Name        Variance Std.Dev.
+ id     (Intercept) 1.207    1.099   
+Number of obs: 444, groups:  id, 56
+
+Conditional model:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.28293    0.50745  -0.558  0.57715    
+center       0.85976    0.27630   3.112  0.00186 ** 
+treatP      -1.67074    0.32933  -5.073 3.91e-07 ***
+age         -0.01984    0.01158  -1.714  0.08654 .  
+baseline     1.99584    0.32671   6.109 1.00e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mixed Markov Example</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Differential Equation Example</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independence correlation structure</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)  </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays table of QIC between all 4 different types of GEE models with different</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation structure</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="fu">QIC</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      QIC     QICu Quasi Lik      CIC params     QICC
+gee_independence 508.2088 497.7051 -243.8526 10.25185      5 509.4088
+gee_exchangeable 508.2088 497.7051 -243.8526 10.25185      5 509.9231
+gee_unstructured 508.1783 497.8161 -243.9081 10.18109      5 514.1783
+gee_ar1          508.7130 498.0765 -244.0382 10.31825      5 510.4273</code></pre>
+</div>
+</div>
 </section>
 <section id="conlusion" class="level3">
 <h3 class="anchored" data-anchor-id="conlusion">Conlusion</h3>
