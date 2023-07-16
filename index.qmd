@@ -31,11 +31,12 @@ GEE is designed for analyzing correlated data, such as longitudinal or panel dat
 GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.
 
 ### Correlation Structure 
-GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
- *Seals (analysis of the 17-segment...)*
+GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. *Seals (analysis of the 17-segment...)* The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
+ 
 
 ### Estimating Equations 
-Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.
+Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. *De'angelo (a generalized estimating equations approach)* The estimating equations are derived based on the assumed correlation structure and the marginal mean model. *De'angelo (a generalized estimating equations approach)* These equations capture the population-averaged effects of the explanatory variables.
+
 
 ### Iterative Algorithm 
 GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.
@@ -68,6 +69,7 @@ data(respiratory)
 
 # Data Information/Visual
 str(respiratory)
+head(respiratory)
 
 
 ```
@@ -85,8 +87,6 @@ glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + (1 | id),
                  data = respiratory, family = binomial())
 
 summary(glmm_example)
-
-
 
 
 # Mixed Markov Example
@@ -118,7 +118,9 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, i
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
 
-### Conlusion
+### Conclusion
+
+
 
 ## References
 
