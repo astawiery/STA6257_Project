@@ -13,7 +13,7 @@ editor:
     wrap: 72
 ---
 
-**(Literature Review)**: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing
+**Literature Review**: https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing
 
 ## Introduction
 
@@ -24,76 +24,99 @@ editor:
 
 ## Methods
 
-**(Data Structure)**: GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example is repeated measures on the same patient for medicinal results over time.
+### Data Structure 
+GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example is repeated measures on the same patient for medicinal results over time.
 
-**(Model Specification)**: GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.
+### Model Specification 
+GEE uses a generalized linear model (GLM) framework to specify the relationship between the response variable and the regressor variables. The choice of the link function and the distribution of the response variable depends on the nature of the data.
 
-**(Correlation Structure)**: GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
+### Correlation Structure 
+GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations. The correlation structures discussed in this paper are exchangeable, autoregressive, unstructured, and independence.
+ *Seals (analysis of the 17-segment...)*
 
-**(Estimating Equations)**: Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.
+### Estimating Equations 
+Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. The estimating equations are derived based on the assumed correlation structure and the marginal mean model. These equations capture the population-averaged effects of the explanatory variables.
 
-**(Iterative Algorithm)**: GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.
+### Iterative Algorithm 
+GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached.
 
-**(Inference)**: GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects.
+### Inference 
+GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects.
 
-**(Model Assessment)**: After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as residual analysis, model comparison criteria (e.g., Akaike Information Criterion), and assessing the adequacy of the assumed correlation structure. This can be thought of as using the Linear Regression analysis we did in previous stats class
+### Model Assessment 
+After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as residual analysis, model comparison criteria, and assessing the adequacy of the assumed correlation structure.
 
 
 ## Analysis and Results
 
 ### Data and Vizualisation
+https://cran.r-project.org/web/packages/geepack/geepack.pdf
 
 A study was conducted to determine how...
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-
 # loading packages 
 library(tidyverse)
 library(knitr)
 library(geepack)
-```
+library(lme4)   # For fitting linear mixed models
+library(glmmTMB)  # For fitting GLMMs with different distributions
+library(deSolve)
 
-```{r, warning=FALSE, echo=TRUE}
 # Load Data
 data(respiratory)
 
-# regular GLM
-m1 <- glm(outcome ~ center + treat + age + baseline, data=respiratory,                
-          family=binomial())     
+# Data Information/Visual
+str(respiratory)
 
-# GEE with independence correlation structure
-gee_independence <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
-                  family=binomial(), corstr="independence")
-
-# GEE with exchangeable correlation structure
-gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
-                  family=binomial(), corstr="exchangeable")
-
-# GEE with unstructured correlation structure
-gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
-                  family=binomial(), corstr="unstructured")
-
-# GEE with Auto-Regressive Order 1 correlation structure
-gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
-                  family=binomial(), corstr="ar1")  
-
-
-# Creating list data structure for all relevant correlation types (different GEE models)
-corrStructureList = list(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
-
-# Loops through the list and performs "row binding {rbind}" to form a single batch
-# lapply + QIC = "Quasi Information Criterion" which allows for quasi-likelihood under the independence model
-do.call(rbind, lapply(corrStructureList, QIC))
-
-
-lapply(corrStructureList, tidy)
-
-# https://online.stat.psu.edu/stat504/lesson/12/12.1 (for correlation structure information)
-  
 
 ```
 
 ### Statistical Modeling
+```{r}
+# GLM Model
+glm_example <- glm(outcome ~ center + treat + age + baseline, data=respiratory,                
+          family = binomial())
+
+summary(glm_example)
+
+# GLMM Model
+glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + (1 | id),
+                 data = respiratory, family = binomial())
+
+summary(glmm_example)
+
+
+
+
+# Mixed Markov Example
+
+
+# Differential Equation Example
+
+
+
+# GEE with independence correlation structure
+gee_independence <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
+                  family = binomial(), corstr="independence")
+
+# GEE with exchangeable correlation structure
+gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
+                  family = binomial(), corstr="exchangeable")
+
+# GEE with unstructured correlation structure
+gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
+                  family = binomial(), corstr="unstructured")
+
+# GEE with Auto-Regressive Order 1 correlation structure
+gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
+                  family = binomial(), corstr="ar1")  
+
+
+# Displays table of QIC between all 4 different types of GEE models with different
+# correlation structure
+QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
+```
 
 ### Conlusion
 
