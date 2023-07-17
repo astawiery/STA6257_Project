@@ -19,20 +19,21 @@ https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/
 
 ## Introduction
 
-Generalized Estimating Equations (GEE) is a statistical methodology in a class of models that model the mean of of an outcome as function of predictor variables
-commonly used to analyze correlated data in various fields that use
-panel or longitudinal data, including epidemiology, social sciences, and
-clinical trials @Mcculloch2008. The method was first introduced by Liang
-and Zeger in a paper entitled "Longitudinal Data Analysis Using
-Generalized Linear Models" in 1986. @Liang1986longitudinal. Analysis of
-longitudinal data has inherent problems with independence involving
-multiple observations for the same individual in clinical data studies.
-Liang and Zeger even referred to time dependence on multiple
-observations of an individual as a nuisance due to correlation issues.
-@Liang1986longitudinal. Another challenge for use of longitudinal data
-is the need for more complex statistical models to deal with the lack of
-independence in observations that could include multidimensional levels
-of integration, and the software is often not
+Generalized Estimating Equations (GEE) is a statistical methodology in a
+class of models that model the mean of of an outcome as function of
+predictor variables commonly used to analyze correlated data in various
+fields that use panel or longitudinal data, including epidemiology,
+social sciences, and clinical trials @Mcculloch2008. The method was
+first introduced by Liang and Zeger in a paper entitled "Longitudinal
+Data Analysis Using Generalized Linear Models" in 1986.
+@Liang1986longitudinal. Analysis of longitudinal data has inherent
+problems with independence involving multiple observations for the same
+individual in clinical data studies. Liang and Zeger even referred to
+time dependence on multiple observations of an individual as a nuisance
+due to correlation issues. @Liang1986longitudinal. Another challenge for
+use of longitudinal data is the need for more complex statistical models
+to deal with the lack of independence in observations that could include
+multidimensional levels of integration, and the software is often not
 available.\@donald2006longitudinal The use of GEE mitigates these
 challenges with use of longitudinal data.
 
@@ -75,7 +76,24 @@ relationship between the response variable and the regressor variables
 distribution of the response variable depends on the nature of the data
 @gayen2018generalized.
 
-### Correlation Structure
+According to a paper written by Liang and Zeger first introducing the
+method of GEE, longitudinal data sets, are comprised of an outcome
+variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
+$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
+$$i=1,...,K$$ which arise often in applied sciences.
+(Liang1986longitudinal) For example, in health care study data,
+individual patients have follow visits to monitor a treatment plan and
+therefore have multiple observations for each patient.
+
+GEE employ a logistic regression model created using the 'geepack'
+package available in R, specifying a correlation structure (see the
+structure types in the paragraph below), family type of binomial for
+discrete outcomes and would yield model of
+
+$$\text{logit}(E[y_{ij}]=|text{logit}(P{y_{ij})=\beta_0+\beta_1x_{ij}$$
+that predicts log odds for the mean of a population. @Mcculloch2008
+
+### Correlation Structures
 
 GEE allows for flexible modeling of the correlation structure within
 clusters. A working correlation structure is specified, which represents
@@ -83,7 +101,17 @@ the assumed relationship among the correlated observations
 @seals2016analysis. The correlation structures discussed in this paper
 are exchangeable, autoregressive (AR1), unstructured, and independence.
 
-
+The independence correlation structure is used when the assumption
+between multiple repeated observations of a single individual is
+independent. Use of the exchange correlation structure is used when
+there is equality between times of observations. Autoagressive (AR1)
+correlation structure is used when there are more than one set of equal
+time differences between repeated observations. And lastly, unstructured
+correlation structure is the most general and takes into account all the
+possible time intervals between repeated observations. Of course there
+are more choices for correlation structures, but these structures are
+the structures used in the 'geepack' R package used in the subsequent
+examples.
 
 ### Estimating Equations
 
