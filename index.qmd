@@ -18,14 +18,19 @@ editor:
 
 ## Introduction
 
-  Generalized Estimating Equations (GEE) is a statistical methodology commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials @Mcculloch2008. GEE extends the generalized linear model framework to account for within-cluster correlations, such as repeated observations or clustered data @shao2023comparison. GEE is used to model the marginal mean response while allowing for flexible correlation structures among observations within the same group or cluster. GEE estimates population-average effects by specifying a working correlation structure such as independence or exchangeable structures @shao2023comparison. GEE also implements an estimating equation approach to iteratively update the parameter estimates.
+  Generalized Estimating Equations (GEE) is a statistical methodology commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials @Mcculloch2008. The method was first introduced by Liang and Zeger in a paper entitled "Longitudinal Data Analysis Using Generalized Linear Models" in 1986. @Liang1986longitudinal. Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies. Liang and Zeger even referred to time dependence on multiple observations of an individual as a nuisance due to correlation issues. @Liang1986longitudinal. Another challenge for use of longitudinal data is the need for more complex statistical models to deal with the lack of independence in observations that could include multidimensional levels of integration, and the software is often not available.@donald2006longitudinal The use of GEE mitigates these challenges with use of longitudinal data.
+  
+  GEE extends the generalized linear model framework to account for within-cluster correlations, such as repeated observations or clustered data @shao2023comparison. GEE is used to model the marginal mean response while allowing for flexible correlation structures among observations within the same group or cluster. GEE estimates population-average effects by specifying a working correlation structure such as independence or exchangeable structures @shao2023comparison. GEE also implements an estimating equation approach to iteratively update the parameter estimates.
     
-  This methodology provides reliable and robust estimates, even when the correlation structure is misspecified. GEE is particularly useful for longitudinal or panel data analysis, as it allows for examination of all available data in the experiment and provides statistical inference for population-level ramifications @lin2011impact. Its ability to handle missing data makes GEE a great choice for analyzing correlated data, particularly in biostatistics or research settings.
+  This methodology provides reliable and robust estimates, even when the correlation structure is mis-specified. GEE is particularly useful for longitudinal or panel data analysis, as it allows for examination of all available data in the experiment and provides statistical inference for population-level ramifications @lin2011impact. Its ability to handle missing data makes GEE a great choice for analyzing correlated data, particularly in biostatistics or research settings.
 
- General mathematical formula for multivariate GEE: {insert PSU website source}
+ General mathematical formula for multivariate GEE: @PSU2023.
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}...\beta_2+RegressorN\beta_{N-1}
 $$
+
+  In this review of GEE, the 'geepack' package for R with a respiratory dataset included was used to showcase an example. @Hojsgaard2006 @Yan2004 @Yan2002 The respiratory dataset included in the packet is an example of longitudinal or panel data as data is from a clinical study of 111 patients receiving treatment for a respiratory illness.  @koch1990categorical 
+
 ## Methods
 
 ### Data Structure 
