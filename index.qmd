@@ -29,12 +29,12 @@ first introduced by Liang and Zeger in a paper in 1986.
 problems with independence involving multiple observations for the same
 individual in clinical data studies. Liang and Zeger even referred to
 time dependence on multiple observations of an individual as a nuisance
-due to correlation issues. [@Liang1986longitudinal]. Another challenge for
-use of longitudinal data is the need for more complex statistical models
-to deal with the lack of independence in observations that could include
-multidimensional levels of integration, and the software is often not
-available.[@donald2006longitudinal] The use of GEE mitigates these
-challenges with use of longitudinal data.
+due to correlation issues. [@Liang1986longitudinal]. Another challenge
+for use of longitudinal data is the need for more complex statistical
+models to deal with the lack of independence in observations that could
+include multidimensional levels of integration, and the software is
+often not available.[@donald2006longitudinal] The use of GEE mitigates
+these challenges with use of longitudinal data.
 
 GEE extends the generalized linear model framework to account for
 within-cluster correlations, such as repeated observations or clustered
@@ -42,9 +42,9 @@ data. [@shao2023comparison] GEE is used to model the marginal mean
 response while allowing for flexible correlation structures among
 observations within the same group or cluster. GEE estimates
 population-average effects by specifying a working correlation structure
-such as independence or exchangeable structures.[@shao2023comparison] GEE
-also implements an estimating equation approach to iteratively update
-the parameter estimates.
+such as independence or exchangeable structures.[@shao2023comparison]
+GEE also implements an estimating equation approach to iteratively
+update the parameter estimates.
 
 This methodology provides reliable and robust estimates, even when the
 correlation structure is mis-specified. GEE is particularly useful for
@@ -52,12 +52,8 @@ longitudinal or panel data analysis, as it allows for examination of all
 available data in the experiment and provides statistical inference for
 population-level ramifications. [@lin2011impact] Its ability to handle
 missing data makes GEE a great choice for analyzing correlated data,
-particularly in biostatistics or research settings.
+particularly in biostatistics or research settings without the use of intense statistical mathematics.
 
-General mathematical formula for multivariate GEE: [@PSU2023]
-$$
- \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
-$$
 
 ## Methods
 
@@ -65,8 +61,9 @@ $$
 
 GEE is designed for analyzing correlated data, such as longitudinal or
 panel data. The data are organized into clusters, where each cluster
-represents a group of related observations. An example is repeated
-measures on the same patient for medicinal results over time.
+represents a group of related observations. An example to demontrate GEE
+uses a dataset with repeated measures on the same patient for medical
+results over time.
 
 ### Model Specification
 
@@ -74,22 +71,31 @@ GEE uses a generalized linear model (GLM) framework to specify the
 relationship between the response variable and the regressor variables.
 [@shao2023comparison] The choice of the link function and the
 distribution of the response variable depends on the nature of the data.
-[@gayen2018generalized]
+[@gayen2018generalized] The table below shows the extension of GEE from
+the GLM and LM and differences in assumptions.
 
-According the Liang and Zeger, the method of GEE, longitudinal data sets, are comprised of an outcome variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
-$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
-$$i=1,...,K$$ which arise often in applied sciences.
-[@Liang1986longitudinal] For example, in health care study data,
-individual patients have follow visits to monitor a treatment plan and
-therefore have multiple observations for each patient.
+![](Model_Comparison_Table.jpg)
+
+
+According the Liang and Zeger, the method of GEE, longitudinal data
+sets, are comprised of an outcome variable, $y_{it}$, and
+\$\$p\\times1\$\$ vector of covariates, $x_{it}$, observed at times
+$$t=1,...,n_{it}$$ for subjects $$i=1,...,K$$ which arise often in
+applied sciences. [@Liang1986longitudinal] For example, in health care
+study data, individual patients have follow visits to monitor a
+treatment plan and therefore have multiple observations for each
+patient.
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the
 structure types in the paragraph below), family type of binomial for
 discrete outcomes and would yield model of
 
-$$\text{logit}(E[y_{ij}]=|text{logit}(P{y_{ij})=\beta_0+\beta_1x_{ij}$$
-that predicts log odds for the mean of a population. [@Mcculloch2008]
+General mathematical formula for multivariate GEE:  $$
+ \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
+$$
+
+that predicts log odds ratios for outcomes for each predictor. [@PSU2023]
 
 ### Correlation Structures
 
@@ -107,9 +113,12 @@ correlation structure is used when there are more than one set of equal
 time differences between repeated observations. And lastly, unstructured
 correlation structure is the most general and takes into account all the
 possible time intervals between repeated observations. Of course there
-are more choices for correlation structures, but these structures are
+are more choices for correlation structures, but these (4) structures are
 the structures used in the 'geepack' R package used in the subsequent
 examples.
+
+If the correlation structure chosen for GEE is not correct, the predictor variables will still be estimated consistently, since the GEE method relies on the first moment, however the standard errors will be incorrect. This considered very attractive property of GEE models.[@donald2006longitudinal] A possible remedy for choosing a correlation structure incorrectly is to use the 'sandwich' package in R that uses the Huber-White sandwich estimator to create an an approximate for the correlation.[@homish2010analyzing] [@zeileis2019package]
+
 
 ### Estimating Equations
 
@@ -152,9 +161,9 @@ and assessing the adequacy of the assumed correlation structure.
 
 In this review of GEE, the 'geepack' package for R with a respiratory
 dataset included was used to showcase an example. [@Hojsgaard2006]
-[@Yan2004] [@Yan2002] The respiratory dataset included in the packet is an
-example of longitudinal or panel data as data is from a clinical study
-of 111 patients receiving treatment for a respiratory illness.
+[@Yan2004] [@Yan2002] The respiratory dataset included in the packet is
+an example of longitudinal or panel data as data is from a clinical
+study of 111 patients receiving treatment for a respiratory illness.
 [@koch1990categorical]
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
