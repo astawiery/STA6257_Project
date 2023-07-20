@@ -179,6 +179,20 @@ an example of longitudinal or panel data as data is from a clinical
 study of 111 patients receiving treatment for a respiratory illness.
 [@koch1990categorical]
 
+
+| Variable  | Description                     |
+|-----------|---------------------------------|
+| center    | a numeric vector                |
+| id        | a numeric vector                |
+| treat     | treatment or placebo            |
+| sex       | male or female                  |
+| age       | in years at baseline            |
+| baseline  | respiratory status at baseline  |
+| visit     | id of visit                     |
+| outcome   | respiratory status at visit     |
+
+: {tbl-colwidths="[20,35]"}
+
 ```{r, warning=FALSE, echo=T, message=FALSE}
 # loading packages 
 library(tidyverse)
@@ -191,27 +205,20 @@ library(glmmTMB)  # For fitting GLMMs with different distributions
 # Load Data
 data(respiratory)
 
-# Visualize data with ggplot
-resp_1g <- respiratory %>% group_by(visit)
+displayData <- respiratory[respiratory$id < 4,]
+displayData <- displayData[displayData$center == 2,]
 
-g <- ggplot(resp_1g, aes(x = visit, group = outcome, fill = outcome))
-g+geom_bar()+
-  labs(x="visit number",y="Respiratory Health, '1' good, '0' poor")
-
-resp_long <- pivot_longer(respiratory,cols = visit, names_to="visit_number",values_to="res_health"
-) %>%
-  mutate(
-    visit_number = fct_inorder(paste("visit number", respiratory$visit)),
-    res_health = respiratory$outcome
-    )
-
-ggplot(resp_long, aes(visit_number,res_health,fill=visit_number))+
-  geom_boxplot()+
-  geom_jitter(width=0.2)+
-  guides(fill="none")+
-  labs(x="",y="Respiratory Health, '1' good, '0' poor")
-                            
+library(ggplot2)
+ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
+  geom_point(size=5) +
+  scale_x_continuous(breaks=c(1,2,3,4)) +
+  scale_color_discrete("Outcome",labels=c("Poor","Good")) +
+  facet_grid(.~id) +
+  theme_bw()
 ```
+The above graphic is displaying a small sample from the 'respiratory' data. The given data set is a study with longitudinal data of repeated measures with a binary outcome. There are four measures, or visits, performed on each individual. Each box with 1 through 4 on the x-axis represents a unique patient and their respective visits. The y-axis displays the treatment the patient is taking where P represents a placebo and A represents the actual treatment.
+
+The points on the plot indicate the outcome of treatment and represent a patient's respiratory status per visit where 1 indicates a "good" respiratory status and 0 indicates a "poor" respiratory status. Note that this graphic is a truncated form of the complete dataset and excludes both a treatment center and 52 other patients.
 
 ### Statistical Modeling
 
