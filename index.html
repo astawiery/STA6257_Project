@@ -168,14 +168,14 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="corr-table.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure 1: Correlation Structures Comparison Table <span class="citation" data-cites="wang2012penalized">(<a href="#ref-wang2012penalized" role="doc-biblioref">L. Wang, Zhou, and Qu 2012</a>)</span></figcaption>
+<figcaption class="figure-caption">Figure 1: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#ref-wang2014generalized" role="doc-biblioref">M. Wang 2014</a>)</span></figcaption>
 </figure>
 </div>
 <p>The The independence correlation structure is used when the assumption between multiple repeated observations of a single individual is independent. Use of the exchange correlation structure is used when there is equality between times of observations. Autoagressive (AR1) correlation structure is used when there are more than one set of equal time differences between repeated observations. And lastly, unstructured correlation structure is the most general and takes into account all the possible time intervals between repeated observations. Of course there are more choices for correlation structures, but these (4) structures are the structures used in the ‘geepack’ R package used in the subsequent examples.</p>
 <p>If the correlation structure chosen for GEE is not correct, the predictor variables will still be estimated consistently, since the GEE method relies on the first moment, however the standard errors will be incorrect. This considered very attractive property of GEE models.<span class="citation" data-cites="donald2006longitudinal">(<a href="#ref-donald2006longitudinal" role="doc-biblioref">Donald and Robert 2006</a>)</span> A possible remedy for choosing a correlation structure incorrectly is to use the ‘sandwich’ package in R that uses the Huber-White sandwich estimator to create an an approximation for the correlation.<span class="citation" data-cites="homish2010analyzing">(<a href="#ref-homish2010analyzing" role="doc-biblioref">Homish et al. 2010</a>)</span> <span class="citation" data-cites="zeileis2019package">(<a href="#ref-zeileis2019package" role="doc-biblioref">Zeileis et al. 2019</a>)</span></p>
 <p>Correlation structure selection is determined through various methods. One valid method used to determine model selection has been proposed by Shults and Chaganty (<span class="citation" data-cites="wang2012penalized">L. Wang, Zhou, and Qu (<a href="#ref-wang2012penalized" role="doc-biblioref">2012</a>)</span>) as to determine the structure based on the generalized error sum of squares given by the following equation: <span class="math display">\[
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-\]</span>.</p>
+\]</span>. In addition to the method by Schuts and Chaganty, Wang discusses several other methods for correlation structure selection and cites many other methods available. <span class="citation" data-cites="wang2014generalized">(<a href="#ref-wang2014generalized" role="doc-biblioref">M. Wang 2014</a>)</span></p>
 </section>
 </section>
 <section id="analysis-and-results" class="level2">
@@ -387,8 +387,9 @@ gee_ar1          508.7130 498.0765 -244.0382 10.31825      5 510.4273</code></pr
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
 <p>Comparison of model results:</p>
+<p><insert more="" here=""></insert></p>
 <p>GEE is a valid choice of statistical modeling to be used in the case that a standard regression model is not applicable due to the between-observation relationship within data. This directly applies to research cases and other applications that utilize clustered or longitudinal data. If a GEE model is not used and the between-segment correlation is ignored, then there may be an incorrect conclusion of significant results, or type I errors. <span class="citation" data-cites="seals2016analysis">(<a href="#ref-seals2016analysis" role="doc-biblioref">Seals and Aban 2016</a>)</span></p>
-<p>GEE uses quasi-likelihood estimation which is opposite of other models that use maximum likelihood estimation or the least squares methods. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> To summarize, a maximum likelihood estimation</p>
+<p>GEE uses quasi-likelihood estimation which is opposite of other models that use maximum likelihood estimation or the least squares methods. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.</p>
 </section>
 </section>
 <section id="references" class="level2 unnumbered">

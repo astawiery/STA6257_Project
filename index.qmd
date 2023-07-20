@@ -114,7 +114,7 @@ the assumed relationship among the correlated observations
 [@seals2016analysis]. The correlation structures discussed in this paper
 are exchangeable, autoregressive (AR1), unstructured, and independent.
 
-![Figure 1: Correlation Structures Comparison Table [@wang2012penalized]](corr-table.jpg)
+![Figure 1: Correlation Structures Comparison Table [@wang2014generalized]](corr-table.jpg)
 
 The The independence correlation structure is used when the assumption
 between multiple repeated observations of a single individual is
@@ -139,10 +139,7 @@ equation:
 $$
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
 $$.
-
-
-
-
+In addition to the method by Schuts and Chaganty, Wang discusses several other methods for correlation structure selection and cites many other methods available. [@wang2014generalized] 
 
 
 ## Analysis and Results
@@ -274,7 +271,7 @@ the population-level effects. [@shao2023comparison]
 
 Comparison of model results:
 
-
+<insert more here>
 
 GEE is a valid choice of statistical modeling to be used in the case
 that a standard regression model is not applicable due to the
@@ -286,6 +283,6 @@ significant results, or type I errors. [@seals2016analysis]
 
 GEE uses quasi-likelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
-[@shao2023comparison] To summarize, a maximum likelihood estimation
+[@shao2023comparison] To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.
 
 ## References
