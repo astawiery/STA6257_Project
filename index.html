@@ -217,6 +217,53 @@ div.csl-indent {
 <section id="data-and-vizualisation" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-vizualisation">Data and Vizualisation</h3>
 <p>In this review of GEE, the ‘geepack’ package for R with a respiratory dataset included was used to showcase an example. <span class="citation" data-cites="Hojsgaard2006">(<a href="#ref-Hojsgaard2006" role="doc-biblioref">Halekoh, Højsgaard, and Yan 2006</a>)</span> <span class="citation" data-cites="Yan2004">(<a href="#ref-Yan2004" role="doc-biblioref">Yan and Fine 2004</a>)</span> <span class="citation" data-cites="Yan2002">(<a href="#ref-Yan2002" role="doc-biblioref">Yan 2002</a>)</span> The respiratory dataset included in the packet is an example of longitudinal or panel data as data is from a clinical study of 111 patients receiving treatment for a respiratory illness. <span class="citation" data-cites="koch1990categorical">(<a href="#ref-koch1990categorical" role="doc-biblioref">Koch et al. 1990</a>)</span></p>
+<p>Variables in respiratory dataset:</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>center</td>
+<td>a numeric vector</td>
+</tr>
+<tr class="even">
+<td>id</td>
+<td>a numeric vector</td>
+</tr>
+<tr class="odd">
+<td>treat</td>
+<td>treatment or placebo</td>
+</tr>
+<tr class="even">
+<td>sex</td>
+<td>male or female</td>
+</tr>
+<tr class="odd">
+<td>age</td>
+<td>in years at baseline</td>
+</tr>
+<tr class="even">
+<td>baseline</td>
+<td>respiratory status at baseline</td>
+</tr>
+<tr class="odd">
+<td>visit</td>
+<td>id of visit</td>
+</tr>
+<tr class="even">
+<td>outcome</td>
+<td>respiratory status at visit</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -231,46 +278,33 @@ div.csl-indent {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(respiratory)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize data with ggplot</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>resp_1g <span class="ot">&lt;-</span> respiratory <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(visit)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>displayData <span class="ot">&lt;-</span> respiratory[respiratory<span class="sc">$</span>id <span class="sc">&lt;</span> <span class="dv">4</span>,]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>displayData <span class="ot">&lt;-</span> displayData[displayData<span class="sc">$</span>center <span class="sc">==</span> <span class="dv">2</span>,]</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(resp_1g, <span class="fu">aes</span>(<span class="at">x =</span> visit, <span class="at">group =</span> outcome, <span class="at">fill =</span> outcome))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>g<span class="sc">+</span><span class="fu">geom_bar</span>()<span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"visit number"</span>,<span class="at">y=</span><span class="st">"Respiratory Health, '1' good, '0' poor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(displayData, <span class="fu">aes</span>(<span class="at">x=</span>visit, <span class="at">y=</span>treat, <span class="at">color=</span><span class="fu">factor</span>(outcome))) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="st">"Outcome"</span>,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Poor"</span>,<span class="st">"Good"</span>)) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>id) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>resp_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(respiratory,<span class="at">cols =</span> visit, <span class="at">names_to=</span><span class="st">"visit_number"</span>,<span class="at">values_to=</span><span class="st">"res_health"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit_number =</span> <span class="fu">fct_inorder</span>(<span class="fu">paste</span>(<span class="st">"visit number"</span>, respiratory<span class="sc">$</span>visit)),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">res_health =</span> respiratory<span class="sc">$</span>outcome</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(resp_long, <span class="fu">aes</span>(visit_number,res_health,<span class="at">fill=</span>visit_number))<span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="st">"none"</span>)<span class="sc">+</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">""</span>,<span class="at">y=</span><span class="st">"Respiratory Health, '1' good, '0' poor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
 </div>
-</div>
+<p>The above graphic is displaying a small sample from the ‘respiratory’ data. The given data set is a study with longitudinal data of repeated measures with a binary outcome. There are four measures, or visits, performed on each individual. The y-axis, or baseline, represents a patient’s medical status prior to the study where 1 indicates a “good” respiratory status and 0 indicates a “poor” respiratory status.</p>
 </section>
 <section id="statistical-modeling" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-modeling">Statistical Modeling</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM Model</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>glm_example <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory,                </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM Model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>glm_example <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory,                </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -306,11 +340,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLMM Model</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>glmm_example <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> respiratory, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLMM Model</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>glmm_example <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> respiratory, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: binomial  ( logit )
@@ -345,26 +379,26 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independence correlation structure</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)  </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays table of QIC between all 4 different types of GEE models with different</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation structure</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">QIC</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independence correlation structure</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)  </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays table of QIC between all 4 different types of GEE models with different</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation structure</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">QIC</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      QIC     QICu Quasi Lik      CIC params     QICC
