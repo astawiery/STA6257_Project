@@ -25,16 +25,11 @@ predictor variables commonly used to analyze correlated data in various
 fields that use panel or longitudinal data, including epidemiology,
 social sciences, and clinical trials [@Mcculloch2008]. The method was
 first introduced by Liang and Zeger in a paper in 1986.
-[@Liang1986longitudinal]. Analysis of longitudinal data has inherent
-problems with independence involving multiple observations for the same
-individual in clinical data studies. Liang and Zeger even referred to
-time dependence on multiple observations of an individual as a nuisance
-due to correlation issues. [@Liang1986longitudinal]. Another challenge
-for use of longitudinal data is the need for more complex statistical
-models to deal with the lack of independence in observations that could
-include multidimensional levels of integration, and the software is
-often not available.[@donald2006longitudinal] The use of GEE mitigates
-these challenges with use of longitudinal data.
+[@Liang1986longitudinal]. The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized] 
+
+Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies. Liang and Zeger even referred to
+time dependence on multiple observations of an individual as a nuisance due to correlation issues. [@Liang1986longitudinal]. Another challenge for use of longitudinal data is the need for more complex statistical models to deal with the lack of independence in observations that could
+include multidimensional levels of integration, and the software is often not available.[@donald2006longitudinal] The use of GEE mitigates these challenges with use of longitudinal data.
 
 GEE extends the generalized linear model framework to account for
 within-cluster correlations, such as repeated observations or clustered
@@ -47,7 +42,7 @@ GEE also implements an estimating equation approach to iteratively
 update the parameter estimates.
 
 This methodology provides reliable and robust estimates, even when the
-correlation structure is mis-specified. GEE is particularly useful for
+correlation structure is mis-specified.[@wang2014generalized] GEE is particularly useful for
 longitudinal or panel data analysis, as it allows for examination of all
 available data in the experiment and provides statistical inference for
 population-level ramifications. [@lin2011impact] Its ability to handle
@@ -61,7 +56,7 @@ particularly in biostatistics or research settings without the use of intense st
 
 GEE is designed for analyzing correlated data, such as longitudinal or
 panel data. The data are organized into clusters, where each cluster
-represents a group of related observations. An example to demontrate GEE
+represents a group of related observations. An example to demonstrate GEE
 uses a dataset with repeated measures on the same patient for medical
 results over time.
 
@@ -84,7 +79,7 @@ $$t=1,...,n_{it}$$ for subjects $$i=1,...,K$$ which arise often in
 applied sciences. [@Liang1986longitudinal] For example, in health care
 study data, individual patients have follow visits to monitor a
 treatment plan and therefore have multiple observations for each
-patient.
+patient. GEE is used for these kind of longitudinal datasets due to the use of correlation structures in its modeling design.
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the
@@ -119,7 +114,7 @@ are more choices for correlation structures, but these (4) structures are
 the structures used in the 'geepack' R package used in the subsequent
 examples.
 
-If the correlation structure chosen for GEE is not correct, the predictor variables will still be estimated consistently, since the GEE method relies on the first moment, however the standard errors will be incorrect. This considered very attractive property of GEE models.[@donald2006longitudinal] A possible remedy for choosing a correlation structure incorrectly is to use the 'sandwich' package in R that uses the Huber-White sandwich estimator to create an an approximate for the correlation.[@homish2010analyzing] [@zeileis2019package]
+If the correlation structure chosen for GEE is not correct, the predictor variables will still be estimated consistently, since the GEE method relies on the first moment, however the standard errors will be incorrect. This considered very attractive property of GEE models.[@donald2006longitudinal] A possible remedy for choosing a correlation structure incorrectly is to use the 'sandwich' package in R that uses the Huber-White sandwich estimator to create an an approximation for the correlation.[@homish2010analyzing] [@zeileis2019package]
 
 
 Correlation structure selection is determined through various methods.
@@ -129,9 +124,8 @@ based on the generalized error sum of squares given by the following
 equation: 
 $$
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-$$
-Another potential formula used to determine the best correlation
-structure to use in a GEE model has been proposed by
+$$.
+
 
 ### Estimating Equations
 
@@ -147,26 +141,10 @@ effects of the explanatory variables.
 GEE uses an iterative algorithm, typically based on the Newton-Raphson
 method, to update the parameter estimates. The process involves solving
 the estimating equations iteratively until convergence is reached.
-[@wang2012penalized] {this needs further sources, read through docs
+[@wang2012penalized] It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs
 again}
 
-### Inference
 
-GEE provides robust standard errors for the estimated regression
-parameters, taking into account the correlation structure. When
-comparing multiple different techniques, it's important to consider the
-correlation between observations in order to perform accurate
-statistical inference of the model's output. [@seals2016analysis]
-Hypothesis tests and confidence intervals can be constructed to assess
-the statistical significance of the variables and make inferences about
-the population-level effects. [@shao2023comparison]
-
-### Model Assessment
-
-After fitting the GEE model, various model diagnostics can be performed
-to assess the model's goodness of fit, such as model comparison criteria
-and assessing the adequacy of the assumed correlation structure.
-[@shao2023comparison]
 
 ## Analysis and Results
 
@@ -212,10 +190,13 @@ library(ggplot2)
 ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   geom_point(size=5) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
-  scale_color_discrete("Respiratory Heatlh",labels=c("Poor","Good")) +
+  scale_color_discrete("Respiratory Health",labels=c("Poor","Good")) +
   facet_grid(.~id) +
   labs(x = "Visit Number/Patient", y = "Treatent, 'A'=Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
+
+
+
 ```
 The above graphic is displaying a small sample from the 'respiratory' data. The given data set is a study with longitudinal data of repeated measures with a binary outcome. There are four measures, or visits, performed on each individual. Each box with 1 through 4 on the x-axis represents a unique patient and their respective visits. The y-axis displays the treatment the patient is taking where P represents a placebo and A represents the actual treatment.
 
@@ -267,6 +248,26 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, i
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
+
+### Model Assessment
+
+After fitting the GEE model, various model diagnostics can be performed
+to assess the model's goodness of fit, such as model comparison criteria
+and assessing the adequacy of the assumed correlation structure.
+[@shao2023comparison]
+
+
+### Inference
+
+GEE provides robust standard errors for the estimated regression
+parameters, taking into account the correlation structure. When
+comparing multiple different techniques, it's important to consider the
+correlation between observations in order to perform accurate
+statistical inference of the model's output. [@seals2016analysis]
+Hypothesis tests and confidence intervals can be constructed to assess
+the statistical significance of the variables and make inferences about
+the population-level effects. [@shao2023comparison]
+
 
 
 
