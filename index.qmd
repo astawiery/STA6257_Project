@@ -95,30 +95,28 @@ extension of GEE from the GLM and LM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
 
+According the Liang and Zeger, the method of GEE, longitudinal data sets, are comprised of an outcome variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
+$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
+$$i=1,...,K$$ which arise often in applied sciences. [@Liang1986longitudinal] For
+example, in health care study data, individual patients have follow
+visits to monitor a treatment plan and therefore have multiple
+observations for each patient. GEE is used for these kind of
+longitudinal datasets due to the use of correlation structures in its
+modeling design to account for the lack of independence in the repeated observations.
+
 In Wang's review of GEE method, a marginal model specifying a
 relationship between $\mu_i$ and $X_{ij}$ is given by the equation
 $g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$
 is a vector of regression coefficients and then shows the mathematical
 calculations to get to the equation
 $U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$ that
-when solved will give estimates of $\beta_i$. In this equation
-$D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the
+when solved will give estimates of $\beta_i$ used in the generated models. 
+In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the
 inverse of the variance-covariance matrix for $Y_i$,
 $V_i = \phi{A_i}^{1/2}R_i(\alpha){A_i}^{1/2}$ , $A_i$ is a diagonal
 matrix with elements that are known variance functions of $\mu_{ij}$
 times a scaling parameter $\phi$, and $R_i(\alpha)$ is the correlation
-structure. [@wang2014generalized] According the Liang and Zeger, the
-method of GEE, longitudinal data sets, are comprised of an outcome
-variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
-$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
-$$i=1,...,K$$
-
-which arise often in applied sciences. [@Liang1986longitudinal] For
-example, in health care study data, individual patients have follow
-visits to monitor a treatment plan and therefore have multiple
-observations for each patient. GEE is used for these kind of
-longitudinal datasets due to the use of correlation structures in its
-modeling design.
+structure. [@wang2014generalized] 
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the
