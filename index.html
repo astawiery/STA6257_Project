@@ -139,6 +139,14 @@ div.csl-indent {
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<section id="estimating-equations" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-equations">Estimating Equations</h3>
+<p>Instead of maximizing the likelihood function, GEE employs a quasilikelihood estimating equation approach to estimate the regression parameters.<span class="citation" data-cites="d2011generalized">(<a href="#ref-d2011generalized" role="doc-biblioref">D’Angelo et al. 2011</a>)</span> The estimating equations are derived based on the assumed correlation structure and the marginal mean model, not a specified distriution. <span class="citation" data-cites="d2011generalized">(<a href="#ref-d2011generalized" role="doc-biblioref">D’Angelo et al. 2011</a>)</span> These equations capture the population-averaged effects of the explanatory variables.</p>
+</section>
+<section id="iterative-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-algorithm">Iterative Algorithm</h3>
+<p>GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached. <span class="citation" data-cites="wang2012penalized">(<a href="#ref-wang2012penalized" role="doc-biblioref">L. Wang, Zhou, and Qu 2012</a>)</span> It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs again}</p>
+</section>
 <section id="data-structure" class="level3">
 <h3 class="anchored" data-anchor-id="data-structure">Data Structure</h3>
 <p>GEE is designed for analyzing correlated data, such as longitudinal or panel data. The data are organized into clusters, where each cluster represents a group of related observations. An example to demonstrate GEE uses a dataset with repeated measures on the same patient for medical results over time.</p>
@@ -168,14 +176,6 @@ div.csl-indent {
 <p>Correlation structure selection is determined through various methods. One valid method used to determine model selection has been proposed by Shults and Chaganty (<span class="citation" data-cites="wang2012penalized">L. Wang, Zhou, and Qu (<a href="#ref-wang2012penalized" role="doc-biblioref">2012</a>)</span>) as to determine the structure based on the generalized error sum of squares given by the following equation: <span class="math display">\[
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
 \]</span>.</p>
-</section>
-<section id="estimating-equations" class="level3">
-<h3 class="anchored" data-anchor-id="estimating-equations">Estimating Equations</h3>
-<p>Instead of maximizing the likelihood function, GEE employs an estimating equation approach to estimate the regression parameters. <span class="citation" data-cites="d2011generalized">(<a href="#ref-d2011generalized" role="doc-biblioref">D’Angelo et al. 2011</a>)</span> The estimating equations are derived based on the assumed correlation structure and the marginal mean model. <span class="citation" data-cites="d2011generalized">(<a href="#ref-d2011generalized" role="doc-biblioref">D’Angelo et al. 2011</a>)</span> These equations capture the population-averaged effects of the explanatory variables.</p>
-</section>
-<section id="iterative-algorithm" class="level3">
-<h3 class="anchored" data-anchor-id="iterative-algorithm">Iterative Algorithm</h3>
-<p>GEE uses an iterative algorithm, typically based on the Newton-Raphson method, to update the parameter estimates. The process involves solving the estimating equations iteratively until convergence is reached. <span class="citation" data-cites="wang2012penalized">(<a href="#ref-wang2012penalized" role="doc-biblioref">L. Wang, Zhou, and Qu 2012</a>)</span> It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs again}</p>
 </section>
 </section>
 <section id="analysis-and-results" class="level2">

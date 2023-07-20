@@ -52,6 +52,20 @@ particularly in biostatistics or research settings without the use of intense st
 
 ## Methodology
 
+### Estimating Equations
+
+Instead of maximizing the likelihood function, GEE employs a quasilikelihood estimating
+equation approach to estimate the regression parameters.[@d2011generalized] The estimating equations are derived based on the assumed correlation structure and the marginal mean model, not a specified distriution. [@d2011generalized] These equations capture the population-averaged
+effects of the explanatory variables.
+
+### Iterative Algorithm
+
+GEE uses an iterative algorithm, typically based on the Newton-Raphson
+method, to update the parameter estimates. The process involves solving
+the estimating equations iteratively until convergence is reached.
+[@wang2012penalized] It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs
+again}
+
 ### Data Structure
 
 GEE is designed for analyzing correlated data, such as longitudinal or
@@ -127,22 +141,7 @@ $$
 $$.
 
 
-### Estimating Equations
 
-Instead of maximizing the likelihood function, GEE employs an estimating
-equation approach to estimate the regression parameters.
-[@d2011generalized] The estimating equations are derived based on the
-assumed correlation structure and the marginal mean model.
-[@d2011generalized] These equations capture the population-averaged
-effects of the explanatory variables.
-
-### Iterative Algorithm
-
-GEE uses an iterative algorithm, typically based on the Newton-Raphson
-method, to update the parameter estimates. The process involves solving
-the estimating equations iteratively until convergence is reached.
-[@wang2012penalized] It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs
-again}
 
 
 
