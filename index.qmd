@@ -212,8 +212,9 @@ library(ggplot2)
 ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   geom_point(size=5) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
-  scale_color_discrete("Outcome",labels=c("Poor","Good")) +
+  scale_color_discrete("Respiratory Heatlh",labels=c("Poor","Good")) +
   facet_grid(.~id) +
+  labs(x = "Visit Number/Patient", y = "Treatent, 'A'=Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
 ```
 The above graphic is displaying a small sample from the 'respiratory' data. The given data set is a study with longitudinal data of repeated measures with a binary outcome. There are four measures, or visits, performed on each individual. Each box with 1 through 4 on the x-axis represents a unique patient and their respective visits. The y-axis displays the treatment the patient is taking where P represents a placebo and A represents the actual treatment.
