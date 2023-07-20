@@ -14,9 +14,6 @@ editor:
     wrap: 72
 ---
 
-**Literature Review**:
-https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing
-
 ## Introduction
 
 Generalized Estimating Equations (GEE) is a statistical methodology in a
@@ -25,11 +22,20 @@ predictor variables commonly used to analyze correlated data in various
 fields that use panel or longitudinal data, including epidemiology,
 social sciences, and clinical trials [@Mcculloch2008]. The method was
 first introduced by Liang and Zeger in a paper in 1986.
-[@Liang1986longitudinal]. The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized] 
+[@Liang1986longitudinal]. The method uses a quasilikelihood approach and
+yields population averaged estimates of parameters.
+[@wang2014generalized]
 
-Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies. Liang and Zeger even referred to
-time dependence on multiple observations of an individual as a nuisance due to correlation issues. [@Liang1986longitudinal]. Another challenge for use of longitudinal data is the need for more complex statistical models to deal with the lack of independence in observations that could
-include multidimensional levels of integration, and the software is often not available.[@donald2006longitudinal] The use of GEE mitigates these challenges with use of longitudinal data.
+Analysis of longitudinal data has inherent problems with independence
+involving multiple observations for the same individual in clinical data
+studies. Liang and Zeger even referred to time dependence on multiple
+observations of an individual as a nuisance due to correlation issues.
+[@Liang1986longitudinal]. Another challenge for use of longitudinal data
+is the need for more complex statistical models to deal with the lack of
+independence in observations that could include multidimensional levels
+of integration, and the software is often not
+available.[@donald2006longitudinal] The use of GEE mitigates these
+challenges with use of longitudinal data.
 
 GEE extends the generalized linear model framework to account for
 within-cluster correlations, such as repeated observations or clustered
@@ -42,69 +48,89 @@ GEE also implements an estimating equation approach to iteratively
 update the parameter estimates.
 
 This methodology provides reliable and robust estimates, even when the
-correlation structure is mis-specified.[@wang2014generalized] GEE is particularly useful for
-longitudinal or panel data analysis, as it allows for examination of all
-available data in the experiment and provides statistical inference for
-population-level ramifications. [@lin2011impact] Its ability to handle
-missing data makes GEE a great choice for analyzing correlated data,
-particularly in biostatistics or research settings without the use of intense statistical mathematics.
-
+correlation structure is mis-specified.[@wang2014generalized] GEE is
+particularly useful for longitudinal or panel data analysis, as it
+allows for examination of all available data in the experiment and
+provides statistical inference for population-level ramifications.
+[@lin2011impact] Its ability to handle missing data makes GEE a great
+choice for analyzing correlated data, particularly in biostatistics or
+research settings without the use of intense statistical mathematics.
 
 ## Methodology
 
 ### Estimating Equations
 
-Instead of maximizing the likelihood function, GEE employs a quasilikelihood estimating
-equation approach to estimate the regression parameters.[@d2011generalized] The estimating equations are derived based on the assumed correlation structure and the marginal mean model, not a specified distriution. [@d2011generalized] These equations capture the population-averaged
-effects of the explanatory variables.
+Instead of maximizing the likelihood function, GEE employs a
+quasilikelihood estimating equation approach to estimate the regression
+parameters.[@d2011generalized] The estimating equations are derived
+based on the assumed correlation structure and the marginal mean model,
+not a specified distriution. [@d2011generalized] These equations capture
+the population-averaged effects of the explanatory variables.
 
 ### Iterative Algorithm
 
 GEE uses an iterative algorithm, typically based on the Newton-Raphson
 method, to update the parameter estimates. The process involves solving
 the estimating equations iteratively until convergence is reached.
-[@wang2012penalized] It is an asymptotic approach versus a least squares regression approach.{this needs further sources, read through docs
+[@wang2012penalized] It is an asymptotic approach versus a least squares
+regression approach.{this needs further sources, read through docs
 again}
 
 ### Data Structure
 
 GEE is designed for analyzing correlated data, such as longitudinal or
 panel data. The data are organized into clusters, where each cluster
-represents a group of related observations. An example to demonstrate GEE
-uses a dataset with repeated measures on the same patient for medical
-results over time.
+represents a group of related observations. An example to demonstrate
+GEE uses a dataset with repeated measures on the same patient for
+medical results over time.
 
 ### Model Specification
 
-GEE uses a generalized linear model (GLM) framework to specify the
-relationship between the response variable and the regressor variables.
-[@shao2023comparison] The choice of the link function and the
-distribution of the response variable depends on the nature of the data.
-[@gayen2018generalized] The table below shows the extension of GEE from
-the GLM and LM and differences in assumptions.
+GEE is an extension of generalized linear models (GLM) and uses that
+framework to specify the relationship between the response variable and
+the regressor variables.[@shao2023comparison] The choice of the link
+function and the distribution of the response variable depends on the
+nature of the data.[@gayen2018generalized] The table below shows the
+extension of GEE from the GLM and LM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
 
+In Wang's review of GEE method, a marginal model specifying a
+relationship between $\mu_i$ and $X_{ij}$ is given by the equation
+$g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$
+is a vector of regression coefficients and then shows the mathematical
+calculations to get to the equation
+$U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$ that
+when solved will give estimates of $\beta_i$. In this equation
+$D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the
+inverse of the variance-covariance matrix for $Y_i$,
+$V_i = \phi{A_i}^{1/2}R_i(\alpha){A_i}^{1/2}$ , $A_i$ is a diagonal
+matrix with elements that are known variance functions of $\mu_{ij}$
+times a scaling parameter $\phi$, and $R_i(\alpha)$ is the correlation
+structure. [@wang2014generalized] According the Liang and Zeger, the
+method of GEE, longitudinal data sets, are comprised of an outcome
+variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
+$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
+$$i=1,...,K$$
 
-According the Liang and Zeger, the method of GEE, longitudinal data
-sets, are comprised of an outcome variable, $y_{it}$, and
-\$\$p\\times1\$\$ vector of covariates, $x_{it}$, observed at times
-$$t=1,...,n_{it}$$ for subjects $$i=1,...,K$$ which arise often in
-applied sciences. [@Liang1986longitudinal] For example, in health care
-study data, individual patients have follow visits to monitor a
-treatment plan and therefore have multiple observations for each
-patient. GEE is used for these kind of longitudinal datasets due to the use of correlation structures in its modeling design.
+which arise often in applied sciences. [@Liang1986longitudinal] For
+example, in health care study data, individual patients have follow
+visits to monitor a treatment plan and therefore have multiple
+observations for each patient. GEE is used for these kind of
+longitudinal datasets due to the use of correlation structures in its
+modeling design.
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the
 structure types in the paragraph below), family type of binomial for
 discrete outcomes and would yield model of
 
-General mathematical formula for multivariate GEE:  $$
+General mathematical formula for multivariate GEE: $$
  \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
 $$
 
-that predicts log odds ratios for outcomes for each predictor. [@PSU2023]
+that predicts log odds ratios for outcomes for each predictor.
+[@PSU2023]
 
 ### Correlation Structures
 
@@ -114,7 +140,8 @@ the assumed relationship among the correlated observations
 [@seals2016analysis]. The correlation structures discussed in this paper
 are exchangeable, autoregressive (AR1), unstructured, and independent.
 
-![Figure 1: Correlation Structures Comparison Table [@wang2014generalized]](corr-table.jpg)
+![Figure 1: Correlation Structures Comparison Table
+[@wang2014generalized]](corr-table.jpg)
 
 The The independence correlation structure is used when the assumption
 between multiple repeated observations of a single individual is
@@ -124,23 +151,29 @@ correlation structure is used when there are more than one set of equal
 time differences between repeated observations. And lastly, unstructured
 correlation structure is the most general and takes into account all the
 possible time intervals between repeated observations. Of course there
-are more choices for correlation structures, but these (4) structures are
-the structures used in the 'geepack' R package used in the subsequent
-examples.
+are more choices for correlation structures, but these (4) structures
+are the structures used in the 'geepack' R package used in the
+subsequent examples.
 
-If the correlation structure chosen for GEE is not correct, the predictor variables will still be estimated consistently, since the GEE method relies on the first moment, however the standard errors will be incorrect. This considered very attractive property of GEE models.[@donald2006longitudinal] A possible remedy for choosing a correlation structure incorrectly is to use the 'sandwich' package in R that uses the Huber-White sandwich estimator to create an an approximation for the correlation.[@homish2010analyzing] [@zeileis2019package]
-
+If the correlation structure chosen for GEE is not correct, the
+predictor variables will still be estimated consistently, since the GEE
+method relies on the first moment, however the standard errors will be
+incorrect. This considered very attractive property of GEE
+models.[@donald2006longitudinal] A possible remedy for choosing a
+correlation structure incorrectly is to use the 'sandwich' package in R
+that uses the Huber-White sandwich estimator to create an an
+approximation for the correlation.[@homish2010analyzing]
+[@zeileis2019package]
 
 Correlation structure selection is determined through various methods.
 One valid method used to determine model selection has been proposed by
 Shults and Chaganty (@wang2012penalized) as to determine the structure
 based on the generalized error sum of squares given by the following
-equation: 
-$$
+equation: $$
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-$$.
-In addition to the method by Schuts and Chaganty, Wang discusses several other methods for correlation structure selection and cites many other methods available. [@wang2014generalized] 
-
+$$. In addition to the method by Schuts and Chaganty, Wang discusses
+several other methods for correlation structure selection and cites many
+other methods available. [@wang2014generalized]
 
 ## Analysis and Results
 
@@ -153,19 +186,18 @@ an example of longitudinal or panel data as data is from a clinical
 study of 111 patients receiving treatment for a respiratory illness.
 [@koch1990categorical]
 
+| Variable | Description                    |
+|----------|--------------------------------|
+| center   | a numeric vector               |
+| id       | a numeric vector               |
+| treat    | treatment or placebo           |
+| sex      | male or female                 |
+| age      | in years at baseline           |
+| baseline | respiratory status at baseline |
+| visit    | id of visit                    |
+| outcome  | respiratory status at visit    |
 
-| Variable  | Description                     |
-|-----------|---------------------------------|
-| center    | a numeric vector                |
-| id        | a numeric vector                |
-| treat     | treatment or placebo            |
-| sex       | male or female                  |
-| age       | in years at baseline            |
-| baseline  | respiratory status at baseline  |
-| visit     | id of visit                     |
-| outcome   | respiratory status at visit     |
-
-: {tbl-colwidths="[20,35]"}
+: {tbl-colwidths="\[20,35\]"}
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 # loading packages 
@@ -194,9 +226,20 @@ ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
 
 
 ```
-The above graphic is displaying a small sample from the 'respiratory' data. The given data set is a study with longitudinal data of repeated measures with a binary outcome. There are four measures, or visits, performed on each individual. Each box with 1 through 4 on the x-axis represents a unique patient and their respective visits. The y-axis displays the treatment the patient is taking where P represents a placebo and A represents the actual treatment.
 
-The points on the plot indicate the outcome of treatment and represent a patient's respiratory status per visit where 1 indicates a "good" respiratory status and 0 indicates a "poor" respiratory status. Note that this graphic is a truncated form of the complete dataset and excludes both a treatment center and 52 other patients.
+The above graphic is displaying a small sample from the 'respiratory'
+data. The given data set is a study with longitudinal data of repeated
+measures with a binary outcome. There are four measures, or visits,
+performed on each individual. Each box with 1 through 4 on the x-axis
+represents a unique patient and their respective visits. The y-axis
+displays the treatment the patient is taking where P represents a
+placebo and A represents the actual treatment.
+
+The points on the plot indicate the outcome of treatment and represent a
+patient's respiratory status per visit where 1 indicates a "good"
+respiratory status and 0 indicates a "poor" respiratory status. Note
+that this graphic is a truncated form of the complete dataset and
+excludes both a treatment center and 52 other patients.
 
 ### Statistical Modeling
 
@@ -207,6 +250,7 @@ glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respira
 
 summary(glm_example)
 ```
+
 The Generalized Linear Model,
 
 ```{r}
@@ -218,10 +262,10 @@ summary(glmm_example)
 
 ```
 
-GEE formula for the respiratory data: 
-$$
+GEE formula for the respiratory data: $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
+
 ```{r}
 # GEE with independence correlation structure
 gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -252,7 +296,6 @@ to assess the model's goodness of fit, such as model comparison criteria
 and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
-
 ### Inference
 
 GEE provides robust standard errors for the estimated regression
@@ -263,9 +306,6 @@ statistical inference of the model's output. [@seals2016analysis]
 Hypothesis tests and confidence intervals can be constructed to assess
 the statistical significance of the variables and make inferences about
 the population-level effects. [@shao2023comparison]
-
-
-
 
 ### Conclusion
 
@@ -283,6 +323,16 @@ significant results, or type I errors. [@seals2016analysis]
 
 GEE uses quasi-likelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
-[@shao2023comparison] To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.
+[@shao2023comparison] To summarize, GEE is a good extension of GLM for
+modeling longitudinal or panel data and data with binary or continuous
+outcomes. The fact that the individual observations do not have to be
+independent or a distribution specified combined with the fact that the
+models are based on the first moment only and use of one several
+possible correlation structures make it a good choice for modeling.
 
 ## References
+
+## Literature Review
+
+[Generalized Estimating Equations Literature
+Review](https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing)
