@@ -141,7 +141,7 @@ are exchangeable, autoregressive (AR1), unstructured, and independent.
 ![Figure 1: Correlation Structures Comparison Table
 [@wang2014generalized]](corr-table.jpg)
 
-The The independence correlation structure is used when the assumption
+The independent correlation structure is used when the assumption
 between multiple repeated observations of a single individual is
 independent. Use of the exchange correlation structure is used when
 there is equality between times of observations. Autoagressive (AR1)
@@ -163,15 +163,6 @@ that uses the Huber-White sandwich estimator to create an an
 approximation for the correlation.[@homish2010analyzing]
 [@zeileis2019package]
 
-Correlation structure selection is determined through various methods.
-One valid method used to determine model selection has been proposed by
-Shults and Chaganty (@wang2012penalized) as to determine the structure
-based on the generalized error sum of squares given by the following
-equation: $$
-  ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-$$. In addition to the method by Schuts and Chaganty, Wang discusses
-several other methods for correlation structure selection and cites many
-other methods available. [@wang2014generalized]
 
 ## Analysis and Results
 
@@ -198,19 +189,24 @@ study of 111 patients receiving treatment for a respiratory illness.
 : {tbl-colwidths="\[20,35\]"}
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-# loading packages 
+######## loading packages ########
+
 library(tidyverse)
 library(knitr)
 library(geepack)
 library(lme4)   # For fitting linear mixed models
 library(glmmTMB)  # For fitting GLMMs with different distributions
+library(ggeffects)
 
 
-# Load Data
+######## Load Data ########
+
 data(respiratory)
 
 displayData <- respiratory[respiratory$id < 4,]
 displayData <- displayData[displayData$center == 2,]
+
+######## Plot sample of data for visualization ########
 
 library(ggplot2)
 ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
@@ -218,7 +214,7 @@ ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
   scale_color_discrete("Respiratory Health",labels=c("Poor","Good")) +
   facet_grid(.~id) +
-  labs(x = "Visit Number/Patient", y = "Treatent, 'A'=Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
+  labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
 
 
@@ -239,6 +235,26 @@ respiratory status and 0 indicates a "poor" respiratory status. Note
 that this graphic is a truncated form of the complete dataset and
 excludes both a treatment center and 52 other patients.
 
+```{r, warning=FALSE, echo=T, message=FALSE}
+######## Correlation between data points ########
+
+covar_data <- respiratory
+covar_data$sex <- as.numeric(covar_data$sex)
+covar_data$treat <- as.numeric(covar_data$treat)
+
+
+# co-variance matrix
+covar_matrix <- select(covar_data, 1:7) %>% 
+  cov()
+covar_matrix
+
+# correlation matrix
+cov2cor(covar_matrix)
+
+
+```
+The correlation matrix shows that 
+
 ### Statistical Modeling
 
 ```{r}
@@ -249,7 +265,7 @@ glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respira
 summary(glm_example)
 ```
 
-The Generalized Linear Model,
+The Generalized Linear Model, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. For this example, the coefficient estimates 
 
 ```{r}
 # GLMM Model
@@ -259,10 +275,6 @@ glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | i
 summary(glmm_example)
 
 ```
-
-GEE formula for the respiratory data: $$
- \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
-$$
 
 ```{r}
 # GEE with independence correlation structure
@@ -282,6 +294,10 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, i
                   family = binomial(), corstr="ar1")  
 
 
+plot(ggemmeans(gee_independence, terms = c("center", "treat"),
+               condition = c(outcome = "poor"))) + 
+  ggplot2::ggtitle("GEE Effect plot")
+
 # Displays table of QIC between all 4 different types of GEE models with different
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
@@ -293,6 +309,10 @@ After fitting the GEE model, various model diagnostics can be performed
 to assess the model's goodness of fit, such as model comparison criteria
 and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
+
+GEE formula for the respiratory data: $$
+ \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
+$$
 
 ### Inference
 
