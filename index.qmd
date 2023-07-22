@@ -340,7 +340,8 @@ between the observations.
 
 ### Statistical Modeling
 
-**GLM Model** 
+**GLM Model**
+
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -364,7 +365,8 @@ that treatment and baseline are good predictors for respiratory outcome.
 Center and age are decent predictors as well. Sex, on the other hand, is
 not a good predictor for our given responses.
 
-**GLMM Model*
+\*\*GLMM Model\*
+
 ```{r}
 # GLMM Model
 glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
@@ -397,6 +399,7 @@ individual variability to account for them [@shao2023comparison].
 **GEE Model(s)**
 
 *GEE with Independent Correlation Structure*
+
 ```{r}
 # GEE with independent correlation structure
 gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -405,6 +408,7 @@ summary(gee_independence)
 ```
 
 *GEE with Exchangeable Correlation Structure*
+
 ```{r}
 # GEE with exchangeable correlation structure
 gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -413,6 +417,7 @@ summary(gee_exchangeable)
 ```
 
 *GEE with Unstructured Correlation Structure*
+
 ```{r}
 # GEE with unstructured correlation structure
 gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -420,6 +425,7 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 ```
 
 *GEE with Auto-Regressive Order 1 Correlation Structure*
+
 ```{r}
 # GEE with Auto-Regressive Order 1 correlation structure
 gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
@@ -427,6 +433,7 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, i
 ```
 
 **Plot regarding random effcts of GEE Models** (not sure if keeping)
+
 ```{r}
 plot(ggemmeans(gee_independence, terms = c("center", "treat"),
                condition = c(outcome = "poor"))) + 
@@ -434,6 +441,7 @@ plot(ggemmeans(gee_independence, terms = c("center", "treat"),
 ```
 
 **QIC (Quasi Information Criterion) for Model Selection**
+
 ```{r}
 # Displays table of QIC between all 4 different types of GEE models with different
 # correlation structure
