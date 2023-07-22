@@ -340,6 +340,7 @@ between the observations.
 
 ### Statistical Modeling
 
+**GLM Model** 
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -363,6 +364,7 @@ that treatment and baseline are good predictors for respiratory outcome.
 Center and age are decent predictors as well. Sex, on the other hand, is
 not a good predictor for our given responses.
 
+**GLMM Model*
 ```{r}
 # GLMM Model
 glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
@@ -392,37 +394,51 @@ predicting respiratory outcomes. Is it important to note that there are
 no listed random effects which indicates that there is not sufficient
 individual variability to account for them [@shao2023comparison].
 
+**GEE Model(s)**
+
+*GEE with Independent Correlation Structure*
 ```{r}
-# GEE with independence correlation structure
+# GEE with independent correlation structure
 gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
                   family = binomial(), corstr="independence")
+summary(gee_independence)
+```
 
+*GEE with Exchangeable Correlation Structure*
+```{r}
 # GEE with exchangeable correlation structure
 gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
                   family = binomial(), corstr="exchangeable")
+summary(gee_exchangeable)
+```
 
+*GEE with Unstructured Correlation Structure*
+```{r}
 # GEE with unstructured correlation structure
 gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
                   family = binomial(), corstr="unstructured")
+```
 
+*GEE with Auto-Regressive Order 1 Correlation Structure*
+```{r}
 # GEE with Auto-Regressive Order 1 correlation structure
 gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
-                  family = binomial(), corstr="ar1")  
+                  family = binomial(), corstr="ar1")
+```
 
-
+**Plot regarding random effcts of GEE Models** (not sure if keeping)
+```{r}
 plot(ggemmeans(gee_independence, terms = c("center", "treat"),
                condition = c(outcome = "poor"))) + 
   ggplot2::ggtitle("GEE Effect plot")
+```
 
+**QIC (Quasi Information Criterion) for Model Selection**
+```{r}
 # Displays table of QIC between all 4 different types of GEE models with different
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
-
-The 'geepack' package in R was used to create a model using the same
-geeglm() equation using the each of the available correlation structures
-availabe in the package, independence, exchangeable, unstructured and
-AR1.
 
 ### Model Assessment
 
