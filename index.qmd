@@ -197,7 +197,9 @@ library(geepack)
 library(lme4)   # For fitting linear mixed models
 library(glmmTMB)  # For fitting GLMMs with different distributions
 library(ggeffects)
-
+library(dplyr)
+library(ggplot2)
+library(furniture)
 
 ######## Load Data ########
 
@@ -208,7 +210,6 @@ displayData <- displayData[displayData$center == 2,]
 
 ######## Plot sample of data for visualization ########
 
-library(ggplot2)
 ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   geom_point(size=5) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
@@ -216,9 +217,6 @@ ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   facet_grid(.~id) +
   labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
-
-
-
 ```
 
 The above graphic is displaying a small sample from the 'respiratory'
@@ -236,7 +234,6 @@ that this graphic is a truncated form of the complete dataset and
 excludes both a treatment center and 52 other patients.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-###### Correlation between repeated observations #######
 
 
 resp_transformed <- respiratory %>% 
@@ -248,10 +245,10 @@ resp_transformed <- respiratory %>%
                 sex, age, treat, 
                 baseline, starts_with("visit"))
 ```
-
 'resp_transformed' is a data frame that has been transformed based on the original data set. This transformation manipulates the data such that there is one line per participant in the data. This method will allow for analyzing the metrics between repeated observations.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
+###### Data transformation for "wide" data [record per visit] #######
 resp_transformed %>% 
   dplyr::group_by(treat) %>% 
   furniture::table1("Visit One" = visit_1, 
@@ -268,6 +265,7 @@ resp_transformed %>%
 Table "Respiratory Outcome Over Time" shows a breakdown of visits and the corresponding statistics. N is the total number of patients in the study, "A" represents the treatment, and "P" represents the placebo. 
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
+###### Graph of Number of Visits with Poor Outcome #######
 resp_transformed %>% 
   dplyr::mutate(n_good = furniture::rowsums(visit_1 == "0", 
                                             visit_2 == "0",
@@ -280,11 +278,11 @@ resp_transformed %>%
   theme_bw() +
   labs(x = "Age in Years",
        y = "Number of Visits out of Four, with 'Poor' Respiration")
-
 ```
 This visualization is focused on the age parameter in terms of outcome per visit. Based on age for the x-axis, it's displaying whether respective patients had a 'poor' outcome (or poor respiration status) as a number out of the four total visits. The larger circles indicate a higher number of poor outcomes in total, while the smaller circles indicate a smaller number of poor outcomes in total. This visual does not display patients who had all 'good' outcomes.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
+###### Correlation between repeated observations #######
 resp_transformed %>% 
   dplyr::select(starts_with("visit")) %>% 
   dplyr::mutate_all(function(x) x == "1") %>% 
@@ -304,7 +302,12 @@ glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respira
 summary(glm_example)
 ```
 
-The Generalized Linear Model, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation.
+GLM, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation. In this case we are specifying that the model is a logistic regression model.
+
+Using the variables center, treatment, age, baseline, and sex, the model is attempting to predict the response variable value of “1” for outcome. This would indicate a ‘good’ respiratory status.
+
+The p-values found in the coefficients table of the summary indicate that treatment and baseline are good predictors for respiratory outcome. Center and age are decent predictors as well. Sex, on the other hand, is not a good predictor for our given responses. 
+
 
 ```{r}
 # GLMM Model
