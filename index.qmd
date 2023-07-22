@@ -236,24 +236,63 @@ that this graphic is a truncated form of the complete dataset and
 excludes both a treatment center and 52 other patients.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-######## Correlation between data points ########
-
-covar_data <- respiratory
-covar_data$sex <- as.numeric(covar_data$sex)
-covar_data$treat <- as.numeric(covar_data$treat)
+###### Correlation between repeated observations #######
 
 
-# co-variance matrix
-covar_matrix <- select(covar_data, 1:7) %>% 
-  cov()
-covar_matrix
+resp_transformed <- respiratory %>% 
+  tidyr::spread(key = visit,
+                value = outcome,
+                sep = "_") %>%
+  dplyr::arrange(id) %>% 
+  dplyr::select(id, center, 
+                sex, age, treat, 
+                baseline, starts_with("visit"))
+```
 
-# correlation matrix
-cov2cor(covar_matrix)
+'resp_transformed' is a data frame that has been transformed based on the original data set. This transformation manipulates the data such that there is one line per participant in the data. This method will allow for analyzing the metrics between repeated observations.
 
+```{r, warning=FALSE, echo=T, message=FALSE}
+resp_transformed %>% 
+  dplyr::group_by(treat) %>% 
+  furniture::table1("Visit One" = visit_1, 
+                    "Visit Two" = visit_2, 
+                    "Visit Three" = visit_3, 
+                    "Visit Four" = visit_4, 
+                    caption = "Respiratory Outcome Over Time",
+                    output = "markdown",
+                    na.rm = FALSE,
+                    total = TRUE,
+                    test = TRUE)
+```
+
+Table "Respiratory Outcome Over Time" shows a breakdown of visits and the corresponding statistics. N is the total number of patients in the study, "A" represents the treatment, and "P" represents the placebo. 
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+resp_transformed %>% 
+  dplyr::mutate(n_good = furniture::rowsums(visit_1 == "0", 
+                                            visit_2 == "0",
+                                            visit_3 == "0",
+                                            visit_4 == "0")) %>% 
+  ggplot(aes(x = age,
+             y = n_good)) +
+  geom_count() +
+  geom_smooth() +
+  theme_bw() +
+  labs(x = "Age in Years",
+       y = "Number of Visits out of Four, with 'Poor' Respiration")
 
 ```
-The correlation matrix shows that 
+This visualization is focused on the age parameter in terms of outcome per visit. Based on age for the x-axis, it's displaying whether respective patients had a 'poor' outcome (or poor respiration status) as a number out of the four total visits. The larger circles indicate a higher number of poor outcomes in total, while the smaller circles indicate a smaller number of poor outcomes in total. This visual does not display patients who had all 'good' outcomes.
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+resp_transformed %>% 
+  dplyr::select(starts_with("visit")) %>% 
+  dplyr::mutate_all(function(x) x == "1") %>% 
+  cor() %>% 
+  corrplot::corrplot()
+```
+The preceding graphic shows the correlation matrix between repeated observations. It's noted that there is a medium to high correlation between the observations. This is showing the necessity for a statistical model that can account for these levels of correlation between the observations.
+
 
 ### Statistical Modeling
 
@@ -265,7 +304,7 @@ glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respira
 summary(glm_example)
 ```
 
-The Generalized Linear Model, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. For this example, the coefficient estimates 
+The Generalized Linear Model, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation.
 
 ```{r}
 # GLMM Model
