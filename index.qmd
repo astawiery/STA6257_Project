@@ -303,13 +303,10 @@ The preceding graphic shows the correlation matrix between repeated observations
 
 
 ### Statistical Modeling
-
-
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
           family = binomial())
-
 summary(glm_example)
 ```
 
@@ -324,12 +321,14 @@ The p-values found in the coefficients table of the summary indicate that treatm
 # GLMM Model
 glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
                  data = respiratory, family = binomial())
-
 summary(glmm_example)
-
 ```
 
-The 'geepack' package in R was used to create a model using the same GLM equation using the each of the available correlation structures availabe in the package, independence, exchangeable, unstructured and AR1.
+GLMM, or generalized linear mixed effect model, is also used here to determine how the predictor variables affect the respiratory status outcome. A GLMM may be used when there are multiple levels of observations in the data and the end goal is to further investigate the relationship between variables within a level [@shao2023comparison]. As an extension of GLM, GLMM uses interactions between time and regressor variables to determine the change of a response variable over time. GLMM is an appropriate method of examining longitudinal data in the case that both within-patient and between-patient differences are the research’s end goal [@shao2023comparison].
+
+Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit.
+
+The p-values found in the coefficients table of the summary indicate that treatment, center, and baseline are good predictors for respiratory outcome. Age and sex are not good indicators in this model for predicting respiratory outcomes. Is it important to note that there are no listed random effects which indicates that there is not sufficient individual variability to account for them [@shao2023comparison].
 
 ```{r}
 # GEE with independence correlation structure
@@ -357,6 +356,8 @@ plot(ggemmeans(gee_independence, terms = c("center", "treat"),
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
+
+The 'geepack' package in R was used to create a model using the same geeglm() equation using the each of the available correlation structures availabe in the package, independence, exchangeable, unstructured and AR1.
 
 ### Model Assessment
 
