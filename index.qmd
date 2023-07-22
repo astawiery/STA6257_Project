@@ -90,7 +90,7 @@ GEE is an extension of generalized linear models (GLM) and uses that
 framework to specify the relationship between the response variable and
 the regressor variables.[@shao2023comparison] The choice of the link
 function and the distribution of the response variable depends on the
-nature of the data.[@gayen2018generalized] The table below shows the
+nature of the data.[@gayen2018generalized] Models can be created for continuous, binary or count outcomes. The table below shows the
 extension of GEE from the GLM and LM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
@@ -161,7 +161,17 @@ models.[@donald2006longitudinal] A possible remedy for choosing a
 correlation structure incorrectly is to use the 'sandwich' package in R
 that uses the Huber-White sandwich estimator to create an an
 approximation for the correlation.[@homish2010analyzing]
-[@zeileis2019package]
+[@zeileis2019package]  By default, the 'geepack' package in R uses a sandwich estimator if the number of clusters is larger than 30, but has a built in options to use another variance estimator called the jackknife estimator, fully iterated or approximate, for cases where the number of clusters is less than 30 (as recommended by [@paik1988repeated]).[@Hojsgaard2006]
+
+Correlation structure selection is determined through various methods and is not limited to the structures shown in the correlation table above.
+One valid method used to determine model selection has been proposed by
+Shults and Chaganty (@wang2012penalized) as to determine the structure
+based on the generalized error sum of squares given by the following
+equation: $$
+  ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
+$$. In addition to the method by Schuts and Chaganty, Wang discusses
+several other methods for correlation structure selection and cites many
+other methods available. [@wang2014generalized]
 
 
 ## Analysis and Results
@@ -294,6 +304,7 @@ The preceding graphic shows the correlation matrix between repeated observations
 
 ### Statistical Modeling
 
+
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -317,6 +328,8 @@ glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | i
 summary(glmm_example)
 
 ```
+
+The 'geepack' package in R was used to create a model using the same GLM equation using the each of the available correlation structures availabe in the package, independence, exchangeable, unstructured and AR1.
 
 ```{r}
 # GEE with independence correlation structure
