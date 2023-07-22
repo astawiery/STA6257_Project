@@ -63,80 +63,94 @@ research settings without the use of intense statistical mathematics.
 Instead of maximizing the likelihood function, GEE employs a
 quasilikelihood estimating equation approach to estimate the regression
 parameters.[@d2011generalized] The estimating equations are derived
-based on the assumed correlation structure and the marginal mean model,
-not a specified distriution. [@d2011generalized] These equations capture
-the population-averaged effects of the explanatory variables.
+based on the assumed correlation structure and the marginal mean
+model,not a specified distriution. [@d2011generalized] GEE models can be
+for continous, binary or count outcomes.
 
 ### Iterative Algorithm
 
 GEE uses an iterative algorithm, typically based on the Newton-Raphson
 method, to update the parameter estimates. The process involves solving
-the estimating equations iteratively until convergence is reached.
-[@wang2012penalized] It is an asymptotic approach versus a least squares
-regression approach.{this needs further sources, read through docs
-again}
+the estimating equations iteratively until convergence is
+reached.[@wang2012penalized] It is an asymptotic approach to modeling
+versus a least squares regression approach.{this needs further sources,
+read through docs again}
 
 ### Data Structure
 
 GEE is designed for analyzing correlated data, such as longitudinal or
-panel data. The data are organized into clusters, where each cluster
-represents a group of related observations. An example to demonstrate
-GEE uses a dataset with repeated measures on the same patient for
-medical results over time.
+panel data in which the data is organized into clusters, where each
+cluster represents a group of related observations. The assumption of
+independent observations may not be accurate. A GEE analysis of a
+dataset with longitudinal data with repeated observations per individual
+will be shown using the respiratory dataset available through the
+'geepack' package in R.
 
 ### Model Specification
 
 GEE is an extension of generalized linear models (GLM) and uses that
 framework to specify the relationship between the response variable and
-the regressor variables.[@shao2023comparison] The choice of the link
+the regressor variables. [@shao2023comparison] The choice of the link
 function and the distribution of the response variable depends on the
-nature of the data.[@gayen2018generalized] Models can be created for continuous, binary or count outcomes. The table below shows the
+nature of the data.[@gayen2018generalized] Models can be created for
+continuous, binary or count outcomes. The table below shows the
 extension of GEE from the GLM and LM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
 
-According the Liang and Zeger, the method of GEE, longitudinal data sets, are comprised of an outcome variable, $y_{it}$, and \$\$p\\times1\$\$ vector of covariates,
-$x_{it}$, observed at times $$t=1,...,n_{it}$$ for subjects
-$$i=1,...,K$$ which arise often in applied sciences. [@Liang1986longitudinal] For
-example, in health care study data, individual patients have follow
-visits to monitor a treatment plan and therefore have multiple
-observations for each patient. GEE is used for these kind of
-longitudinal datasets due to the use of correlation structures in its
-modeling design to account for the lack of independence in the repeated observations.
+According the Liang and Zeger, the method of GEE, longitudinal data
+sets, are comprised of an outcome variable, $y_{it}$, and
+\$\$p\\times1\$\$ vector of covariates, $x_{it}$, observed at times
+$$t=1,...,n_{it}$$ for subjects $$i=1,...,K$$ which arise often in
+applied sciences. [@Liang1986longitudinal] For example, in health care
+study data, individual patients have follow visits to monitor a
+treatment plan and therefore have multiple observations for each
+patient. GEE is used for these kind of longitudinal datasets due to the
+use of correlation structures in its modeling design to account for the
+lack of independence in the repeated observations.
 
 In Wang's review of GEE method, a marginal model specifying a
 relationship between $\mu_i$ and $X_{ij}$ is given by the equation
 $g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$
 is a vector of regression coefficients and then shows the mathematical
 calculations to get to the equation
-$U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$ that
-when solved will give estimates of $\beta_i$ used in the generated models. 
-In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the
-inverse of the variance-covariance matrix for $Y_i$,
+
+$U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
+
+that when solved will give estimates of $\beta_i$ used in the generated
+models. In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and
+${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$,
 $V_i = \phi{A_i}^{1/2}R_i(\alpha){A_i}^{1/2}$ , $A_i$ is a diagonal
 matrix with elements that are known variance functions of $\mu_{ij}$
 times a scaling parameter $\phi$, and $R_i(\alpha)$ is the correlation
-structure. [@wang2014generalized] 
+structure. [@wang2014generalized]
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the
 structure types in the paragraph below), family type of binomial for
 discrete outcomes and would yield model of
 
-General mathematical formula for multivariate GEE: $$
+General mathematical formula for multivariate GEE using the logit link
+function for binary outcomes: $$
  \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
 $$
 
 that predicts log odds ratios for outcomes for each predictor.
 [@PSU2023]
 
+The 'geepack' package in R uses the link and variance functions in the
+geeglm() function of identity for gaussian, logit and
+$\mu(1-\mu),\mu\in(0,1)$ for binomal, log and$\mu,\mu>0$ for poisson,
+and log and $\mu^2,\mu>0$ for gamma families. [@Hojsgaard2006]
+
 ### Correlation Structures
 
 GEE allows for flexible modeling of the correlation structure within
 clusters. A working correlation structure is specified, which represents
 the assumed relationship among the correlated observations
-[@seals2016analysis]. The correlation structures discussed in this paper
-are exchangeable, autoregressive (AR1), unstructured, and independent.
+[@seals2016analysis]. The correlation structures discussed in this
+paperare exchangeable, autoregressive (AR1), unstructured, and
+independent.
 
 ![Figure 1: Correlation Structures Comparison Table
 [@wang2014generalized]](corr-table.jpg)
@@ -161,18 +175,23 @@ models.[@donald2006longitudinal] A possible remedy for choosing a
 correlation structure incorrectly is to use the 'sandwich' package in R
 that uses the Huber-White sandwich estimator to create an an
 approximation for the correlation.[@homish2010analyzing]
-[@zeileis2019package]  By default, the 'geepack' package in R uses a sandwich estimator if the number of clusters is larger than 30, but has a built in options to use another variance estimator called the jackknife estimator, fully iterated or approximate, for cases where the number of clusters is less than 30 (as recommended by [@paik1988repeated]).[@Hojsgaard2006]
+[@zeileis2019package] By default, the 'geepack' package in R uses a
+sandwich estimator if the number of clusters is larger than 30, but has
+a built in options to use another variance estimator called the
+jackknife estimator, fully iterated or approximate, for cases where the
+number of clusters is less than 30 (as recommended by
+[@paik1988repeated]).[@Hojsgaard2006]
 
-Correlation structure selection is determined through various methods and is not limited to the structures shown in the correlation table above.
-One valid method used to determine model selection has been proposed by
-Shults and Chaganty (@wang2012penalized) as to determine the structure
-based on the generalized error sum of squares given by the following
-equation: $$
+Correlation structure selection is determined through various methods
+and is not limited to the structures shown in the correlation table
+above. One valid method used to determine model selection has been
+proposed by Shults and Chaganty (@wang2012penalized) as to determine the
+structure based on the generalized error sum of squares given by the
+following equation: $$
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
 $$. In addition to the method by Schuts and Chaganty, Wang discusses
 several other methods for correlation structure selection and cites many
 other methods available. [@wang2014generalized]
-
 
 ## Analysis and Results
 
@@ -255,7 +274,11 @@ resp_transformed <- respiratory %>%
                 sex, age, treat, 
                 baseline, starts_with("visit"))
 ```
-'resp_transformed' is a data frame that has been transformed based on the original data set. This transformation manipulates the data such that there is one line per participant in the data. This method will allow for analyzing the metrics between repeated observations.
+
+'resp_transformed' is a data frame that has been transformed based on
+the original data set. This transformation manipulates the data such
+that there is one line per participant in the data. This method will
+allow for analyzing the metrics between repeated observations.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Data transformation for "wide" data [record per visit] #######
@@ -272,7 +295,9 @@ resp_transformed %>%
                     test = TRUE)
 ```
 
-Table "Respiratory Outcome Over Time" shows a breakdown of visits and the corresponding statistics. N is the total number of patients in the study, "A" represents the treatment, and "P" represents the placebo. 
+Table "Respiratory Outcome Over Time" shows a breakdown of visits and
+the corresponding statistics. N is the total number of patients in the
+study, "A" represents the treatment, and "P" represents the placebo.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Graph of Number of Visits with Poor Outcome #######
@@ -289,7 +314,14 @@ resp_transformed %>%
   labs(x = "Age in Years",
        y = "Number of Visits out of Four, with 'Poor' Respiration")
 ```
-This visualization is focused on the age parameter in terms of outcome per visit. Based on age for the x-axis, it's displaying whether respective patients had a 'poor' outcome (or poor respiration status) as a number out of the four total visits. The larger circles indicate a higher number of poor outcomes in total, while the smaller circles indicate a smaller number of poor outcomes in total. This visual does not display patients who had all 'good' outcomes.
+
+This visualization is focused on the age parameter in terms of outcome
+per visit. Based on age for the x-axis, it's displaying whether
+respective patients had a 'poor' outcome (or poor respiration status) as
+a number out of the four total visits. The larger circles indicate a
+higher number of poor outcomes in total, while the smaller circles
+indicate a smaller number of poor outcomes in total. This visual does
+not display patients who had all 'good' outcomes.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Correlation between repeated observations #######
@@ -299,10 +331,15 @@ resp_transformed %>%
   cor() %>% 
   corrplot::corrplot()
 ```
-The preceding graphic shows the correlation matrix between repeated observations. It's noted that there is a medium to high correlation between the observations. This is showing the necessity for a statistical model that can account for these levels of correlation between the observations.
 
+The preceding graphic shows the correlation matrix between repeated
+observations. It's noted that there is a medium to high correlation
+between the observations. This is showing the necessity for a
+statistical model that can account for these levels of correlation
+between the observations.
 
 ### Statistical Modeling
+
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -310,12 +347,21 @@ glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respira
 summary(glm_example)
 ```
 
-GLM, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation. In this case we are specifying that the model is a logistic regression model.
+GLM, shown as the glm() function above, does not account for the between
+segment correlations in longitudinal data. We are accounting for the
+distribution for this model (where that is defined in the family =
+binomial() parameter), but it is still not sufficient to account for the
+between-segment correlation. In this case we are specifying that the
+model is a logistic regression model.
 
-Using the variables center, treatment, age, baseline, and sex, the model is attempting to predict the response variable value of “1” for outcome. This would indicate a ‘good’ respiratory status.
+Using the variables center, treatment, age, baseline, and sex, the model
+is attempting to predict the response variable value of "1" for outcome.
+This would indicate a 'good' respiratory status.
 
-The p-values found in the coefficients table of the summary indicate that treatment and baseline are good predictors for respiratory outcome. Center and age are decent predictors as well. Sex, on the other hand, is not a good predictor for our given responses. 
-
+The p-values found in the coefficients table of the summary indicate
+that treatment and baseline are good predictors for respiratory outcome.
+Center and age are decent predictors as well. Sex, on the other hand, is
+not a good predictor for our given responses.
 
 ```{r}
 # GLMM Model
@@ -324,11 +370,27 @@ glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | i
 summary(glmm_example)
 ```
 
-GLMM, or generalized linear mixed effect model, is also used here to determine how the predictor variables affect the respiratory status outcome. A GLMM may be used when there are multiple levels of observations in the data and the end goal is to further investigate the relationship between variables within a level [@shao2023comparison]. As an extension of GLM, GLMM uses interactions between time and regressor variables to determine the change of a response variable over time. GLMM is an appropriate method of examining longitudinal data in the case that both within-patient and between-patient differences are the research’s end goal [@shao2023comparison].
+GLMM, or generalized linear mixed effect model, is also used here to
+determine how the predictor variables affect the respiratory status
+outcome. A GLMM may be used when there are multiple levels of
+observations in the data and the end goal is to further investigate the
+relationship between variables within a level [@shao2023comparison]. As
+an extension of GLM, GLMM uses interactions between time and regressor
+variables to determine the change of a response variable over time. GLMM
+is an appropriate method of examining longitudinal data in the case that
+both within-patient and between-patient differences are the research's
+end goal [@shao2023comparison].
 
-Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit.
+Using the variables center, treatment, age, baseline, and sex, the model
+is attempting to determine how these variables affect the likelihood of
+a 'poor' outcome versus a 'good' outcome within a patient's visit.
 
-The p-values found in the coefficients table of the summary indicate that treatment, center, and baseline are good predictors for respiratory outcome. Age and sex are not good indicators in this model for predicting respiratory outcomes. Is it important to note that there are no listed random effects which indicates that there is not sufficient individual variability to account for them [@shao2023comparison].
+The p-values found in the coefficients table of the summary indicate
+that treatment, center, and baseline are good predictors for respiratory
+outcome. Age and sex are not good indicators in this model for
+predicting respiratory outcomes. Is it important to note that there are
+no listed random effects which indicates that there is not sufficient
+individual variability to account for them [@shao2023comparison].
 
 ```{r}
 # GEE with independence correlation structure
@@ -357,7 +419,10 @@ plot(ggemmeans(gee_independence, terms = c("center", "treat"),
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
 
-The 'geepack' package in R was used to create a model using the same geeglm() equation using the each of the available correlation structures availabe in the package, independence, exchangeable, unstructured and AR1.
+The 'geepack' package in R was used to create a model using the same
+geeglm() equation using the each of the available correlation structures
+availabe in the package, independence, exchangeable, unstructured and
+AR1.
 
 ### Model Assessment
 
