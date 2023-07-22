@@ -263,8 +263,7 @@ that this graphic is a truncated form of the complete dataset and
 excludes both a treatment center and 52 other patients.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-
-
+###### Data transformation for "wide" data [record per visit] #######
 resp_transformed <- respiratory %>% 
   tidyr::spread(key = visit,
                 value = outcome,
@@ -281,7 +280,7 @@ that there is one line per participant in the data. This method will
 allow for analyzing the metrics between repeated observations.
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
-###### Data transformation for "wide" data [record per visit] #######
+###### Table of data breakdown - respiratory outcome over time #######
 resp_transformed %>% 
   dplyr::group_by(treat) %>% 
   furniture::table1("Visit One" = visit_1, 
@@ -340,8 +339,7 @@ between the observations.
 
 ### Statistical Modeling
 
-**GLM Model**
-
+#### GLM Model
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -365,8 +363,7 @@ that treatment and baseline are good predictors for respiratory outcome.
 Center and age are decent predictors as well. Sex, on the other hand, is
 not a good predictor for our given responses.
 
-\*\*GLMM Model\*
-
+#### GLMM Model
 ```{r}
 # GLMM Model
 glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
@@ -396,10 +393,11 @@ predicting respiratory outcomes. Is it important to note that there are
 no listed random effects which indicates that there is not sufficient
 individual variability to account for them [@shao2023comparison].
 
-**GEE Model(s)**
+#### GEE Model(s)
 
-*GEE with Independent Correlation Structure*
+GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. We have used the 'geepack' package in R to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status.
 
+  1. **GEE with Independent Correlation Structure**
 ```{r}
 # GEE with independent correlation structure
 gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -407,8 +405,7 @@ gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_independence)
 ```
 
-*GEE with Exchangeable Correlation Structure*
-
+  2. **GEE with Exchangeable Correlation Structure**
 ```{r}
 # GEE with exchangeable correlation structure
 gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -416,36 +413,20 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_exchangeable)
 ```
 
-*GEE with Unstructured Correlation Structure*
-
+ 3. **GEE with Unstructured Correlation Structure**
 ```{r}
 # GEE with unstructured correlation structure
 gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
                   family = binomial(), corstr="unstructured")
+summary(gee_unstructured)
 ```
 
-*GEE with Auto-Regressive Order 1 Correlation Structure*
-
+ 4. **GEE with Auto-Regressive Order 1 Correlation Structure**
 ```{r}
 # GEE with Auto-Regressive Order 1 correlation structure
-gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline, data=respiratory, id=id, 
+gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
                   family = binomial(), corstr="ar1")
-```
-
-**Plot regarding random effcts of GEE Models** (not sure if keeping)
-
-```{r}
-plot(ggemmeans(gee_independence, terms = c("center", "treat"),
-               condition = c(outcome = "poor"))) + 
-  ggplot2::ggtitle("GEE Effect plot")
-```
-
-**QIC (Quasi Information Criterion) for Model Selection**
-
-```{r}
-# Displays table of QIC between all 4 different types of GEE models with different
-# correlation structure
-QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
+summary(gee_ar1)
 ```
 
 ### Model Assessment
@@ -455,9 +436,29 @@ to assess the model's goodness of fit, such as model comparison criteria
 and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
-GEE formula for the respiratory data: $$
+#### Respiratory Data GEE Formula
+$$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
+
+
+#### Plot regarding random effects of GEE Models
+```{r}
+plot(ggemmeans(gee_independence, terms = c("center", "treat"),
+               condition = c(outcome = "poor"))) + 
+  ggplot2::ggtitle("GEE Effect plot")
+```
+
+- Do we want to keep this?
+
+#### QIC (Quasi Information Criterion) for Model Selection**
+```{r}
+# Displays table of QIC between all 4 different types of GEE models with different
+# correlation structure
+QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
+```
+
+- Explain here what the QIC is demonstrating for model selection in the case of GEE models
 
 ### Inference
 
