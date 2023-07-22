@@ -65,7 +65,7 @@ quasilikelihood estimating equation approach to estimate the regression
 parameters.[@d2011generalized] The estimating equations are derived
 based on the assumed correlation structure and the marginal mean
 model,not a specified distriution. [@d2011generalized] GEE models can be
-for continous, binary or count outcomes.
+for continuous, binary or count outcomes.
 
 ### Iterative Algorithm
 
