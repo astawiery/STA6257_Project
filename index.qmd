@@ -94,9 +94,10 @@ the regressor variables. [@shao2023comparison] The choice of the link
 function and the distribution of the response variable depends on the
 nature of the data.[@gayen2018generalized] Models can be created for
 continuous, binary or count outcomes. The table below shows the
-extension of GEE from the GLM and LM and differences in assumptions.
+extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
+Information in table summarized from [@Mcculloch2008]
 
 According the Liang and Zeger, the method of GEE, longitudinal data
 sets, are comprised of an outcome variable, $y_{it}$, and
