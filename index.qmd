@@ -96,8 +96,7 @@ nature of the data.[@gayen2018generalized] Models can be created for
 continuous, binary or count outcomes. The table below shows the
 extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
 
-![](Model_Comparison_Table.jpg)
-Table 1 Information in table summarized from [@Mcculloch2008]
+![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
 According the Liang and Zeger, the method of GEE, longitudinal data
 sets, are comprised of an outcome variable, $y_{it}$, and
@@ -132,7 +131,8 @@ structure types in the paragraph below), family type of binomial for
 discrete outcomes and would yield model of
 
 General mathematical formula for multivariate GEE using the logit link
-function for binary outcomes: $$
+function for binary outcomes: 
+$$
  \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
 $$
 
@@ -153,7 +153,7 @@ the assumed relationship among the correlated observations
 paperare exchangeable, autoregressive (AR1), unstructured, and
 independent.
 
-![Figure 1: Correlation Structures Comparison Table
+![Figure 2: Correlation Structures Comparison Table
 [@wang2014generalized]](corr-table.jpg)
 
 The independent correlation structure is used when the assumption
@@ -340,66 +340,13 @@ between the observations.
 
 ### Statistical Modeling
 
-#### GLM Model
-
-```{r}
-# GLM Model
-glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
-          family = binomial())
-summary(glm_example)
-```
-
-GLM, shown as the glm() function above, does not account for the between
-segment correlations in longitudinal data. We are accounting for the
-distribution for this model (where that is defined in the family =
-binomial() parameter), but it is still not sufficient to account for the
-between-segment correlation. In this case we are specifying that the
-model is a logistic regression model.
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to predict the response variable value of "1" for outcome.
-This would indicate a 'good' respiratory status.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment and baseline are good predictors for respiratory outcome.
-Center and age are decent predictors as well. Sex, on the other hand, is
-not a good predictor for our given responses.
-
-#### GLMM Model
-
-```{r}
-# GLMM Model
-glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
-                 data = respiratory, family = binomial())
-summary(glmm_example)
-```
-
-GLMM, or generalized linear mixed effect model, is also used here to
-determine how the predictor variables affect the respiratory status
-outcome. A GLMM may be used when there are multiple levels of
-observations in the data and the end goal is to further investigate the
-relationship between variables within a level [@shao2023comparison]. As
-an extension of GLM, GLMM uses interactions between time and regressor
-variables to determine the change of a response variable over time. GLMM
-is an appropriate method of examining longitudinal data in the case that
-both within-patient and between-patient differences are the research's
-end goal [@shao2023comparison].
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to determine how these variables affect the likelihood of
-a 'poor' outcome versus a 'good' outcome within a patient's visit.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment, center, and baseline are good predictors for respiratory
-outcome. Age and sex are not good indicators in this model for
-predicting respiratory outcomes. Is it important to note that there are
-no listed random effects which indicates that there is not sufficient
-individual variability to account for them [@shao2023comparison].
 
 #### GEE Model(s)
 
-GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. The 'geepack' package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the
-function input. The binomial distribution is chosen for each model as well due to the binary response of a 'poor' or 'good' respiratory status.
+GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. GEE modeling requires parameters in the form of distribution of the response variable, the link function, the regressor variables, and the desired correlation structure. The various types of correlation structures were discussed in the previous methodology section; our example focuses on independent, exchangeable, unstructured, and auto-regressive order 1 correlation structures. The distribution selected for a model is based on the distribution of the response variable [@seals2016analysis] and may be a value such as binomial, Poisson, or Gaussian [@gayen2018generalized]. The link function parameter is contingent on the corresponding distribution where the distribution of the response variable dictates the model to be used [@agresti2015foundations].
+
+The 'geepack' package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a 'poor' or 'good' respiratory status. The canonical link function used for binary response data is 'logit' or logistic regression [@agresti2015foundations]. This link function is inherently used in our models without direct specification.
+
 
 1.  **GEE with Independent Correlation Structure**
 
@@ -495,6 +442,63 @@ outcomes. The fact that the individual observations do not have to be
 independent or a distribution specified combined with the fact that the
 models are based on the first moment only and use of one several
 possible correlation structures make it a good choice for modeling.
+
+
+##### GLM Model
+
+```{r}
+# GLM Model
+glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
+          family = binomial())
+summary(glm_example)
+```
+
+GLM, shown as the glm() function above, does not account for the between
+segment correlations in longitudinal data. We are accounting for the
+distribution for this model (where that is defined in the family =
+binomial() parameter), but it is still not sufficient to account for the
+between-segment correlation. In this case we are specifying that the
+model is a logistic regression model.
+
+Using the variables center, treatment, age, baseline, and sex, the model
+is attempting to predict the response variable value of "1" for outcome.
+This would indicate a 'good' respiratory status.
+
+The p-values found in the coefficients table of the summary indicate
+that treatment and baseline are good predictors for respiratory outcome.
+Center and age are decent predictors as well. Sex, on the other hand, is
+not a good predictor for our given responses.
+
+##### GLMM Model
+
+```{r}
+# GLMM Model
+glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
+                 data = respiratory, family = binomial())
+summary(glmm_example)
+```
+
+GLMM, or generalized linear mixed effect model, is also used here to
+determine how the predictor variables affect the respiratory status
+outcome. A GLMM may be used when there are multiple levels of
+observations in the data and the end goal is to further investigate the
+relationship between variables within a level [@shao2023comparison]. As
+an extension of GLM, GLMM uses interactions between time and regressor
+variables to determine the change of a response variable over time. GLMM
+is an appropriate method of examining longitudinal data in the case that
+both within-patient and between-patient differences are the research's
+end goal [@shao2023comparison].
+
+Using the variables center, treatment, age, baseline, and sex, the model
+is attempting to determine how these variables affect the likelihood of
+a 'poor' outcome versus a 'good' outcome within a patient's visit.
+
+The p-values found in the coefficients table of the summary indicate
+that treatment, center, and baseline are good predictors for respiratory
+outcome. Age and sex are not good indicators in this model for
+predicting respiratory outcomes. Is it important to note that there are
+no listed random effects which indicates that there is not sufficient
+individual variability to account for them [@shao2023comparison].
 
 ## References
 
