@@ -17,7 +17,7 @@ editor:
 ## Introduction
 
 Generalized Estimating Equations (GEE) is a statistical methodology in a
-class of models that model the mean of of an outcome as function of
+class of models that model the mean of an outcome as function of
 predictor variables commonly used to analyze correlated data in various
 fields that use panel or longitudinal data, including epidemiology,
 social sciences, and clinical trials [@Mcculloch2008]. The method was
@@ -97,7 +97,7 @@ continuous, binary or count outcomes. The table below shows the
 extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
 
 ![](Model_Comparison_Table.jpg)
-Information in table summarized from [@Mcculloch2008]
+Table 1 Information in table summarized from [@Mcculloch2008]
 
 According the Liang and Zeger, the method of GEE, longitudinal data
 sets, are comprised of an outcome variable, $y_{it}$, and
