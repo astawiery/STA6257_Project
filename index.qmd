@@ -69,21 +69,13 @@ for continuous, binary or count outcomes.
 
 ### Iterative Algorithm
 
-GEE uses an iterative algorithm, typically based on the Newton-Raphson
-method, to update the parameter estimates. The process involves solving
-the estimating equations iteratively until convergence is
-reached.[@wang2012penalized] It is an asymptotic approach to modeling
-versus a least squares regression approach.{this needs further sources,
-read through docs again}
+GEE uses an iterative algorithm after using initial estimates for regression coefficients, $\beta_i$, to update the parameter estimates. Software packages, such as 'geepack' package in R handle the iteration process. The iterative process works until there is convergence to stable estimates. [@Hojsgaard2006] [@Liang1986longitudinal] 
 
 ### Data Structure
 
 GEE is designed for analyzing correlated data, such as longitudinal or
 panel data in which the data is organized into clusters, where each
-cluster represents a group of related observations. The assumption of
-independent observations may not be accurate. A GEE analysis of a
-dataset with longitudinal data with repeated observations per individual
-will be shown using the respiratory dataset available through the
+cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the
 'geepack' package in R.
 
 ### Model Specification
@@ -422,10 +414,6 @@ statistical inference of the model's output. [@seals2016analysis] Hypothesis tes
 
 ### Conclusion
 
-Comparison of model results:
-
-<insert more here>
-
 GEE is a valid choice of statistical modeling to be used in the case
 that a standard regression model is not applicable due to the
 between-observation relationship within data. This directly applies to
@@ -442,6 +430,8 @@ outcomes. The fact that the individual observations do not have to be
 independent or a distribution specified combined with the fact that the
 models are based on the first moment only and use of one several
 possible correlation structures make it a good choice for modeling.
+
+There are a few other packages available in R to create GEE models not discussed in this review GEE. They are the 'gee' package [@Carey2022] and 'multgee' pagkage specifically for multinomial responses [@touloumis2014r].
 
 
 ##### GLM Model
