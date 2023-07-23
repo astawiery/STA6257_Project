@@ -349,6 +349,9 @@ gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_independence)
 ```
 
+The GEE model summary with an independent correlation structure specified shows that there are no estimated correlation parameters. Referencing back to Figure 2, it’s noted that the estimator column for an independent correlation structure is empty. This is because the independent correlation structure is assuming there is no correlation between the observations within a cluster [@seals2016analysis].
+
+
 2.  **GEE with Exchangeable Correlation Structure**
 
 ```{r}
@@ -357,6 +360,9 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
                   family = binomial(), corstr="exchangeable")
 summary(gee_exchangeable)
 ```
+
+The GEE model summary with an exchangeable correlation structure specified shows that there is one estimated correlation parameter. One again referencing back to Figure 2, it’s noted that the estimator parameter (\alpha) is contained in the working correlation structure. The \alpha value in the summary shows that there is an estimated 0.329 correlation value between visits for patients, or a 0.329 correlation value between observations in a cluster.
+
 
 3.  **GEE with Unstructured Correlation Structure**
 
@@ -367,6 +373,15 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_unstructured)
 ```
 
+The GEE model summary with an unstructured correlation structure specified shows that there are six individual estimated correlation parameters for the between observation correlation. Figure 2 shows that the \alpha values in an unstructured correlation structure is a set of the pairwise estimated correlation parameter values. The \alpha values correspond to a specific location within the working correlation matrix.
+
+
+```{r}
+gee_unstructured$geese$alpha
+```
+
+For this model summary, the \alpha values above demonstrate the estimated correlation value between observations, where the ‘alpha.1:2’ value of 0.321 equates to the correlation value between observations of visit 1 and visit 2.
+
 4.  **GEE with Auto-Regressive Order 1 Correlation Structure**
 
 ```{r}
@@ -376,12 +391,14 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
 summary(gee_ar1)
 ```
 
+The GEE model summary with an autoregressive (AR1) correlation structure specified shows that there is one estimated correlation parameter for the between observation correlation. Figure 2 shows that the \alpha values in an AR1 correlation structure is two values where one value is \alpha and the other value is \alpha{2}. The \alpha values once again correspond to a specific location within the working correlation matrix. 
+
 ### Model Assessment
 
 After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as model comparison criteria and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
-#### Respiratory Data GEE Formula
+The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model. Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit. Note that all model analyses are completed on the full model and we have taken no actions to reduce the models, whether through stepwise fashion or other methods. There was no determination to remove statistically insignificant regressor variables.
 
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
@@ -394,8 +411,6 @@ plot(ggemmeans(gee_independence, terms = c("center", "treat"),
                condition = c(outcome = "poor"))) + 
   ggplot2::ggtitle("GEE Effect plot")
 ```
-
--   Do we want to keep this?
 
 #### QIC (Quasi Information Criterion) for Model Selection\*\*
 
