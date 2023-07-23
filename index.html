@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ashley Dosch, Amy Muller, Anthony Stawiery">
-<meta name="dcterms.date" content="2023-07-22">
+<meta name="dcterms.date" content="2023-07-23">
 
 <title>Generalized Estimating Equations</title>
 <style>
@@ -119,7 +119,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 22, 2023</p>
+      <p class="date">July 23, 2023</p>
     </div>
   </div>
   
@@ -509,7 +509,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="gee-models" class="level4">
 <h4 class="anchored" data-anchor-id="gee-models">GEE Model(s)</h4>
-<p>GEE models focus on the mean of the correlated observations that are within groups and don’t focus on the distribution of the full data of the population <span class="citation" data-cites="Hojsgaard2006">(<a href="#ref-Hojsgaard2006" role="doc-biblioref">Halekoh, Højsgaard, and Yan 2006</a>)</span>. We have used the ‘geepack’ package in R to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status.</p>
+<p>GEE models focus on the mean of the correlated observations that are within groups and don’t focus on the distribution of the full data of the population <span class="citation" data-cites="Hojsgaard2006">(<a href="#ref-Hojsgaard2006" role="doc-biblioref">Halekoh, Højsgaard, and Yan 2006</a>)</span>. The ‘geepack’ package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status.</p>
 <ol type="1">
 <li><strong>GEE with Independent Correlation Structure</strong></li>
 </ol>
@@ -719,9 +719,7 @@ gee_unstructured 512  500      -244 12.4      6  520
 gee_ar1          513  500      -244 12.7      6  516</code></pre>
 </div>
 </div>
-<ul>
-<li>Explain here what the QIC is demonstrating for model selection in the case of GEE models</li>
-</ul>
+<p>In order to evaluate which correlation structure is best to use with GEE models, QIC, quasilikelihood information criterion, must be used instead of the AIC, Akaike’s information criterion, to assess since GEE is not based on a specified distribution. AIC uses the asymptotic nature of the maximum likelihood estimator for a specified distribution and is therefore not applicable for GEE. <span class="citation" data-cites="pan2001akaike">(<a href="#ref-pan2001akaike" role="doc-biblioref">Pan 2001</a>)</span> When comparing the different correlation structures used for GEE, the smallest QIC value is the indicator for which is the best correlation structure to use. For the respiratory dataset, the unstructured correlation structure has the lowest QIC value of 512 when compared to the other correlation structures.Therefore, use of the unstructured correlation structure should be used for the GEE model for the respiratory dataset.</p>
 </section>
 </section>
 <section id="inference" class="level3">
@@ -733,7 +731,7 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 <p>Comparison of model results:</p>
 <p><insert more="" here=""></insert></p>
 <p>GEE is a valid choice of statistical modeling to be used in the case that a standard regression model is not applicable due to the between-observation relationship within data. This directly applies to research cases and other applications that utilize clustered or longitudinal data. If a GEE model is not used and the between-segment correlation is ignored, then there may be an incorrect conclusion of significant results, or type I errors. <span class="citation" data-cites="seals2016analysis">(<a href="#ref-seals2016analysis" role="doc-biblioref">Seals and Aban 2016</a>)</span></p>
-<p>GEE uses quasi-likelihood estimation which is opposite of other models that use maximum likelihood estimation or the least squares methods. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.</p>
+<p>GEE uses quasilikelihood estimation which is opposite of other models that use maximum likelihood estimation or the least squares methods. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.</p>
 </section>
 </section>
 <section id="references" class="level2">
@@ -829,6 +827,9 @@ Pan, Wei. 2001. <span>“Akaike’s Information Criterion in Generalized Estimat
 </div>
 <div id="ref-paradis2002analysis" class="csl-entry" role="listitem">
 Paradis, Emmanuel, and Julien Claude. 2002. <span>“Analysis of Comparative Data Using Generalized Estimating Equations.”</span> <em>Journal of Theoretical Biology</em> 218 (2): 175–85.
+</div>
+<div id="ref-pekar2018generalized" class="csl-entry" role="listitem">
+Pekár, Stano, and Marek Brabec. 2018. <span>“Generalized Estimating Equations: A Pragmatic and Flexible Approach to the Marginal GLM Modelling of Correlated Data in the Behavioural Sciences.”</span> <em>Ethology</em> 124 (2): 86–93.
 </div>
 <div id="ref-salazar2016simple" class="csl-entry" role="listitem">
 Salazar, Alejandro, Begoña Ojeda, Marı́a Dueñas, Fernando Fernández, and Inmaculada Failde. 2016. <span>“Simple Generalized Estimating Equations (GEEs) and Weighted Generalized Estimating Equations (WGEEs) in Longitudinal Studies with Dropouts: Guidelines and Implementation in r.”</span> <em>Statistics in Medicine</em> 35 (19): 3424–48.

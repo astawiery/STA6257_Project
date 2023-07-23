@@ -397,14 +397,8 @@ individual variability to account for them [@shao2023comparison].
 
 #### GEE Model(s)
 
-GEE models focus on the mean of the correlated observations that are
-within groups and don't focus on the distribution of the full data of
-the population [@Hojsgaard2006]. We have used the 'geepack' package in R
-to create four different models using the same geeglm() function and
-specifying different correlation structures as parameters within the
-function input. The binomial distribution is chosen for each model as
-well due to the binary response of a 'poor' or 'good' respiratory
-status.
+GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. The 'geepack' package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the
+function input. The binomial distribution is chosen for each model as well due to the binary response of a 'poor' or 'good' respiratory status.
 
 1.  **GEE with Independent Correlation Structure**
 
@@ -444,9 +438,7 @@ summary(gee_ar1)
 
 ### Model Assessment
 
-After fitting the GEE model, various model diagnostics can be performed
-to assess the model's goodness of fit, such as model comparison criteria
-and assessing the adequacy of the assumed correlation structure.
+After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as model comparison criteria and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
 #### Respiratory Data GEE Formula
@@ -473,19 +465,12 @@ plot(ggemmeans(gee_independence, terms = c("center", "treat"),
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
 
--   Explain here what the QIC is demonstrating for model selection in
-    the case of GEE models
+In order to evaluate which correlation structure is best to use with GEE models, QIC, quasilikelihood information criterion, must be used instead of the AIC, Akaike's information criterion, to assess since GEE is not based on a specified distribution. AIC uses the asymptotic nature of the maximum likelihood estimator for a specified distribution and is therefore not applicable for GEE. [@pan2001akaike] When comparing the different correlation structures used for GEE, the smallest QIC value is the indicator for which is the best correlation structure to use. For the respiratory dataset, the unstructured correlation structure has the lowest QIC value of 512 when compared to the other correlation structures.Therefore, use of the unstructured correlation structure should be used for the GEE model for the respiratory dataset.
 
 ### Inference
 
-GEE provides robust standard errors for the estimated regression
-parameters, taking into account the correlation structure. When
-comparing multiple different techniques, it's important to consider the
-correlation between observations in order to perform accurate
-statistical inference of the model's output. [@seals2016analysis]
-Hypothesis tests and confidence intervals can be constructed to assess
-the statistical significance of the variables and make inferences about
-the population-level effects. [@shao2023comparison]
+GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it's important to consider the correlation between observations in order to perform accurate
+statistical inference of the model's output. [@seals2016analysis] Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. [@shao2023comparison]
 
 ### Conclusion
 
@@ -501,7 +486,7 @@ longitudinal data. If a GEE model is not used and the between-segment
 correlation is ignored, then there may be an incorrect conclusion of
 significant results, or type I errors. [@seals2016analysis]
 
-GEE uses quasi-likelihood estimation which is opposite of other models
+GEE uses quasilikelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
 [@shao2023comparison] To summarize, GEE is a good extension of GLM for
 modeling longitudinal or panel data and data with binary or continuous
