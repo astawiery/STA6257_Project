@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,10 +19,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -49,19 +48,48 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -75,7 +103,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="index_files/libs/clipboard/clipboard.min.js"></script>
@@ -89,7 +118,6 @@ div.csl-indent {
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -122,7 +150,6 @@ div.csl-indent {
       <p class="date">July 23, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
@@ -153,7 +180,12 @@ div.csl-indent {
 <section id="model-specification" class="level3">
 <h3 class="anchored" data-anchor-id="model-specification">Model Specification</h3>
 <p>GEE is an extension of generalized linear models (GLM) and uses that framework to specify the relationship between the response variable and the regressor variables. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> The choice of the link function and the distribution of the response variable depends on the nature of the data.<span class="citation" data-cites="gayen2018generalized">(<a href="#ref-gayen2018generalized" role="doc-biblioref">Gayen and Kumar 2018</a>)</span> Models can be created for continuous, binary or count outcomes. The table below shows the extension of GEE from the LM, GLM,and GLMM and differences in assumptions.</p>
-<p><img src="Model_Comparison_Table.jpg" class="img-fluid"> Table 1 Information in table summarized from <span class="citation" data-cites="Mcculloch2008">(<a href="#ref-Mcculloch2008" role="doc-biblioref">S. McCulloch C. 2008</a>)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Model_Comparison_Table.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 1: Model Comparision and Summary <span class="citation" data-cites="Mcculloch2008">(<a href="#ref-Mcculloch2008" role="doc-biblioref">S. McCulloch C. 2008</a>)</span></figcaption><p></p>
+</figure>
+</div>
 <p>According the Liang and Zeger, the method of GEE, longitudinal data sets, are comprised of an outcome variable, <span class="math inline">\(y_{it}\)</span>, and $$p\times1$$ vector of covariates, <span class="math inline">\(x_{it}\)</span>, observed at times <span class="math display">\[t=1,...,n_{it}\]</span> for subjects <span class="math display">\[i=1,...,K\]</span> which arise often in applied sciences. <span class="citation" data-cites="Liang1986longitudinal">(<a href="#ref-Liang1986longitudinal" role="doc-biblioref">Liang and Zeger 1986</a>)</span> For example, in health care study data, individual patients have follow visits to monitor a treatment plan and therefore have multiple observations for each patient. GEE is used for these kind of longitudinal datasets due to the use of correlation structures in its modeling design to account for the lack of independence in the repeated observations.</p>
 <p>In Wang’s review of GEE method, a marginal model specifying a relationship between <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(X_{ij}\)</span> is given by the equation <span class="math inline">\(g(\mu_{ij})=X'_{ij} \beta\)</span>, where <span class="math inline">\(g\)</span> is the link function and <span class="math inline">\(\beta\)</span> is a vector of regression coefficients and then shows the mathematical calculations to get to the equation</p>
 <p><span class="math inline">\(U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0\)</span></p>
@@ -171,7 +203,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="corr-table.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure 1: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#ref-wang2014generalized" role="doc-biblioref">M. Wang 2014</a>)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#ref-wang2014generalized" role="doc-biblioref">M. Wang 2014</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>The independent correlation structure is used when the assumption between multiple repeated observations of a single individual is independent. Use of the exchange correlation structure is used when there is equality between times of observations. Autoagressive (AR1) correlation structure is used when there are more than one set of equal time differences between repeated observations. And lastly, unstructured correlation structure is the most general and takes into account all the possible time intervals between repeated observations. Of course there are more choices for correlation structures, but these (4) structures are the structures used in the ‘geepack’ R package used in the subsequent examples.</p>
@@ -302,7 +334,7 @@ div.csl-indent {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">test =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <caption>Respiratory Outcome Over Time</caption>
 <thead>
 <tr class="header">
@@ -422,104 +454,20 @@ div.csl-indent {
 </section>
 <section id="statistical-modeling" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-modeling">Statistical Modeling</h3>
-<section id="glm-model" class="level4">
-<h4 class="anchored" data-anchor-id="glm-model">GLM Model</h4>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM Model</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>glm_example <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory,                </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = outcome ~ center + treat + age + baseline + sex, 
-    family = binomial(), data = respiratory)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.2906  -0.8610   0.4402   0.9041   1.9164  
-
-Coefficients:
-             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -0.103461   0.551639  -0.188  0.85123    
-center       0.649490   0.238258   2.726  0.00641 ** 
-treatP      -1.265356   0.235000  -5.384 7.27e-08 ***
-age         -0.018756   0.008816  -2.128  0.03337 *  
-baseline     1.845720   0.239267   7.714 1.22e-14 ***
-sexM        -0.136780   0.293330  -0.466  0.64100    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 609.41  on 443  degrees of freedom
-Residual deviance: 487.49  on 438  degrees of freedom
-AIC: 499.49
-
-Number of Fisher Scoring iterations: 4</code></pre>
-</div>
-</div>
-<p>GLM, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation. In this case we are specifying that the model is a logistic regression model.</p>
-<p>Using the variables center, treatment, age, baseline, and sex, the model is attempting to predict the response variable value of “1” for outcome. This would indicate a ‘good’ respiratory status.</p>
-<p>The p-values found in the coefficients table of the summary indicate that treatment and baseline are good predictors for respiratory outcome. Center and age are decent predictors as well. Sex, on the other hand, is not a good predictor for our given responses.</p>
-</section>
-<section id="glmm-model" class="level4">
-<h4 class="anchored" data-anchor-id="glmm-model">GLMM Model</h4>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLMM Model</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>glmm_example <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> respiratory, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> Family: binomial  ( logit )
-Formula:          outcome ~ center + treat + age + baseline + sex + (1 | id)
-Data: respiratory
-
-     AIC      BIC   logLik deviance df.resid 
-   478.2    506.8   -232.1    464.2      437 
-
-Random effects:
-
-Conditional model:
- Groups Name        Variance Std.Dev.
- id     (Intercept) 1.206    1.098   
-Number of obs: 444, groups:  id, 56
-
-Conditional model:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -0.17937    0.69713  -0.257  0.79695    
-center       0.84603    0.28321   2.987  0.00281 ** 
-treatP      -1.68767    0.33914  -4.976 6.48e-07 ***
-age         -0.02019    0.01169  -1.727  0.08412 .  
-baseline     2.00867    0.33238   6.043 1.51e-09 ***
-sexM        -0.08499    0.39288  -0.216  0.82874    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>GLMM, or generalized linear mixed effect model, is also used here to determine how the predictor variables affect the respiratory status outcome. A GLMM may be used when there are multiple levels of observations in the data and the end goal is to further investigate the relationship between variables within a level <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>. As an extension of GLM, GLMM uses interactions between time and regressor variables to determine the change of a response variable over time. GLMM is an appropriate method of examining longitudinal data in the case that both within-patient and between-patient differences are the research’s end goal <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>.</p>
-<p>Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit.</p>
-<p>The p-values found in the coefficients table of the summary indicate that treatment, center, and baseline are good predictors for respiratory outcome. Age and sex are not good indicators in this model for predicting respiratory outcomes. Is it important to note that there are no listed random effects which indicates that there is not sufficient individual variability to account for them <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>.</p>
-</section>
 <section id="gee-models" class="level4">
 <h4 class="anchored" data-anchor-id="gee-models">GEE Model(s)</h4>
-<p>GEE models focus on the mean of the correlated observations that are within groups and don’t focus on the distribution of the full data of the population <span class="citation" data-cites="Hojsgaard2006">(<a href="#ref-Hojsgaard2006" role="doc-biblioref">Halekoh, Højsgaard, and Yan 2006</a>)</span>. The ‘geepack’ package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status.</p>
+<p>GEE models focus on the mean of the correlated observations that are within groups and don’t focus on the distribution of the full data of the population <span class="citation" data-cites="Hojsgaard2006">(<a href="#ref-Hojsgaard2006" role="doc-biblioref">Halekoh, Højsgaard, and Yan 2006</a>)</span>. GEE modeling requires parameters in the form of distribution of the response variable, the link function, the regressor variables, and the desired correlation structure. The various types of correlation structures were discussed in the previous methodology section; our example focuses on independent, exchangeable, unstructured, and auto-regressive order 1 correlation structures. The distribution selected for a model is based on the distribution of the response variable <span class="citation" data-cites="seals2016analysis">(<a href="#ref-seals2016analysis" role="doc-biblioref">Seals and Aban 2016</a>)</span> and may be a value such as binomial, Poisson, or Gaussian <span class="citation" data-cites="gayen2018generalized">(<a href="#ref-gayen2018generalized" role="doc-biblioref">Gayen and Kumar 2018</a>)</span>. The link function parameter is contingent on the corresponding distribution where the distribution of the response variable dictates the model to be used <span class="citation" data-cites="agresti2015foundations">(<a href="#ref-agresti2015foundations" role="doc-biblioref">Agresti 2015</a>)</span>.</p>
+<p>The ‘geepack’ package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status. The canonical link function used for binary response data is ‘logit’ or logistic regression <span class="citation" data-cites="agresti2015foundations">(<a href="#ref-agresti2015foundations" role="doc-biblioref">Agresti 2015</a>)</span>. This link function is inherently used in our models without direct specification.</p>
 <ol type="1">
 <li><strong>GEE with Independent Correlation Structure</strong></li>
 </ol>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independent correlation structure</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_independence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with independent correlation structure</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gee_independence <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"independence"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_independence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -552,10 +500,10 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_exchangeable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with exchangeable correlation structure</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gee_exchangeable <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"exchangeable"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_exchangeable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -593,10 +541,10 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_unstructured)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with unstructured correlation structure</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>gee_unstructured <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"unstructured"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_unstructured)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -639,10 +587,10 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GEE with Auto-Regressive Order 1 correlation structure</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gee_ar1 <span class="ot">&lt;-</span> <span class="fu">geeglm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory, <span class="at">id=</span>id, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">corstr=</span><span class="st">"ar1"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -690,12 +638,12 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggemmeans</span>(gee_independence, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"treat"</span>),</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">condition =</span> <span class="fu">c</span>(<span class="at">outcome =</span> <span class="st">"poor"</span>))) <span class="sc">+</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"GEE Effect plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggemmeans</span>(gee_independence, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"treat"</span>),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">condition =</span> <span class="fu">c</span>(<span class="at">outcome =</span> <span class="st">"poor"</span>))) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"GEE Effect plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ul>
@@ -707,9 +655,9 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays table of QIC between all 4 different types of GEE models with different</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation structure</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">QIC</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays table of QIC between all 4 different types of GEE models with different</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation structure</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">QIC</span>(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 QIC QICu Quasi Lik  CIC params QICC
@@ -732,6 +680,91 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 <p><insert more="" here=""></insert></p>
 <p>GEE is a valid choice of statistical modeling to be used in the case that a standard regression model is not applicable due to the between-observation relationship within data. This directly applies to research cases and other applications that utilize clustered or longitudinal data. If a GEE model is not used and the between-segment correlation is ignored, then there may be an incorrect conclusion of significant results, or type I errors. <span class="citation" data-cites="seals2016analysis">(<a href="#ref-seals2016analysis" role="doc-biblioref">Seals and Aban 2016</a>)</span></p>
 <p>GEE uses quasilikelihood estimation which is opposite of other models that use maximum likelihood estimation or the least squares methods. <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span> To summarize, GEE is a good extension of GLM for modeling longitudinal or panel data and data with binary or continuous outcomes. The fact that the individual observations do not have to be independent or a distribution specified combined with the fact that the models are based on the first moment only and use of one several possible correlation structures make it a good choice for modeling.</p>
+<section id="glm-model" class="level5">
+<h5 class="anchored" data-anchor-id="glm-model">GLM Model</h5>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM Model</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>glm_example <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex, <span class="at">data=</span>respiratory,                </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = outcome ~ center + treat + age + baseline + sex, 
+    family = binomial(), data = respiratory)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-2.291  -0.861   0.440   0.904   1.916  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.10346    0.55164   -0.19   0.8512    
+center       0.64949    0.23826    2.73   0.0064 ** 
+treatP      -1.26536    0.23500   -5.38  7.3e-08 ***
+age         -0.01876    0.00882   -2.13   0.0334 *  
+baseline     1.84572    0.23927    7.71  1.2e-14 ***
+sexM        -0.13678    0.29333   -0.47   0.6410    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 609.41  on 443  degrees of freedom
+Residual deviance: 487.49  on 438  degrees of freedom
+AIC: 499.5
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>GLM, shown as the glm() function above, does not account for the between segment correlations in longitudinal data. We are accounting for the distribution for this model (where that is defined in the family = binomial() parameter), but it is still not sufficient to account for the between-segment correlation. In this case we are specifying that the model is a logistic regression model.</p>
+<p>Using the variables center, treatment, age, baseline, and sex, the model is attempting to predict the response variable value of “1” for outcome. This would indicate a ‘good’ respiratory status.</p>
+<p>The p-values found in the coefficients table of the summary indicate that treatment and baseline are good predictors for respiratory outcome. Center and age are decent predictors as well. Sex, on the other hand, is not a good predictor for our given responses.</p>
+</section>
+<section id="glmm-model" class="level5">
+<h5 class="anchored" data-anchor-id="glmm-model">GLMM Model</h5>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLMM Model</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>glmm_example <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(outcome <span class="sc">~</span> center <span class="sc">+</span> treat <span class="sc">+</span> age <span class="sc">+</span> baseline <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> respiratory, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: binomial  ( logit )
+Formula:          outcome ~ center + treat + age + baseline + sex + (1 | id)
+Data: respiratory
+
+     AIC      BIC   logLik deviance df.resid 
+     478      507     -232      464      437 
+
+Random effects:
+
+Conditional model:
+ Groups Name        Variance Std.Dev.
+ id     (Intercept) 1.21     1.1     
+Number of obs: 444, groups:  id, 56
+
+Conditional model:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -0.1794     0.6971   -0.26   0.7969    
+center        0.8460     0.2832    2.99   0.0028 ** 
+treatP       -1.6877     0.3391   -4.98  6.5e-07 ***
+age          -0.0202     0.0117   -1.73   0.0841 .  
+baseline      2.0087     0.3324    6.04  1.5e-09 ***
+sexM         -0.0850     0.3929   -0.22   0.8287    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>GLMM, or generalized linear mixed effect model, is also used here to determine how the predictor variables affect the respiratory status outcome. A GLMM may be used when there are multiple levels of observations in the data and the end goal is to further investigate the relationship between variables within a level <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>. As an extension of GLM, GLMM uses interactions between time and regressor variables to determine the change of a response variable over time. GLMM is an appropriate method of examining longitudinal data in the case that both within-patient and between-patient differences are the research’s end goal <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>.</p>
+<p>Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit.</p>
+<p>The p-values found in the coefficients table of the summary indicate that treatment, center, and baseline are good predictors for respiratory outcome. Age and sex are not good indicators in this model for predicting respiratory outcomes. Is it important to note that there are no listed random effects which indicates that there is not sufficient individual variability to account for them <span class="citation" data-cites="shao2023comparison">(<a href="#ref-shao2023comparison" role="doc-biblioref">Shao et al. 2023</a>)</span>.</p>
+</section>
 </section>
 </section>
 <section id="references" class="level2">
@@ -743,131 +776,131 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-agresti2015foundations" class="csl-entry" role="listitem">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-agresti2015foundations" class="csl-entry" role="doc-biblioentry">
 Agresti, Alan. 2015. <em>Foundations of Linear and Generalized Linear Models</em>. John Wiley &amp; Sons.
 </div>
-<div id="ref-barnhart1998goodness" class="csl-entry" role="listitem">
+<div id="ref-barnhart1998goodness" class="csl-entry" role="doc-biblioentry">
 Barnhart, Huiman X, and John M Williamson. 1998. <span>“Goodness-of-Fit Tests for GEE Modeling with Binary Responses.”</span> <em>Biometrics</em>, 720–29.
 </div>
-<div id="ref-Burton1998" class="csl-entry" role="listitem">
+<div id="ref-Burton1998" class="csl-entry" role="doc-biblioentry">
 Burton, Lyle Gurrin, Paul, and Peter Sly. 1998. <span>“Extending the Simple Linear Regression Model to Account for Correlated Responses: An Introduction to Generalized Estimating Equations and Multi-Level Mixed Modelling.”</span> <em>Statistics in Medicine</em> 17 (11): 1261–91. <a href="https://doi.org/10.1002/(SICI)1097-0258(19980615)17:11<1261::AID-SIM846>3.0.CO;2-Z">https://doi.org/10.1002/(SICI)1097-0258(19980615)17:11&lt;1261::AID-SIM846&gt;3.0.CO;2-Z</a>.
 </div>
-<div id="ref-crespi2009using" class="csl-entry" role="listitem">
+<div id="ref-crespi2009using" class="csl-entry" role="doc-biblioentry">
 Crespi, Catherine M, Weng Kee Wong, and Shiraz I Mishra. 2009. <span>“Using Second-Order Generalized Estimating Equations to Model Heterogeneous Intraclass Correlation in Cluster-Randomized Trials.”</span> <em>Statistics in Medicine</em> 28 (5): 814–27.
 </div>
-<div id="ref-d2011generalized" class="csl-entry" role="listitem">
+<div id="ref-d2011generalized" class="csl-entry" role="doc-biblioentry">
 D’Angelo, Gina M, Nicole A Lazar, William F Eddy, John C Morris, and Yvette I Sheline. 2011. <span>“A Generalized Estimating Equations Approach for Resting-State Functional MRI Group Analysis.”</span> In <em>2011 Annual International Conference of the IEEE Engineering in Medicine and Biology Society</em>, 5064–67. IEEE.
 </div>
-<div id="ref-donald2006longitudinal" class="csl-entry" role="listitem">
+<div id="ref-donald2006longitudinal" class="csl-entry" role="doc-biblioentry">
 Donald, Hedeker, and D Gibbons Robert. 2006. <span>“Longitudinal Data Analysis.”</span> <em>John Wiley &amp; Sons, Inc., Hoboken, NJ. DOI</em> 10: 0470036486.
 </div>
-<div id="ref-garson2013generalized" class="csl-entry" role="listitem">
+<div id="ref-garson2013generalized" class="csl-entry" role="doc-biblioentry">
 Garson, GD. 2013. <span>“Generalized Linear Models/Generalized Estimating Equations. 2013 Ed.”</span> <em>Asheboro, NC: Statistical Associates Publishers</em>.
 </div>
-<div id="ref-gayen2018generalized" class="csl-entry" role="listitem">
+<div id="ref-gayen2018generalized" class="csl-entry" role="doc-biblioentry">
 Gayen, Atin, and M Ashok Kumar. 2018. <span>“Generalized Estimating Equation for the Student-t Distributions.”</span> In <em>2018 IEEE International Symposium on Information Theory (ISIT)</em>, 571–75. IEEE.
 </div>
-<div id="ref-Hojsgaard2006" class="csl-entry" role="listitem">
+<div id="ref-Hojsgaard2006" class="csl-entry" role="doc-biblioentry">
 Halekoh, Ulrich, Søren Højsgaard, and Jun Yan. 2006. <span>“The r Package Geepack for Generalized Estimating Equations.”</span> <em>Journal of Statistical Software</em> 15/2: 1–11.
 </div>
-<div id="ref-hanley2003statistical" class="csl-entry" role="listitem">
+<div id="ref-hanley2003statistical" class="csl-entry" role="doc-biblioentry">
 Hanley, James A, Abdissa Negassa, Michael D deB Edwardes, and Janet E Forrester. 2003. <span>“Statistical Analysis of Correlated Data Using Generalized Estimating Equations: An Orientation.”</span> <em>American Journal of Epidemiology</em> 157 (4): 364–75.
 </div>
-<div id="ref-hardin2013generalized" class="csl-entry" role="listitem">
+<div id="ref-hardin2013generalized" class="csl-entry" role="doc-biblioentry">
 Hardin, J, and J Hilbe. 2013. <span>“Generalized Estimating Equations (Second.).”</span> New York: CRC Press.
 </div>
-<div id="ref-hin2009working" class="csl-entry" role="listitem">
+<div id="ref-hin2009working" class="csl-entry" role="doc-biblioentry">
 Hin, Lin-Yee, and You-Gan Wang. 2009. <span>“Working-Correlation-Structure Identification in Generalized Estimating Equations.”</span> <em>Statistics in Medicine</em> 28 (4): 642–58.
 </div>
-<div id="ref-homish2010analyzing" class="csl-entry" role="listitem">
+<div id="ref-homish2010analyzing" class="csl-entry" role="doc-biblioentry">
 Homish, Gregory G, Ellen P Edwards, Rina D Eiden, and Kenneth E Leonard. 2010. <span>“Analyzing Family Data: A GEE Approach for Substance Use Researchers.”</span> <em>Addictive Behaviors</em> 35 (6): 558–63.
 </div>
-<div id="ref-Huang2022" class="csl-entry" role="listitem">
+<div id="ref-Huang2022" class="csl-entry" role="doc-biblioentry">
 Huang, Francis L. 2022. <span>“Analyzing Cross-Sectionally Clustered Data Using Generalized Estimating Equations.”</span> <em>Journal of Educational and Behavioral Statistics</em> 47 (1): 101–25. <a href="https://doi.org/10.3102/10769986211017480">https://doi.org/10.3102/10769986211017480</a>.
 </div>
-<div id="ref-hubbard2010gee" class="csl-entry" role="listitem">
+<div id="ref-hubbard2010gee" class="csl-entry" role="doc-biblioentry">
 Hubbard, Alan E, Jennifer Ahern, Nancy L Fleischer, Mark Van der Laan, Sheri A Satariano, Nicholas Jewell, Tim Bruckner, and William A Satariano. 2010. <span>“To GEE or Not to GEE: Comparing Population Average and Mixed Models for Estimating the Associations Between Neighborhood Risk Factors and Health.”</span> <em>Epidemiology</em>, 467–74.
 </div>
-<div id="ref-huh2012optimizing" class="csl-entry" role="listitem">
+<div id="ref-huh2012optimizing" class="csl-entry" role="doc-biblioentry">
 Huh, David, Brian P Flaherty, and Jane M Simoni. 2012. <span>“Optimizing the Analysis of Adherence Interventions Using Logistic Generalized Estimating Equations.”</span> <em>AIDS and Behavior</em> 16: 422–31.
 </div>
-<div id="ref-ito2022grouped" class="csl-entry" role="listitem">
+<div id="ref-ito2022grouped" class="csl-entry" role="doc-biblioentry">
 Ito, Tsubasa, and Shonosuke Sugasawa. 2022. <span>“Grouped Generalized Estimating Equations for Longitudinal Data Analysis.”</span> <em>Biometrics</em>.
 </div>
-<div id="ref-koch1990categorical" class="csl-entry" role="listitem">
+<div id="ref-koch1990categorical" class="csl-entry" role="doc-biblioentry">
 Koch, Gary G, Gregory J Carr, Ingrid A Amara, Maura E Stokes, and Thomas J Uryniak. 1990. <span>“Categorical Data Analysis.”</span> <em>Statistical Methodology in the Pharmaceutical Sciences</em> 13: 389–470.
 </div>
-<div id="ref-koper2009generalized" class="csl-entry" role="listitem">
+<div id="ref-koper2009generalized" class="csl-entry" role="doc-biblioentry">
 Koper, Nicola, and Micheline Manseau. 2009. <span>“Generalized Estimating Equations and Generalized Linear Mixed-Effects Models for Modelling Resource Selection.”</span> <em>Journal of Applied Ecology</em>, 590–99.
 </div>
-<div id="ref-Liang1986longitudinal" class="csl-entry" role="listitem">
+<div id="ref-Liang1986longitudinal" class="csl-entry" role="doc-biblioentry">
 Liang, Kung-Yee, and Scott L Zeger. 1986. <span>“Longitudinal Data Analysis Using Generalized Linear Models.”</span> <em>Biometrika</em> 73 (1): 13–22.
 </div>
-<div id="ref-lin2011impact" class="csl-entry" role="listitem">
+<div id="ref-lin2011impact" class="csl-entry" role="doc-biblioentry">
 Lin, Meng-Lung, and Cheng-Hwang Perng. 2011. <span>“The Impact of Terrain on NDVI Dynamics of Corn Field Using Generalized Estimating Equations and Time-Series MODIS Images.”</span> In <em>2011 IEEE International Geoscience and Remote Sensing Symposium</em>, 3342–45. IEEE.
 </div>
-<div id="ref-luo2022conditional" class="csl-entry" role="listitem">
+<div id="ref-luo2022conditional" class="csl-entry" role="doc-biblioentry">
 Luo, Renwen, and Jianxin Pan. 2022. <span>“Conditional Generalized Estimating Equations of Mean-Variance-Correlation for Clustered Data.”</span> <em>Computational Statistics &amp; Data Analysis</em> 168: 107386.
 </div>
-<div id="ref-mcculloch1996introduction" class="csl-entry" role="listitem">
+<div id="ref-mcculloch1996introduction" class="csl-entry" role="doc-biblioentry">
 McCulloch, Charles E. 1996. <span>“An Introduction to Generalized Linear Mixed Models.”</span>
 </div>
-<div id="ref-Mcculloch2008" class="csl-entry" role="listitem">
+<div id="ref-Mcculloch2008" class="csl-entry" role="doc-biblioentry">
 McCulloch, Searle, C. 2008. <em>Generalized, Linear, and Mixed Models, 2nd Edition</em>. Wiley Series in Probability and Statistics. Wiley New Jersey. <a href="https://www.wiley.com/en-us/Generalized%2C+Linear%2C+and+Mixed+Models%2C+2nd+Edition-p-9780470073711">https://www.wiley.com/en-us/Generalized%2C+Linear%2C+and+Mixed+Models%2C+2nd+Edition-p-9780470073711</a>.
 </div>
-<div id="ref-nam2017factors" class="csl-entry" role="listitem">
+<div id="ref-nam2017factors" class="csl-entry" role="doc-biblioentry">
 Nam, Ju-Hyun, Myeong-Seob Lim, Hyun-Kyeong Choi, Jae-Yeop Kim, Sung-Kyeong Kim, Sung-Soo Oh, Sang-Baek Koh, and Hee-Tae Kang. 2017. <span>“Factors Increasing the Risk for Psychosocial Stress Among Korean Adults Living in Rural Areas: Using Generalized Estimating Equations and Mixed Models.”</span> <em>Annals of Occupational and Environmental Medicine</em> 29: 1–12.
 </div>
-<div id="ref-overall2004robustness" class="csl-entry" role="listitem">
+<div id="ref-overall2004robustness" class="csl-entry" role="doc-biblioentry">
 Overall, John E, and Scott Tonidandel. 2004. <span>“Robustness of Generalized Estimating Equation (GEE) Tests of Significance Against Misspecification of the Error Structure Model.”</span> <em>Biometrical Journal: Journal of Mathematical Methods in Biosciences</em> 46 (2): 203–13.
 </div>
-<div id="ref-paik1988repeated" class="csl-entry" role="listitem">
+<div id="ref-paik1988repeated" class="csl-entry" role="doc-biblioentry">
 Paik, Myunghee C. 1988. <span>“Repeated Measurement Analysis for Nonnormal Data in Small Samples.”</span> <em>Communications in Statistics-Simulation and Computation</em> 17 (4): 1155–71.
 </div>
-<div id="ref-pan2001akaike" class="csl-entry" role="listitem">
+<div id="ref-pan2001akaike" class="csl-entry" role="doc-biblioentry">
 Pan, Wei. 2001. <span>“Akaike’s Information Criterion in Generalized Estimating Equations.”</span> <em>Biometrics</em> 57 (1): 120–25.
 </div>
-<div id="ref-paradis2002analysis" class="csl-entry" role="listitem">
+<div id="ref-paradis2002analysis" class="csl-entry" role="doc-biblioentry">
 Paradis, Emmanuel, and Julien Claude. 2002. <span>“Analysis of Comparative Data Using Generalized Estimating Equations.”</span> <em>Journal of Theoretical Biology</em> 218 (2): 175–85.
 </div>
-<div id="ref-pekar2018generalized" class="csl-entry" role="listitem">
+<div id="ref-pekar2018generalized" class="csl-entry" role="doc-biblioentry">
 Pekár, Stano, and Marek Brabec. 2018. <span>“Generalized Estimating Equations: A Pragmatic and Flexible Approach to the Marginal GLM Modelling of Correlated Data in the Behavioural Sciences.”</span> <em>Ethology</em> 124 (2): 86–93.
 </div>
-<div id="ref-salazar2016simple" class="csl-entry" role="listitem">
+<div id="ref-salazar2016simple" class="csl-entry" role="doc-biblioentry">
 Salazar, Alejandro, Begoña Ojeda, Marı́a Dueñas, Fernando Fernández, and Inmaculada Failde. 2016. <span>“Simple Generalized Estimating Equations (GEEs) and Weighted Generalized Estimating Equations (WGEEs) in Longitudinal Studies with Dropouts: Guidelines and Implementation in r.”</span> <em>Statistics in Medicine</em> 35 (19): 3424–48.
 </div>
-<div id="ref-Schwartz2023" class="csl-entry" role="listitem">
+<div id="ref-Schwartz2023" class="csl-entry" role="doc-biblioentry">
 Schwartz S, Barrett T. 2023. <span>“Encyclopedia of Quantitative Methods in r, Vol 5, 15-19: GEE.”</span> 2023. <a href="https://cehs-research.github.io/eBook_multilevel/gee-binary-outcome-respiratory-illness.html">https://cehs-research.github.io/eBook_multilevel/gee-binary-outcome-respiratory-illness.html</a>.
 </div>
-<div id="ref-seals2016analysis" class="csl-entry" role="listitem">
+<div id="ref-seals2016analysis" class="csl-entry" role="doc-biblioentry">
 Seals, Samantha R, and Inmaculada B Aban. 2016. <span>“Analysis of the 17-Segment Left Ventricle Model Using Generalized Estimating Equations.”</span> <em>Journal of Nuclear Cardiology</em>. Springer.
 </div>
-<div id="ref-sepato2014generalized" class="csl-entry" role="listitem">
+<div id="ref-sepato2014generalized" class="csl-entry" role="doc-biblioentry">
 Sepato, Sandra Moepeng. 2014. <span>“Generalized Linear Mixed Model and Generalized Estimating Equation for Binary Longitudinal Data.”</span> PhD thesis, University of Pretoria.
 </div>
-<div id="ref-shao2023comparison" class="csl-entry" role="listitem">
+<div id="ref-shao2023comparison" class="csl-entry" role="doc-biblioentry">
 Shao, Sijing, Judith E Canner, Rebecca A Everett, Kidist Bekele-Maxwell, Alexis Kuerbis, Lyric Stephenson, Jennifer Menda, Jon Morgenstern, and HT Banks. 2023. <span>“A Comparison of Mathematical and Statistical Modeling with Longitudinal Data: An Application to Ecological Momentary Assessment of Behavior Change in Individuals with Alcohol Use Disorder.”</span> <em>Bulletin of Mathematical Biology</em> 85 (1): 5.
 </div>
-<div id="ref-PSU2023" class="csl-entry" role="listitem">
+<div id="ref-PSU2023" class="csl-entry" role="doc-biblioentry">
 Statistics, Penn State Department of. 2023. <span>“Analysis of Discrete Data, 12: Advanced Topics II.”</span> 2023. <a href="https://online.stat.psu.edu/stat504/lesson/12/12.2">https://online.stat.psu.edu/stat504/lesson/12/12.2</a>.
 </div>
-<div id="ref-wang2012penalized" class="csl-entry" role="listitem">
+<div id="ref-wang2012penalized" class="csl-entry" role="doc-biblioentry">
 Wang, Lan, Jianhui Zhou, and Annie Qu. 2012. <span>“Penalized Generalized Estimating Equations for High-Dimensional Longitudinal Data Analysis.”</span> <em>Biometrics</em> 68 (2): 353–60.
 </div>
-<div id="ref-wang2014generalized" class="csl-entry" role="listitem">
+<div id="ref-wang2014generalized" class="csl-entry" role="doc-biblioentry">
 Wang, Ming. 2014. <span>“Generalized Estimating Equations in Longitudinal Data Analysis: A Review and Recent Developments.”</span> <em>Advances in Statistics</em> 2014.
 </div>
-<div id="ref-warton2011regularized" class="csl-entry" role="listitem">
+<div id="ref-warton2011regularized" class="csl-entry" role="doc-biblioentry">
 Warton, David I. 2011. <span>“Regularized Sandwich Estimators for Analysis of High-Dimensional Data Using Generalized Estimating Equations.”</span> <em>Biometrics</em> 67 (1): 116–23.
 </div>
-<div id="ref-Yan2002" class="csl-entry" role="listitem">
+<div id="ref-Yan2002" class="csl-entry" role="doc-biblioentry">
 Yan, Jun. 2002. <span>“Geepack: Yet Another Package for Generalized Estimating Equations.”</span> <em>R-News</em> 2/3: 12–14.
 </div>
-<div id="ref-Yan2004" class="csl-entry" role="listitem">
+<div id="ref-Yan2004" class="csl-entry" role="doc-biblioentry">
 Yan, Jun, and Jason P. Fine. 2004. <span>“Estimating Equations for Association Structures.”</span> <em>Statistics in Medicine</em> 23: 859–80.
 </div>
-<div id="ref-zeileis2019package" class="csl-entry" role="listitem">
+<div id="ref-zeileis2019package" class="csl-entry" role="doc-biblioentry">
 Zeileis, Achim, Thomas Lumley, Susanne Berger, Nathaniel Graham, and Maintainer Achim Zeileis. 2019. <span>“Package <span>‘Sandwich’</span>.”</span> <em>R Package Version</em>, 2–5.
 </div>
 </div></section></div></main>
@@ -899,23 +932,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -927,24 +946,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -980,128 +982,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
