@@ -340,6 +340,7 @@ between the observations.
 ### Statistical Modeling
 
 #### GLM Model
+
 ```{r}
 # GLM Model
 glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
@@ -364,6 +365,7 @@ Center and age are decent predictors as well. Sex, on the other hand, is
 not a good predictor for our given responses.
 
 #### GLMM Model
+
 ```{r}
 # GLMM Model
 glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
@@ -395,9 +397,17 @@ individual variability to account for them [@shao2023comparison].
 
 #### GEE Model(s)
 
-GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. We have used the 'geepack' package in R to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a ‘poor’ or ‘good’ respiratory status.
+GEE models focus on the mean of the correlated observations that are
+within groups and don't focus on the distribution of the full data of
+the population [@Hojsgaard2006]. We have used the 'geepack' package in R
+to create four different models using the same geeglm() function and
+specifying different correlation structures as parameters within the
+function input. The binomial distribution is chosen for each model as
+well due to the binary response of a 'poor' or 'good' respiratory
+status.
 
-  1. **GEE with Independent Correlation Structure**
+1.  **GEE with Independent Correlation Structure**
+
 ```{r}
 # GEE with independent correlation structure
 gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -405,7 +415,8 @@ gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_independence)
 ```
 
-  2. **GEE with Exchangeable Correlation Structure**
+2.  **GEE with Exchangeable Correlation Structure**
+
 ```{r}
 # GEE with exchangeable correlation structure
 gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -413,7 +424,8 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_exchangeable)
 ```
 
- 3. **GEE with Unstructured Correlation Structure**
+3.  **GEE with Unstructured Correlation Structure**
+
 ```{r}
 # GEE with unstructured correlation structure
 gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -421,7 +433,8 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_unstructured)
 ```
 
- 4. **GEE with Auto-Regressive Order 1 Correlation Structure**
+4.  **GEE with Auto-Regressive Order 1 Correlation Structure**
+
 ```{r}
 # GEE with Auto-Regressive Order 1 correlation structure
 gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
@@ -437,28 +450,31 @@ and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
 #### Respiratory Data GEE Formula
+
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
 
-
 #### Plot regarding random effects of GEE Models
+
 ```{r}
 plot(ggemmeans(gee_independence, terms = c("center", "treat"),
                condition = c(outcome = "poor"))) + 
   ggplot2::ggtitle("GEE Effect plot")
 ```
 
-- Do we want to keep this?
+-   Do we want to keep this?
 
-#### QIC (Quasi Information Criterion) for Model Selection**
+#### QIC (Quasi Information Criterion) for Model Selection\*\*
+
 ```{r}
 # Displays table of QIC between all 4 different types of GEE models with different
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
 
-- Explain here what the QIC is demonstrating for model selection in the case of GEE models
+-   Explain here what the QIC is demonstrating for model selection in
+    the case of GEE models
 
 ### Inference
 
