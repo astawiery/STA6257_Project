@@ -181,8 +181,9 @@ above. One valid method used to determine model selection has been
 proposed by Shults and Chaganty [@wang2012penalized] as to determine the
 structure based on the generalized error sum of squares given by the
 following equation: $$
-  ESS($\alpha$,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-$$. In addition to the method by Schuts and Chaganty, Wang discusses
+  ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
+$$ 
+In addition to the method by Schuts and Chaganty, Wang discusses
 several other methods for correlation structure selection and cites many
 other methods available. [@wang2014generalized]
 
@@ -208,7 +209,8 @@ study of 111 patients receiving treatment for a respiratory illness.
 | visit    | id of visit                    |
 | outcome  | respiratory status at visit    |
 
-: {tbl-colwidths="\[20,35\]"}
+: Figure 3: Respiratory Variable Summary
+ {tbl-colwidths="\[20,35\]"}
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ######## loading packages ########
@@ -237,11 +239,11 @@ ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
   scale_color_discrete("Respiratory Health",labels=c("Poor","Good")) +
   facet_grid(.~id) +
-  labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
+  labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
 ```
 
-The above graphic is displaying a small sample from the 'respiratory'
+Figure 4, the above graphic, is displaying a small sample from the 'respiratory'
 data. The given data set is a study with longitudinal data of repeated
 measures with a binary outcome. There are four measures, or visits,
 performed on each individual. Each box with 1 through 4 on the x-axis
@@ -280,14 +282,14 @@ resp_transformed %>%
                     "Visit Two" = visit_2, 
                     "Visit Three" = visit_3, 
                     "Visit Four" = visit_4, 
-                    caption = "Respiratory Outcome Over Time",
+                    caption = "Figure 5: Respiratory Outcome Over Time",
                     output = "markdown",
                     na.rm = FALSE,
                     total = TRUE,
                     test = TRUE)
 ```
 
-Table "Respiratory Outcome Over Time" shows a breakdown of visits and
+Figure 5 "Respiratory Outcome Over Time" shows a breakdown of visits and
 the corresponding statistics. N is the total number of patients in the
 study, "A" represents the treatment, and "P" represents the placebo.
 
@@ -304,7 +306,8 @@ resp_transformed %>%
   geom_smooth() +
   theme_bw() +
   labs(x = "Age in Years",
-       y = "Number of Visits out of Four, with 'Poor' Respiration")
+       y = "Number of Visits out of Four, with 'Poor' Respiration",
+       title = "Figure 6: 'Poor' Respiration Outcomes for Total Visits")
 ```
 
 This visualization is focused on the age parameter in terms of outcome
@@ -321,10 +324,11 @@ resp_transformed %>%
   dplyr::select(starts_with("visit")) %>% 
   dplyr::mutate_all(function(x) x == "1") %>% 
   cor() %>% 
-  corrplot::corrplot()
+  corrplot::corrplot(title = "Figure 7: Correlation Matrix for Repeated Visits",
+                     mar=c(0,0,2,0))
 ```
 
-The preceding graphic shows the correlation matrix between repeated
+The preceding graphic, figure 7, shows the correlation matrix between repeated
 observations. It's noted that there is a medium to high correlation
 between the observations. This is showing the necessity for a
 statistical model that can account for these levels of correlation
@@ -441,7 +445,7 @@ possible correlation structures make it a good choice for modeling.
 
 ## References
 
-## Literature Review
+### Literature Review
 
 [Generalized Estimating Equations Literature
 Review](https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing)
