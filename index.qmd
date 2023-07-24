@@ -421,13 +421,12 @@ statistical inference of the model's output. [@seals2016analysis] Hypothesis tes
 
 ### Conclusion
 
-GEE is a valid choice of statistical modeling to be used in the case
-that a standard regression model is not applicable due to the
-between-observation relationship within data. This directly applies to
-research cases and other applications that utilize clustered or
-longitudinal data. If a GEE model is not used and the between-segment
-correlation is ignored, then there may be an incorrect conclusion of
-significant results, or type I errors. [@seals2016analysis]
+GEE is a valid choice of statistical modeling to be used in cases when assumptions for linear regression models and generalized linear models do not hold such as datasets with  non-normal data, dependence in observations, longitudinal or panel data, clustered or correlated data. In addition, when there are large amounts of higher dimensional data and finding the likelihood functions is very difficult computationally, GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations. GEE can be used for continuous, binary or count responses.
+
+Analyzing longitudinal datasets with repeated observations is one of the biggest applications for GEE and it is used extensively in studies in the sciences and health services. If a GEE model is not used in these cases and the between-observation correlation is ignored, then there may be an incorrect conclusion of significant results, or type I errors. [@seals2016analysis] GEE handles the correlation by using defined correlation structures as part of its process to find parameter estimates.
+
+The 'geepack' package in R was used to calculated GEE models to analyze a longitudinal respiratory dataset that exhibited correlation between individual patient observations. All (4) available correlation structures were used to determine which structure would yield the best GEE model and based on QIC, the unstructured correlation structure was the best. There are a few other packages available in R to create GEE models not discussed in this review GEE. They are the 'gee' package [@Carey2022] and 'multgee' pagkage specifically for multinomial responses [@touloumis2014r].
+
 
 GEE uses quasilikelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
@@ -438,64 +437,7 @@ independent or a distribution specified combined with the fact that the
 models are based on the first moment only and use of one several
 possible correlation structures make it a good choice for modeling.
 
-There are a few other packages available in R to create GEE models not discussed in this review GEE. They are the 'gee' package [@Carey2022] and 'multgee' pagkage specifically for multinomial responses [@touloumis2014r].
 
-
-##### GLM Model
-
-```{r}
-# GLM Model
-glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
-          family = binomial())
-summary(glm_example)
-```
-
-GLM, shown as the glm() function above, does not account for the between
-segment correlations in longitudinal data. We are accounting for the
-distribution for this model (where that is defined in the family =
-binomial() parameter), but it is still not sufficient to account for the
-between-segment correlation. In this case we are specifying that the
-model is a logistic regression model.
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to predict the response variable value of "1" for outcome.
-This would indicate a 'good' respiratory status.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment and baseline are good predictors for respiratory outcome.
-Center and age are decent predictors as well. Sex, on the other hand, is
-not a good predictor for our given responses.
-
-##### GLMM Model
-
-```{r}
-# GLMM Model
-glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
-                 data = respiratory, family = binomial())
-summary(glmm_example)
-```
-
-GLMM, or generalized linear mixed effect model, is also used here to
-determine how the predictor variables affect the respiratory status
-outcome. A GLMM may be used when there are multiple levels of
-observations in the data and the end goal is to further investigate the
-relationship between variables within a level [@shao2023comparison]. As
-an extension of GLM, GLMM uses interactions between time and regressor
-variables to determine the change of a response variable over time. GLMM
-is an appropriate method of examining longitudinal data in the case that
-both within-patient and between-patient differences are the research's
-end goal [@shao2023comparison].
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to determine how these variables affect the likelihood of
-a 'poor' outcome versus a 'good' outcome within a patient's visit.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment, center, and baseline are good predictors for respiratory
-outcome. Age and sex are not good indicators in this model for
-predicting respiratory outcomes. Is it important to note that there are
-no listed random effects which indicates that there is not sufficient
-individual variability to account for them [@shao2023comparison].
 
 ## References
 
