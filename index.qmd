@@ -112,9 +112,9 @@ $U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
 that when solved will give estimates of $\beta_i$ used in the generated
 models. In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and
 ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$,
-$V_i = \phi{A_i}^{1/2}R_i(\alpha){A_i}^{1/2}$ , $A_i$ is a diagonal
+$V_i = \phi{A_i}^{1/2}R_i($\alpha$){A_i}^{1/2}$ , $A_i$ is a diagonal
 matrix with elements that are known variance functions of $\mu_{ij}$
-times a scaling parameter $\phi$, and $R_i(\alpha)$ is the correlation
+times a scaling parameter $\phi$, and $R_i($\alpha$)$ is the correlation
 structure. [@wang2014generalized]
 
 GEE employ a logistic regression model created using the 'geepack'
@@ -181,7 +181,7 @@ above. One valid method used to determine model selection has been
 proposed by Shults and Chaganty (@wang2012penalized) as to determine the
 structure based on the generalized error sum of squares given by the
 following equation: $$
-  ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
+  ESS($\alpha$,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
 $$. In addition to the method by Schuts and Chaganty, Wang discusses
 several other methods for correlation structure selection and cites many
 other methods available. [@wang2014generalized]
@@ -361,7 +361,7 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_exchangeable)
 ```
 
-The GEE model summary with an exchangeable correlation structure specified shows that there is one estimated correlation parameter. One again referencing back to Figure 2, it’s noted that the estimator parameter (\alpha) is contained in the working correlation structure. The \alpha value in the summary shows that there is an estimated 0.329 correlation value between visits for patients, or a 0.329 correlation value between observations in a cluster.
+The GEE model summary with an exchangeable correlation structure specified shows that there is one estimated correlation parameter. One again referencing back to Figure 2, it’s noted that the estimator parameter ($\alpha$) is contained in the working correlation structure. The $\alpha$ value in the summary shows that there is an estimated 0.329 correlation value between visits for patients, or a 0.329 correlation value between observations in a cluster.
 
 
 3.  **GEE with Unstructured Correlation Structure**
@@ -373,14 +373,14 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_unstructured)
 ```
 
-The GEE model summary with an unstructured correlation structure specified shows that there are six individual estimated correlation parameters for the between observation correlation. Figure 2 shows that the \alpha values in an unstructured correlation structure is a set of the pairwise estimated correlation parameter values. The \alpha values correspond to a specific location within the working correlation matrix.
+The GEE model summary with an unstructured correlation structure specified shows that there are six individual estimated correlation parameters for the between observation correlation. Figure 2 shows that the $\alpha$ values in an unstructured correlation structure is a set of the pairwise estimated correlation parameter values. The $\alpha$ values correspond to a specific location within the working correlation matrix.
 
 
 ```{r}
 gee_unstructured$geese$alpha
 ```
 
-For this model summary, the \alpha values above demonstrate the estimated correlation value between observations, where the ‘alpha.1:2’ value of 0.321 equates to the correlation value between observations of visit 1 and visit 2.
+For this model summary, the $\alpha$ values above demonstrate the estimated correlation value between observations, where the ‘alpha.1:2’ value of 0.321 equates to the correlation value between observations of visit 1 and visit 2.
 
 4.  **GEE with Auto-Regressive Order 1 Correlation Structure**
 
@@ -391,7 +391,7 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
 summary(gee_ar1)
 ```
 
-The GEE model summary with an autoregressive (AR1) correlation structure specified shows that there is one estimated correlation parameter for the between observation correlation. Figure 2 shows that the \alpha values in an AR1 correlation structure is two values where one value is \alpha and the other value is \alpha{2}. The \alpha values once again correspond to a specific location within the working correlation matrix. 
+The GEE model summary with an autoregressive (AR1) correlation structure specified shows that there is one estimated correlation parameter for the between observation correlation. Figure 2 shows that the $\alpha$ values in an AR1 correlation structure is two values where one value is $\alpha$ and the other value is $\alpha{2}$. The $\alpha$ values once again correspond to a specific location within the working correlation matrix. 
 
 ### Model Assessment
 
@@ -403,14 +403,6 @@ The following formula is the logistic regression model unique to the respiratory
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
-
-#### Plot regarding random effects of GEE Models
-
-```{r}
-plot(ggemmeans(gee_independence, terms = c("center", "treat"),
-               condition = c(outcome = "poor"))) + 
-  ggplot2::ggtitle("GEE Effect plot")
-```
 
 #### QIC (Quasi Information Criterion) for Model Selection\*\*
 
