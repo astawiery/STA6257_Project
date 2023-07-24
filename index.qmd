@@ -178,7 +178,7 @@ number of clusters is less than 30 (as recommended by
 Correlation structure selection is determined through various methods
 and is not limited to the structures shown in the correlation table
 above. One valid method used to determine model selection has been
-proposed by Shults and Chaganty (@wang2012penalized) as to determine the
+proposed by Shults and Chaganty [@wang2012penalized] as to determine the
 structure based on the generalized error sum of squares given by the
 following equation: $$
   ESS($\alpha$,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
