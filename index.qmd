@@ -69,21 +69,13 @@ for continuous, binary or count outcomes.
 
 ### Iterative Algorithm
 
-GEE uses an iterative algorithm, typically based on the Newton-Raphson
-method, to update the parameter estimates. The process involves solving
-the estimating equations iteratively until convergence is
-reached.[@wang2012penalized] It is an asymptotic approach to modeling
-versus a least squares regression approach.{this needs further sources,
-read through docs again}
+GEE uses an iterative algorithm after using initial estimates for regression coefficients, $\beta_i$, to update the parameter estimates. Software packages, such as 'geepack' package in R handle the iteration process. The iterative process works until there is convergence to stable estimates. [@Hojsgaard2006] [@Liang1986longitudinal] 
 
 ### Data Structure
 
 GEE is designed for analyzing correlated data, such as longitudinal or
 panel data in which the data is organized into clusters, where each
-cluster represents a group of related observations. The assumption of
-independent observations may not be accurate. A GEE analysis of a
-dataset with longitudinal data with repeated observations per individual
-will be shown using the respiratory dataset available through the
+cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the
 'geepack' package in R.
 
 ### Model Specification
@@ -96,8 +88,7 @@ nature of the data.[@gayen2018generalized] Models can be created for
 continuous, binary or count outcomes. The table below shows the
 extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
 
-![](Model_Comparison_Table.jpg)
-Table 1 Information in table summarized from [@Mcculloch2008]
+![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
 According the Liang and Zeger, the method of GEE, longitudinal data
 sets, are comprised of an outcome variable, $y_{it}$, and
@@ -121,9 +112,9 @@ $U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
 that when solved will give estimates of $\beta_i$ used in the generated
 models. In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and
 ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$,
-$V_i = \phi{A_i}^{1/2}R_i(\alpha){A_i}^{1/2}$ , $A_i$ is a diagonal
+$V_i = \phi{A_i}^{1/2}R_i($\alpha$){A_i}^{1/2}$ , $A_i$ is a diagonal
 matrix with elements that are known variance functions of $\mu_{ij}$
-times a scaling parameter $\phi$, and $R_i(\alpha)$ is the correlation
+times a scaling parameter $\phi$, and $R_i($\alpha$)$ is the correlation
 structure. [@wang2014generalized]
 
 GEE employ a logistic regression model created using the 'geepack'
@@ -132,7 +123,8 @@ structure types in the paragraph below), family type of binomial for
 discrete outcomes and would yield model of
 
 General mathematical formula for multivariate GEE using the logit link
-function for binary outcomes: $$
+function for binary outcomes: 
+$$
  \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
 $$
 
@@ -153,7 +145,7 @@ the assumed relationship among the correlated observations
 paperare exchangeable, autoregressive (AR1), unstructured, and
 independent.
 
-![Figure 1: Correlation Structures Comparison Table
+![Figure 2: Correlation Structures Comparison Table
 [@wang2014generalized]](corr-table.jpg)
 
 The independent correlation structure is used when the assumption
@@ -186,11 +178,12 @@ number of clusters is less than 30 (as recommended by
 Correlation structure selection is determined through various methods
 and is not limited to the structures shown in the correlation table
 above. One valid method used to determine model selection has been
-proposed by Shults and Chaganty (@wang2012penalized) as to determine the
+proposed by Shults and Chaganty [@wang2012penalized] as to determine the
 structure based on the generalized error sum of squares given by the
 following equation: $$
   ESS(\alpha,\beta) = \sum_{i=1}^{K}{(Y_i - \mu _i)}'{V_{i}}^{-1}(Y_i - \mu _i)
-$$. In addition to the method by Schuts and Chaganty, Wang discusses
+$$ 
+In addition to the method by Schuts and Chaganty, Wang discusses
 several other methods for correlation structure selection and cites many
 other methods available. [@wang2014generalized]
 
@@ -216,7 +209,8 @@ study of 111 patients receiving treatment for a respiratory illness.
 | visit    | id of visit                    |
 | outcome  | respiratory status at visit    |
 
-: {tbl-colwidths="\[20,35\]"}
+: Figure 3: Respiratory Variable Summary
+ {tbl-colwidths="\[20,35\]"}
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ######## loading packages ########
@@ -245,11 +239,11 @@ ggplot(displayData, aes(x=visit, y=treat, color=factor(outcome))) +
   scale_x_continuous(breaks=c(1,2,3,4)) +
   scale_color_discrete("Respiratory Health",labels=c("Poor","Good")) +
   facet_grid(.~id) +
-  labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Respiratory Treatment Outcomes Over (4) Patient Visits")+
+  labs(x = "Visit Number/Patient", y = "Treatent, 'A' = Treatment, 'P' = Placebo",title = "Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits")+
   theme_bw()
 ```
 
-The above graphic is displaying a small sample from the 'respiratory'
+Figure 4, the above graphic, is displaying a small sample from the 'respiratory'
 data. The given data set is a study with longitudinal data of repeated
 measures with a binary outcome. There are four measures, or visits,
 performed on each individual. Each box with 1 through 4 on the x-axis
@@ -288,14 +282,14 @@ resp_transformed %>%
                     "Visit Two" = visit_2, 
                     "Visit Three" = visit_3, 
                     "Visit Four" = visit_4, 
-                    caption = "Respiratory Outcome Over Time",
+                    caption = "Figure 5: Respiratory Outcome Over Time",
                     output = "markdown",
                     na.rm = FALSE,
                     total = TRUE,
                     test = TRUE)
 ```
 
-Table "Respiratory Outcome Over Time" shows a breakdown of visits and
+Figure 5 "Respiratory Outcome Over Time" shows a breakdown of visits and
 the corresponding statistics. N is the total number of patients in the
 study, "A" represents the treatment, and "P" represents the placebo.
 
@@ -312,7 +306,8 @@ resp_transformed %>%
   geom_smooth() +
   theme_bw() +
   labs(x = "Age in Years",
-       y = "Number of Visits out of Four, with 'Poor' Respiration")
+       y = "Number of Visits out of Four, with 'Poor' Respiration",
+       title = "Figure 6: 'Poor' Respiration Outcomes for Total Visits")
 ```
 
 This visualization is focused on the age parameter in terms of outcome
@@ -329,10 +324,11 @@ resp_transformed %>%
   dplyr::select(starts_with("visit")) %>% 
   dplyr::mutate_all(function(x) x == "1") %>% 
   cor() %>% 
-  corrplot::corrplot()
+  corrplot::corrplot(title = "Figure 7: Correlation Matrix for Repeated Visits",
+                     mar=c(0,0,2,0))
 ```
 
-The preceding graphic shows the correlation matrix between repeated
+The preceding graphic, figure 7, shows the correlation matrix between repeated
 observations. It's noted that there is a medium to high correlation
 between the observations. This is showing the necessity for a
 statistical model that can account for these levels of correlation
@@ -340,66 +336,13 @@ between the observations.
 
 ### Statistical Modeling
 
-#### GLM Model
-
-```{r}
-# GLM Model
-glm_example <- glm(outcome ~ center + treat + age + baseline + sex, data=respiratory,                
-          family = binomial())
-summary(glm_example)
-```
-
-GLM, shown as the glm() function above, does not account for the between
-segment correlations in longitudinal data. We are accounting for the
-distribution for this model (where that is defined in the family =
-binomial() parameter), but it is still not sufficient to account for the
-between-segment correlation. In this case we are specifying that the
-model is a logistic regression model.
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to predict the response variable value of "1" for outcome.
-This would indicate a 'good' respiratory status.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment and baseline are good predictors for respiratory outcome.
-Center and age are decent predictors as well. Sex, on the other hand, is
-not a good predictor for our given responses.
-
-#### GLMM Model
-
-```{r}
-# GLMM Model
-glmm_example <- glmmTMB(outcome ~ center + treat + age + baseline + sex + (1 | id),
-                 data = respiratory, family = binomial())
-summary(glmm_example)
-```
-
-GLMM, or generalized linear mixed effect model, is also used here to
-determine how the predictor variables affect the respiratory status
-outcome. A GLMM may be used when there are multiple levels of
-observations in the data and the end goal is to further investigate the
-relationship between variables within a level [@shao2023comparison]. As
-an extension of GLM, GLMM uses interactions between time and regressor
-variables to determine the change of a response variable over time. GLMM
-is an appropriate method of examining longitudinal data in the case that
-both within-patient and between-patient differences are the research's
-end goal [@shao2023comparison].
-
-Using the variables center, treatment, age, baseline, and sex, the model
-is attempting to determine how these variables affect the likelihood of
-a 'poor' outcome versus a 'good' outcome within a patient's visit.
-
-The p-values found in the coefficients table of the summary indicate
-that treatment, center, and baseline are good predictors for respiratory
-outcome. Age and sex are not good indicators in this model for
-predicting respiratory outcomes. Is it important to note that there are
-no listed random effects which indicates that there is not sufficient
-individual variability to account for them [@shao2023comparison].
 
 #### GEE Model(s)
 
-GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. The 'geepack' package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the
-function input. The binomial distribution is chosen for each model as well due to the binary response of a 'poor' or 'good' respiratory status.
+GEE models focus on the mean of the correlated observations that are within groups and don't focus on the distribution of the full data of the population [@Hojsgaard2006]. GEE modeling requires parameters in the form of distribution of the response variable, the link function, the regressor variables, and the desired correlation structure. The various types of correlation structures were discussed in the previous methodology section; our example focuses on independent, exchangeable, unstructured, and auto-regressive order 1 correlation structures. The distribution selected for a model is based on the distribution of the response variable [@seals2016analysis] and may be a value such as binomial, Poisson, or Gaussian [@gayen2018generalized]. The link function parameter is contingent on the corresponding distribution where the distribution of the response variable dictates the model to be used [@agresti2015foundations].
+
+The 'geepack' package in R was used to create four different models using the same geeglm() function and specifying different correlation structures as parameters within the function input. The binomial distribution is chosen for each model as well due to the binary response of a 'poor' or 'good' respiratory status. The canonical link function used for binary response data is 'logit' or logistic regression [@agresti2015foundations]. This link function is inherently used in our models without direct specification.
+
 
 1.  **GEE with Independent Correlation Structure**
 
@@ -410,6 +353,9 @@ gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_independence)
 ```
 
+The GEE model summary with an independent correlation structure specified shows that there are no estimated correlation parameters. Referencing back to Figure 2, it’s noted that the estimator column for an independent correlation structure is empty. This is because the independent correlation structure is assuming there is no correlation between the observations within a cluster [@seals2016analysis].
+
+
 2.  **GEE with Exchangeable Correlation Structure**
 
 ```{r}
@@ -418,6 +364,9 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
                   family = binomial(), corstr="exchangeable")
 summary(gee_exchangeable)
 ```
+
+The GEE model summary with an exchangeable correlation structure specified shows that there is one estimated correlation parameter. One again referencing back to Figure 2, it’s noted that the estimator parameter ($\alpha$) is contained in the working correlation structure. The $\alpha$ value in the summary shows that there is an estimated 0.329 correlation value between visits for patients, or a 0.329 correlation value between observations in a cluster.
+
 
 3.  **GEE with Unstructured Correlation Structure**
 
@@ -428,6 +377,15 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_unstructured)
 ```
 
+The GEE model summary with an unstructured correlation structure specified shows that there are six individual estimated correlation parameters for the between observation correlation. Figure 2 shows that the $\alpha$ values in an unstructured correlation structure is a set of the pairwise estimated correlation parameter values. The $\alpha$ values correspond to a specific location within the working correlation matrix.
+
+
+```{r}
+gee_unstructured$geese$alpha
+```
+
+For this model summary, the $\alpha$ values above demonstrate the estimated correlation value between observations, where the ‘alpha.1:2’ value of 0.321 equates to the correlation value between observations of visit 1 and visit 2.
+
 4.  **GEE with Auto-Regressive Order 1 Correlation Structure**
 
 ```{r}
@@ -437,26 +395,18 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
 summary(gee_ar1)
 ```
 
+The GEE model summary with an autoregressive (AR1) correlation structure specified shows that there is one estimated correlation parameter for the between observation correlation. Figure 2 shows that the $\alpha$ values in an AR1 correlation structure is two values where one value is $\alpha$ and the other value is $\alpha{2}$. The $\alpha$ values once again correspond to a specific location within the working correlation matrix. 
+
 ### Model Assessment
 
 After fitting the GEE model, various model diagnostics can be performed to assess the model's goodness of fit, such as model comparison criteria and assessing the adequacy of the assumed correlation structure.
 [@shao2023comparison]
 
-#### Respiratory Data GEE Formula
+The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model. Using the variables center, treatment, age, baseline, and sex, the model is attempting to determine how these variables affect the likelihood of a ‘poor’ outcome versus a ‘good’ outcome within a patient’s visit. Note that all model analyses are completed on the full model and we have taken no actions to reduce the models, whether through stepwise fashion or other methods. There was no determination to remove statistically insignificant regressor variables.
 
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
-
-#### Plot regarding random effects of GEE Models
-
-```{r}
-plot(ggemmeans(gee_independence, terms = c("center", "treat"),
-               condition = c(outcome = "poor"))) + 
-  ggplot2::ggtitle("GEE Effect plot")
-```
-
--   Do we want to keep this?
 
 #### QIC (Quasi Information Criterion) for Model Selection\*\*
 
@@ -475,17 +425,12 @@ statistical inference of the model's output. [@seals2016analysis] Hypothesis tes
 
 ### Conclusion
 
-Comparison of model results:
+GEE is a valid choice of statistical modeling to be used in cases when assumptions for linear regression models and generalized linear models do not hold such as datasets with  non-normal data, dependence in observations, longitudinal or panel data, clustered or correlated data. In addition, when there are large amounts of higher dimensional data and finding the likelihood functions is very difficult computationally, GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations. GEE can be used for continuous, binary or count responses. 
 
-<insert more here>
+Analyzing longitudinal datasets with repeated observations is one of the biggest applications for GEE and it is used extensively in studies in the sciences and health services. If a GEE model is not used in these cases and the between-observation correlation is ignored, then there may be an incorrect conclusion of significant results, or type I errors. [@seals2016analysis] GEE handles the correlation by using defined correlation structures as part of its process to find parameter estimates and even if the correlation structure chosen is not correct, the estimates are still consistent although standard errors may be not correct which is a potential drawback of the method. 
 
-GEE is a valid choice of statistical modeling to be used in the case
-that a standard regression model is not applicable due to the
-between-observation relationship within data. This directly applies to
-research cases and other applications that utilize clustered or
-longitudinal data. If a GEE model is not used and the between-segment
-correlation is ignored, then there may be an incorrect conclusion of
-significant results, or type I errors. [@seals2016analysis]
+The 'geepack' package in R was used to calculated GEE models to analyze a longitudinal respiratory dataset that exhibited correlation between individual patient observations. All (4) available correlation structures were used to determine which structure would yield the best GEE model and based on QIC, the unstructured correlation structure was the best. There are a few other packages available in R to create GEE models not discussed in this review GEE. They are the 'gee' package [@Carey2022] and 'multgee' pagkage specifically for multinomial responses [@touloumis2014r].
+
 
 GEE uses quasilikelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
@@ -496,9 +441,11 @@ independent or a distribution specified combined with the fact that the
 models are based on the first moment only and use of one several
 possible correlation structures make it a good choice for modeling.
 
+
+
 ## References
 
-## Literature Review
+### Literature Review
 
 [Generalized Estimating Equations Literature
 Review](https://docs.google.com/document/d/1h3yuMl3h2s_q4uzmoouksLEmx3fMcz9ML1uDiyCilMI/edit?usp=sharing)
