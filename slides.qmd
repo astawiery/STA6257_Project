@@ -1,0 +1,196 @@
+---
+title: "Generalized Estimating Equations"
+author: "Dosch, Muller, Stawiery"
+date:  "July 31, 2023"
+format: revealjs
+editor: visual
+---
+
+## Introduction
+
+Generalized Estimating Equations (GEE) is a statistical methodology in a class of models that model the mean of an outcome as function of predictor variables commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials [@Mcculloch2008]. The method was first introduced by Liang and Zeger in a paper in 1986. [@Liang1986longitudinal]. The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
+
+Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies and GEE handles the dependence between observations.
+
+## Methods
+
+-   Estimating Equations
+
+-   Iterative Algorithm
+
+-   Data Structure
+
+-   Model Specification
+
+-   Correlation Structures
+
+## Methods - Estimating Equations
+
+GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the 'geepack' package in R.
+
+## Methods - Iterative Algorithm
+
+GEE uses an iterative algorithm after using initial estimates for regression coefficients, $\beta_i$, to update the parameter estimates. Software packages, such as 'geepack' package in R handle the iteration process. The iterative process works until there is convergence to stable estimates. [@Hojsgaard2006] [@Liang1986longitudinal]
+
+## Methods - Data Structure
+
+GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the 'geepack' package in R.
+
+## Methods - Model Specification
+
+GEE is an extension of generalized linear models (GLM) and uses that framework to specify the relationship between the response variable and the regressor variables. [@shao2023comparison] The choice of the link function and the distribution of the response variable depends on the nature of the data.[@gayen2018generalized] Models can be created for continuous, binary or count outcomes. The table below shows the extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
+
+## Methodology - Model Specification
+
+![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
+
+
+![](Formula_GEE_Multivariate_Logit.jpg)
+
+## Methods - Correlation Structures
+
+GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations [@seals2016analysis].
+
+-   [Independent]{.underline} - Assumption that all individual observations are independent
+-   [Exchangeable]{.underline} - Assumption there is equality of time between observations
+-   [Autoregressive (AR1]{.underline}) - Assumption that there are more than one set of equality of times between observations
+-   [Unstructured]{.underline} - Most general and takes into account all possible times possible between observations
+
+## Methods - Correlation Structures
+
+![Figure 2: Correlation Structures Comparison Table [@wang2014generalized]](corr-table.jpg)
+
+## Analysis and Results
+
+-   Data and Visualization In this review of GEE, the 'geepack' package for R with a respiratory dataset included was used to showcase an example. [@Hojsgaard2006]
+
+![Figure 3: Respiratory Variable Summary
+[@Hojsgaard2006]](Respiratory_Dataset_Description.jpg)
+
+## Analysis and Results: Sample Data Plot
+
+![Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits
+[@Hojsgaard2006]](Figure_4_Respiratory_Treatment_Outcomes.jpg)
+
+
+## Analysis and Results: Outcomes Over Time
+
+![](Figure_5_Respiratory_Outcome_Over_Time.jpg)
+
+
+## Analysis and Results: 'Poor' Outcomes for Total Visits
+
+![](Poor_Outcomes.jpg)
+
+## Analysis and Results: Correlation Matrix For Repeated Visits
+
+![](Figure_7_Correlation_Matrix.jpg)
+
+
+
+
+## Statistical Modeling
+
+-   GEE Model(s)
+
+-   Model Assessment
+
+-   QIC (Quasi Information Criterion) for Model
+
+-   Inference
+
+## Statistical Modeling: GG w/Independent Correlation Structure
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(geepack)
+library(lme4)   # For fitting linear mixed models
+library(glmmTMB)  # For fitting GLMMs with different distributions
+library(ggeffects)
+library(dplyr)
+library(ggplot2)
+library(furniture)
+
+# GEE with independent correlation structure
+gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="independence")
+summary(gee_independence)
+```
+
+## Statistical Modeling: GG w/Exchangeable Correlation Structure
+
+```{r}
+# GEE with exchangeable correlation structure
+gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="exchangeable")
+summary(gee_exchangeable)
+
+```
+
+## Statistical Modeling: GG w/Autoregressive Correlation Structure
+
+```{r}
+# GEE with Auto-Regressive Order 1 correlation structure
+gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="ar1")
+summary(gee_ar1)
+
+```
+
+
+## Statistical Modeling: GG w/Unstructured Correlation Structure
+
+```{r}
+# GEE with unstructured correlation structure
+gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="unstructured")
+summary(gee_unstructured)
+gee_unstructured$geese$alpha
+
+```
+
+## Statistical Modeling: Model Assessment
+
+The following formula is the logistic regression model unique to the
+respiratory data set. This formula was translated into the four
+different models above with a different correlation structure specified
+per model.
+
+
+$$
+ \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
+$$
+
+## Statistical Modeling: QIC for Model Selection
+
+```{r}
+# Displays table of QIC between all 4 different types of GEE models with different
+# correlation structure
+QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
+
+```
+
+
+## Statistical Modeling: Inference
+
+GEE provides robust standard errors for the estimated regression
+parameters, taking into account the correlation structure. When
+comparing multiple different techniques, it's important to consider the
+correlation between observations in order to perform accurate
+statistical inference of the model's output. [@seals2016analysis]
+Hypothesis tests and confidence intervals can be constructed to assess
+the statistical significance of the variables and make inferences about
+the population-level effects. [@shao2023comparison]
+
+## Conclusion
+
+GEE is a valid choice of statistical modeling to be used in cases when
+assumptions for linear regression models and generalized linear models
+do not hold such as datasets with non-normal data, dependence in
+observations, longitudinal or panel data, clustered or correlated data.
+In addition, when there are large amounts of higher dimensional data and
+finding the likelihood functions is very difficult computationally, GEE
+provides an easy alternative and gives stable, consistent estimates for
+parameters without the need for the possibly intense likelihood
+calculations. GEE can be used for continuous, binary or count responses.
