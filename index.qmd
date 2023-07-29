@@ -149,9 +149,8 @@ and log and $\mu^2,\mu>0$ for gamma families. [@Hojsgaard2006]
 GEE allows for flexible modeling of the correlation structure within
 clusters. A working correlation structure is specified, which represents
 the assumed relationship among the correlated observations
-[@seals2016analysis]. The correlation structures discussed in this
-paper are exchangeable, autoregressive (AR1), unstructured, and
-independent.
+[@seals2016analysis]. The correlation structures discussed in this paper
+are exchangeable, autoregressive (AR1), unstructured, and independent.
 
 ![Figure 2: Correlation Structures Comparison Table
 [@wang2014generalized]](corr-table.jpg)
