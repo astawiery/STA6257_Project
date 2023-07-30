@@ -24,31 +24,13 @@ Analysis of longitudinal data has inherent problems with independence involving 
 
 -   Correlation Structures
 
-## Methods - Estimating Equations
-
-GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the 'geepack' package in R.
-
-## Methods - Iterative Algorithm
-
-GEE uses an iterative algorithm after using initial estimates for regression coefficients, $\beta_i$, to update the parameter estimates. Software packages, such as 'geepack' package in R handle the iteration process. The iterative process works until there is convergence to stable estimates. [@Hojsgaard2006] [@Liang1986longitudinal]
-
-## Methods - Data Structure
-
-GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.[@Mcculloch2008] The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the 'geepack' package in R.
-
-## Methods - Model Specification
-
-GEE is an extension of generalized linear models (GLM) and uses that framework to specify the relationship between the response variable and the regressor variables. [@shao2023comparison] The choice of the link function and the distribution of the response variable depends on the nature of the data.[@gayen2018generalized] Models can be created for continuous, binary or count outcomes. The table below shows the extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
-
 ## Methodology - Model Specification
 
 ![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
 ![](Formula_GEE_Multivariate_Logit.jpg)
 
-## Methods - Correlation Structures
-
-GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations [@seals2016analysis].
+## Methods - Correlation Structures in 'geepack'
 
 -   [Independent]{.underline} - Assumption that all individual observations are independent
 -   [Exchangeable]{.underline} - Assumption there is equality of time between observations
@@ -59,9 +41,7 @@ GEE allows for flexible modeling of the correlation structure within clusters. A
 
 ![Figure 2: Correlation Structures Comparison Table [@wang2014generalized]](corr-table.jpg)
 
-## Analysis and Results
-
--   Data and Visualization In this review of GEE, the 'geepack' package for R with a respiratory dataset included was used to showcase an example. [@Hojsgaard2006]
+## Analysis and Results - Dataset
 
 ![Figure 3: Respiratory Variable Summary [@Hojsgaard2006]](Respiratory_Dataset_Description.jpg)
 
