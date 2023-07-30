@@ -345,22 +345,6 @@
 <li><p>Correlation Structures</p></li>
 </ul>
 </section>
-<section id="methods---estimating-equations" class="slide level2">
-<h2>Methods - Estimating Equations</h2>
-<p>GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.<span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span> The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the ‘geepack’ package in R.</p>
-</section>
-<section id="methods---iterative-algorithm" class="slide level2">
-<h2>Methods - Iterative Algorithm</h2>
-<p>GEE uses an iterative algorithm after using initial estimates for regression coefficients, <span class="math inline">\(\beta_i\)</span>, to update the parameter estimates. Software packages, such as ‘geepack’ package in R handle the iteration process. The iterative process works until there is convergence to stable estimates. <span class="citation" data-cites="Hojsgaard2006">[@Hojsgaard2006]</span> <span class="citation" data-cites="Liang1986longitudinal">[@Liang1986longitudinal]</span></p>
-</section>
-<section id="methods---data-structure" class="slide level2">
-<h2>Methods - Data Structure</h2>
-<p>GEE is designed for analyzing correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations.<span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span> The assumption of independent observations may not be accurate. A GEE analysis of a dataset with longitudinal data with repeated observations per individual will be shown using the respiratory dataset available through the ‘geepack’ package in R.</p>
-</section>
-<section id="methods---model-specification" class="slide level2">
-<h2>Methods - Model Specification</h2>
-<p>GEE is an extension of generalized linear models (GLM) and uses that framework to specify the relationship between the response variable and the regressor variables. <span class="citation" data-cites="shao2023comparison">[@shao2023comparison]</span> The choice of the link function and the distribution of the response variable depends on the nature of the data.<span class="citation" data-cites="gayen2018generalized">[@gayen2018generalized]</span> Models can be created for continuous, binary or count outcomes. The table below shows the extension of GEE from the LM, GLM,and GLMM and differences in assumptions.</p>
-</section>
 <section id="methodology---model-specification" class="slide level2">
 <h2>Methodology - Model Specification</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -371,9 +355,8 @@
 </div>
 <p><img data-src="Formula_GEE_Multivariate_Logit.jpg"></p>
 </section>
-<section id="methods---correlation-structures" class="slide level2">
-<h2>Methods - Correlation Structures</h2>
-<p>GEE allows for flexible modeling of the correlation structure within clusters. A working correlation structure is specified, which represents the assumed relationship among the correlated observations <span class="citation" data-cites="seals2016analysis">[@seals2016analysis]</span>.</p>
+<section id="methods---correlation-structures-in-geepack" class="slide level2">
+<h2>Methods - Correlation Structures in ‘geepack’</h2>
 <ul>
 <li><u>Independent</u> - Assumption that all individual observations are independent</li>
 <li><u>Exchangeable</u> - Assumption there is equality of time between observations</li>
@@ -381,15 +364,12 @@
 <li><u>Unstructured</u> - Most general and takes into account all possible times possible between observations</li>
 </ul>
 </section>
-<section id="methods---correlation-structures-1" class="slide level2">
+<section id="methods---correlation-structures" class="slide level2">
 <h2>Methods - Correlation Structures</h2>
 
 <img data-src="corr-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">[@wang2014generalized]</span></p></section>
-<section id="analysis-and-results" class="slide level2">
-<h2>Analysis and Results</h2>
-<ul>
-<li>Data and Visualization In this review of GEE, the ‘geepack’ package for R with a respiratory dataset included was used to showcase an example. <span class="citation" data-cites="Hojsgaard2006">[@Hojsgaard2006]</span></li>
-</ul>
+<section id="analysis-and-results---dataset" class="slide level2">
+<h2>Analysis and Results - Dataset</h2>
 
 <img data-src="Respiratory_Dataset_Description.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3: Respiratory Variable Summary <span class="citation" data-cites="Hojsgaard2006">[@Hojsgaard2006]</span></p></section>
 <section id="analysis-and-results-sample-data-plot" class="slide level2">
