@@ -126,7 +126,7 @@ ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$,
 $V_i = \phi{Ai}^{1/2}R_i(a){A_i}\^{1/2}\$ , $A_i$ is a diagonal matrix
 with elements that are known variance functions of $\mu_{ij}$ times a
 scaling parameter $\phi$, and $R_i(a)$ is the correlation
-structure. [@wang2014generalized] Since the equation used for solving for $\beta$ depends only on the mean and variance, the estimates are referred to as quasilikelihood estimates and not based on the more complex statisical mathematics for determining maximum likelihood estimates as can be the case for GLMM.
+structure. [@wang2014generalized] Since the equation used for solving for $\beta$ depends only on the mean and variance, the estimates are referred to as quasilikelihood estimates and not based on the more complex statisical mathematics for determining maximum likelihood estimates as can be the case for GLMM. [@donald2006longitudinal]
 
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the structure types in the paragraph below), family type of binomial for discrete outcomes and would yield model of
