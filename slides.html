@@ -338,10 +338,22 @@ Dosch, Muller, Stawiery
 
   <p class="date">2023-07-31</p>
 </section>
-<section id="introduction" class="slide level2">
-<h2>Introduction</h2>
-<p>Generalized Estimating Equations (GEE) is a statistical methodology in a class of models that model the mean of an outcome as function of predictor variables commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials <span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span>. The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">[@Liang1986longitudinal]</span>. The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">[@wang2014generalized]</span></p>
-<p>Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies and GEE handles the dependence between observations.</p>
+<section id="introduction---what-is-gee" class="slide level2">
+<h2>Introduction - What is GEE?</h2>
+<ul>
+<li><p>Generalized Estimating Equations (GEE) is a statistical methodology that expands upon general linear models.</p></li>
+<li><p>The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">[@Liang1986longitudinal]</span>.</p></li>
+<li><p>Open to the possibility of correlation within the data (contrary to most methodologies that assume independence of observations)</p></li>
+</ul>
+</section>
+<section id="introduction---when-to-use-gee" class="slide level2">
+<h2>Introduction - When to use GEE?</h2>
+<ul>
+<li><p>Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). <span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span></p></li>
+<li><p>GEE does not require a specified distribution</p></li>
+<li><p>GEE does require a specified relationship between mean and variance</p></li>
+<li><p>The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">[@wang2014generalized]</span></p></li>
+</ul>
 </section>
 <section id="methods" class="slide level2">
 <h2>Methods</h2>
@@ -570,7 +582,12 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
-<p>GEE is a valid choice of statistical modeling to be used in cases when assumptions for linear regression models and generalized linear models do not hold such as datasets with non-normal data, dependence in observations, longitudinal or panel data, clustered or correlated data. In addition, when there are large amounts of higher dimensional data and finding the likelihood functions is very difficult computationally, GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations. GEE can be used for continuous, binary or count responses.</p>
+<ul>
+<li><p>Use GEE in cases when assumptions for linear regression models and generalized linear models do not hold (non-normal data, dependence in observations, longitudinal or panel data, clustered data, correlated data, etc.)</p></li>
+<li><p>Use GEE when there are large amounts of higher dimensional data (finding the likelihood functions is very difficult computationally)</p></li>
+<li><p>GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.</p></li>
+<li><p>GEE can be used for continuous, binary or count responses.</p></li>
+</ul>
 <div class="footer footer-default">
 
 </div>
