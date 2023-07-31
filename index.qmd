@@ -144,7 +144,7 @@ geeglm() function of identity for gaussian, logit and
 $\mu(1-\mu),\mu\in(0,1)$ for binomal, log and$\mu,\mu>0$ for poisson,
 and log and $\mu^2,\mu>0$ for gamma families. [@Hojsgaard2006]
 
-In order to have confidence intervals and hypothesis testing for the for the estimated regression coefficients, standard error must be calculated and can be found by taking the square root of the diagonal elements of $V(\hat\beta)$ yielding two types of standard error, naive and robust.
+In order to have confidence intervals and hypothesis testing for the for the estimated regression coefficients, standard error must be calculated and can be found by taking the square root of the diagonal elements of $V(\hat\beta)$ yielding two types of standard error, naive and robust.[@donald2006longitudinal]
 
 ### Correlation Structures
 
