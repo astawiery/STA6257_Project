@@ -8,7 +8,7 @@ editor: visual
 
 ## Introduction - What is GEE?
 
--   Generalized Estimating Equations (GEE) is a statistical methodology that expands upon general linear models.
+-   Generalized Estimating Equations (GEE) is a statistical methodology that expands upon generalized linear models.
 
 -   The method was first introduced by Liang and Zeger in a paper in 1986. [@Liang1986longitudinal].
 
