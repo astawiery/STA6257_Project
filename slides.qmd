@@ -14,17 +14,17 @@ Analysis of longitudinal data has inherent problems with independence involving 
 
 ## Methods
 
--   Estimating Equations
+-   [Estimating Equations]{.underline} - Quasilikelihood approach to estimating parameters
 
--   Iterative Algorithm
+-   [Iterative Algorithm]{.underline} - Using IRLS to iterate estimates of $a$ to get new estimates for $\beta$ until convergence
 
--   Data Structure
+-   [Data Structure]{.underline} - Used for analyzing correlated, such as longitudinal or panel data
 
--   Model Specification
+-   [Model Specification]{.underline} - Extension of GLM, models can be for countinuous, binary or count outcomes
 
--   Correlation Structures
+-   [Correlation Structures]{.underline} - Flexible working correlation structures available based on data
 
-## Methodology - Model Specification
+## Methods - Model Specification
 
 ![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
