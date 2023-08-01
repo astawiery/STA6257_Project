@@ -63,40 +63,28 @@ research settings without the use of intense statistical mathematics.
 ### Estimating Equations
 
 Instead of maximizing the likelihood function, GEE employs a
-quasilikelihood estimating equation approach to estimate the regression
-parameters.[@d2011generalized] The estimating equations are derived
-based on the assumed correlation structure and the marginal mean
-model,not a specified distriution. [@d2011generalized] GEE models can be
-for continuous, binary or count outcomes.
+quasilikelihood estimating equation approach, as $\beta$ estimates are based on the mean and variance of the population. [@d2011generalized] The estimating equations are derived based on the assumed correlation structure and the marginal mean
+model,not a specified distribution. [@d2011generalized] GEE models can be
+for continuous, binary or count outcomes for changes in population mean as a funtion of predictor variables.
 
 ### Iterative Algorithm
 
-GEE uses an iterative algorithm after using initial estimates for
-regression coefficients, $\beta_i$, to update the parameter estimates.
+In the GEE process, IRLS, iteratively reweighted least squares,is used for estimates of the dispersion parameter $\alpha$ to determine new estimates for the $\beta$ estimators or coefficients of predictor variables after using initial estimate until convergence of the estimators occurs. Once there is convergence and $\beta$ estimators for each variable are known, then hypothesis testing, calculating confidence intervals for each of the estimators can be done and standard errors obtained.[@donald2006longitudinal] 
+
 Software packages, such as 'geepack' package in R handle the iteration
 process. The iterative process works until there is convergence to
 stable estimates. [@Hojsgaard2006] [@Liang1986longitudinal]
 
 ### Data Structure
 
-GEE is designed for analyzing correlated data, such as longitudinal or
-panel data in which the data is organized into clusters, where each
-cluster represents a group of related observations.[@Mcculloch2008] The
-assumption of independent observations may not be accurate. A GEE
-analysis of a dataset with longitudinal data with repeated observations
-per individual will be shown using the respiratory dataset available
-through the 'geepack' package in R.
+GEE is designed for analyzing relationships between population means and correlated data, such as longitudinal or panel data in which the data is organized into clusters, where each cluster represents a group of related observations (epidemiology, social sciences, clinical trials, etc.).[@Mcculloch2008] Theassumption of independent observations may not be accurate. A GEEanalysis of a dataset with longitudinal data with repeated observationsper individual will be shown using the respiratory dataset availablethrough the 'geepack' package in R. [@Hojsgaard2006]
 
 ### Model Specification
 
 GEE is an extension of generalized linear models (GLM) and uses that
 framework to specify the relationship between the response variable and
-the regressor variables. [@shao2023comparison] The choice of the link
-function and the distribution of the response variable depends on the
-nature of the data.[@gayen2018generalized] Models can be created for
-continuous, binary or count outcomes. The table below shows the
-extension of GEE from the LM, GLM,and GLMM and differences in
-assumptions.
+the regressor variables by adding the use of correlation structures to handle possible correlation in the data with population mean outcomes. [@shao2023comparison] The choice of the link function and the distribution of the response variable depends on the nature of the data.[@gayen2018generalized] Models can be created for population means for continuous, binary or count outcomes. The table below shows the
+extension of GEE from the LM, GLM,and GLMM and differences in assumptions.
 
 ![Figure 1: Model Comparision and Summary
 [@Mcculloch2008]](Model_Comparison_Table.jpg)
@@ -131,12 +119,12 @@ structure. [@wang2014generalized] Since the equation used for solving for $\beta
 GEE employ a logistic regression model created using the 'geepack'
 package available in R, specifying a correlation structure (see the structure types in the paragraph below), family type of binomial for discrete outcomes and would yield model of
 
-General mathematical formula for multivariate GEE using the logit link
-function for binary outcomes: $$
- \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
+General mathematical formula for multivariate GEE modeling the population mean using the logit link function for binary outcomes: 
+$$
+g(\mu)= \text{logit}[P(y_\text{ij}=1)]=log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Regressor1_{ij}\beta_1+Regressor2_{ij}\beta_2...+RegressorN\beta_{N-1}
 $$
 
-that predicts log odds ratios for outcomes for each predictor.
+that predicts average change in the log odds for population mean outcomes for each predictor variable.
 [@PSU2023]
 
 The 'geepack' package in R uses the link and variance functions in the
@@ -463,7 +451,7 @@ stepwise fashion or other methods. There was no determination to remove
 statistically insignificant regressor variables.
 
 $$
- \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
+g(\mu) = \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
 
 #### QIC (Quasi Information Criterion) for Model Selection\*\*
@@ -484,12 +472,11 @@ different correlation structures used for GEE, the smallest QIC value is
 the indicator for which is the best correlation structure to use. For
 the respiratory dataset, the unstructured correlation structure has the
 lowest QIC value of 512 when compared to the other correlation
-structures.Therefore, use of the unstructured correlation structure
-should be used for the GEE model for the respiratory dataset.
+structures. Another option for evaluating which correlation structure is best to use with GEE models is CIC, Correlation information Criterion, developed by Hin and Wang in 2009 which was shown to be better for binary outcomes as is the case for respiratory GEE model. [@hin2009working] In both cases, the QIC and CIC values are lowest for the unstructured correlation structure. Therefore, use of the unstructured correlation structure should be used for the GEE model for the respiratory dataset.
 
 ### Inference
 
-GEE provides robust standard errors for the estimated regression
+GEE provides naive and robust standard errors for the estimated regression
 parameters, taking into account the correlation structure. When
 comparing multiple different techniques, it's important to consider the
 correlation between observations in order to perform accurate
@@ -508,7 +495,7 @@ In addition, when there are large amounts of higher dimensional data and
 finding the likelihood functions is very difficult computationally, GEE
 provides an easy alternative and gives stable, consistent estimates for
 parameters without the need for the possibly intense likelihood
-calculations. GEE can be used for continuous, binary or count responses.
+calculations. GEE can be used for modeling population mean changes for continuous, binary or count responses.
 
 Analyzing longitudinal datasets with repeated observations is one of the
 biggest applications for GEE and it is used extensively in studies in
@@ -526,10 +513,10 @@ a longitudinal respiratory dataset that exhibited correlation between
 individual patient observations. All (4) available correlation
 structures were used to determine which structure would yield the best
 GEE model and based on QIC, the unstructured correlation structure was
-the best. There are a few other packages available in R to create GEE
+the best. There are other packages available in R to create GEE
 models not discussed in this review GEE. They are the 'gee' package
-[@Carey2022] and 'multgee' pagkage specifically for multinomial
-responses [@touloumis2014r].
+[@Carey2022], 'geeM' package (solver heavily reliant on R 'Matrix' package for faster calculations), [@mcdaniel2013fast] and 'multgee' pagkage specifically for multinomial
+responses [@touloumis2014r]. This is certainly not an exhaustive list of available packages.
 
 GEE uses quasilikelihood estimation which is opposite of other models
 that use maximum likelihood estimation or the least squares methods.
