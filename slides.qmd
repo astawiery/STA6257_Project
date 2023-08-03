@@ -7,7 +7,6 @@ bibliography: references.bib # file contains bibtex for references
 #always_allow_html: true # this allows to get PDF with HTML features
 nocite: '@*'
 editor: visual
-
 ---
 
 ## Introduction - What is GEE?
@@ -28,7 +27,6 @@ editor: visual
 
 -   The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
 
-
 ## Methods
 
 -   [Estimating Equations]{.underline} - Quasilikelihood approach to estimating parameters
@@ -43,21 +41,11 @@ editor: visual
 
 ## Methods - Estimating Equations
 
-In Wang's review of GEE method, a marginal model specifying a
-relationship between $\mu_i$ and $X_{ij}$ is given by the equation
-$g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$
-is a vector of regression coefficients and then shows the mathematical
-calculations to get to the equation
+In Wang's review of GEE method, a marginal model specifying a relationship between $\mu_i$ and $X_{ij}$ is given by the equation $g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$ is a vector of regression coefficients and then shows the mathematical calculations to get to the equation
 
 $U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
 
-that when solved will give estimates of $\beta_i$ used in the generated
-models. In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and
-${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$,
-$V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}$ , $A_i$ is a diagonal matrix
-with elements that are known variance functions of $\mu_{ij}$ times a
-scaling parameter $\phi$, and $R_i(a)$ is the correlation
-structure. [@wang2014generalized]
+that when solved will give estimates of $\beta_i$ used in the generated models. In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$, $V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}$ , $A_i$ is a diagonal matrix with elements that are known variance functions of $\mu_{ij}$ times a scaling parameter $\phi$, and $R_i(a)$ is the correlation structure. [@wang2014generalized]
 
 ## Methods - Model Specification
 
@@ -186,3 +174,6 @@ GEE provides robust standard errors for the estimated regression parameters, tak
 -   GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.
 
 -   GEE can be used for continuous, binary or count responses.
+
+## References
+

@@ -361,17 +361,17 @@ Dosch, Muller, Stawiery
 <h2>Introduction - What is GEE?</h2>
 <ul>
 <li><p>Generalized Estimating Equations (GEE) is a statistical methodology that expands upon generalized linear models.</p></li>
-<li><p>The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">(<a href="#/conclusion" role="doc-biblioref" onclick="">Liang and Zeger 1986</a>)</span>.</p></li>
+<li><p>The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">(<a href="#/references" role="doc-biblioref" onclick="">Liang and Zeger 1986</a>)</span>.</p></li>
 <li><p>Open to the possibility of correlation within the data (contrary to most methodologies that assume independence of observations)</p></li>
 </ul>
 </section>
 <section id="introduction---when-to-use-gee" class="slide level2">
 <h2>Introduction - When to use GEE?</h2>
 <ul>
-<li><p>Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). <span class="citation" data-cites="Mcculloch2008">(<a href="#/conclusion" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></p></li>
+<li><p>Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). <span class="citation" data-cites="Mcculloch2008">(<a href="#/references" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></p></li>
 <li><p>GEE does not require a specified distribution</p></li>
 <li><p>GEE does require a specified relationship between mean and variance</p></li>
-<li><p>The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">(<a href="#/conclusion" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></li>
+<li><p>The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></li>
 </ul>
 </section>
 <section id="methods" class="slide level2">
@@ -388,14 +388,14 @@ Dosch, Muller, Stawiery
 <h2>Methods - Estimating Equations</h2>
 <p>In Wang’s review of GEE method, a marginal model specifying a relationship between <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(X_{ij}\)</span> is given by the equation <span class="math inline">\(g(\mu_{ij})=X'_{ij} \beta\)</span>, where <span class="math inline">\(g\)</span> is the link function and <span class="math inline">\(\beta\)</span> is a vector of regression coefficients and then shows the mathematical calculations to get to the equation</p>
 <p><span class="math inline">\(U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0\)</span></p>
-<p>that when solved will give estimates of <span class="math inline">\(\beta_i\)</span> used in the generated models. In this equation <span class="math inline">\(D_i=\partial\mu_i/\partial\beta^{\prime}\)</span> and <span class="math inline">\({V_i}^{-1}\)</span> is the inverse of the variance-covariance matrix for <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}\)</span> , <span class="math inline">\(A_i\)</span> is a diagonal matrix with elements that are known variance functions of <span class="math inline">\(\mu_{ij}\)</span> times a scaling parameter <span class="math inline">\(\phi\)</span>, and <span class="math inline">\(R_i(a)\)</span> is the correlation structure. <span class="citation" data-cites="wang2014generalized">(<a href="#/conclusion" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p>
+<p>that when solved will give estimates of <span class="math inline">\(\beta_i\)</span> used in the generated models. In this equation <span class="math inline">\(D_i=\partial\mu_i/\partial\beta^{\prime}\)</span> and <span class="math inline">\({V_i}^{-1}\)</span> is the inverse of the variance-covariance matrix for <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}\)</span> , <span class="math inline">\(A_i\)</span> is a diagonal matrix with elements that are known variance functions of <span class="math inline">\(\mu_{ij}\)</span> times a scaling parameter <span class="math inline">\(\phi\)</span>, and <span class="math inline">\(R_i(a)\)</span> is the correlation structure. <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p>
 </section>
 <section id="methods---model-specification" class="slide level2">
 <h2>Methods - Model Specification</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="Model_Comparison_Table.jpg"></p>
-<figcaption>Figure 1: Model Comparision and Summary <span class="citation" data-cites="Mcculloch2008">(<a href="#/conclusion" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></figcaption>
+<figcaption>Figure 1: Model Comparision and Summary <span class="citation" data-cites="Mcculloch2008">(<a href="#/references" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></figcaption>
 </figure>
 </div>
 <p><img data-src="Formula_GEE_Multivariate_Logit.jpg"></p>
@@ -412,15 +412,15 @@ Dosch, Muller, Stawiery
 <section id="methods---correlation-structures" class="slide level2">
 <h2>Methods - Correlation Structures</h2>
 
-<img data-src="corr-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#/conclusion" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></section>
+<img data-src="corr-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></section>
 <section id="analysis-and-results---dataset" class="slide level2">
 <h2>Analysis and Results - Dataset</h2>
 
-<img data-src="Respiratory_Dataset_Description.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3: Respiratory Variable Summary <span class="citation" data-cites="Hojsgaard2006">(<a href="#/conclusion" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
+<img data-src="Respiratory_Dataset_Description.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3: Respiratory Variable Summary <span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
 <section id="analysis-and-results-sample-data-plot" class="slide level2">
 <h2>Analysis and Results: Sample Data Plot</h2>
 
-<img data-src="Figure_4_Respiratory_Treatment_Outcomes.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits <span class="citation" data-cites="Hojsgaard2006">(<a href="#/conclusion" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
+<img data-src="Figure_4_Respiratory_Treatment_Outcomes.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits <span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
 <section id="analysis-and-results-outcomes-over-time" class="slide level2">
 <h2>Analysis and Results: Outcomes Over Time</h2>
 
@@ -603,9 +603,9 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 </section>
 <section id="statistical-modeling-inference" class="slide level2">
 <h2>Statistical Modeling: Inference</h2>
-<p>GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it’s important to consider the correlation between observations in order to perform accurate statistical inference of the model’s output. <span class="citation" data-cites="seals2016analysis">(<a href="#/conclusion" role="doc-biblioref" onclick="">Seals and Aban 2016</a>)</span> Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. <span class="citation" data-cites="shao2023comparison">(<a href="#/conclusion" role="doc-biblioref" onclick="">Shao et al. 2023</a>)</span></p>
+<p>GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it’s important to consider the correlation between observations in order to perform accurate statistical inference of the model’s output. <span class="citation" data-cites="seals2016analysis">(<a href="#/references" role="doc-biblioref" onclick="">Seals and Aban 2016</a>)</span> Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. <span class="citation" data-cites="shao2023comparison">(<a href="#/references" role="doc-biblioref" onclick="">Shao et al. 2023</a>)</span></p>
 </section>
-<section id="conclusion" class="slide level2 smaller scrollable">
+<section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
 <li><p>Use GEE in cases when assumptions for linear regression models and generalized linear models do not hold (non-normal data, dependence in observations, longitudinal or panel data, clustered data, correlated data, etc.)</p></li>
@@ -613,6 +613,9 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 <li><p>GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.</p></li>
 <li><p>GEE can be used for continuous, binary or count responses.</p></li>
 </ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 <div class="footer footer-default">
 
 </div>
