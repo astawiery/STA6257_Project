@@ -6,25 +6,38 @@ format: revealjs
 editor: visual
 ---
 
-## Introduction
+## Introduction - What is GEE?
 
-Generalized Estimating Equations (GEE) is a statistical methodology in a class of models that model the mean of an outcome as function of predictor variables commonly used to analyze correlated data in various fields that use panel or longitudinal data, including epidemiology, social sciences, and clinical trials [@Mcculloch2008]. The method was first introduced by Liang and Zeger in a paper in 1986. [@Liang1986longitudinal]. The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
+-   Generalized Estimating Equations (GEE) is a statistical methodology that expands upon generalized linear models.
 
-Analysis of longitudinal data has inherent problems with independence involving multiple observations for the same individual in clinical data studies and GEE handles the dependence between observations.
+-   The method was first introduced by Liang and Zeger in a paper in 1986. [@Liang1986longitudinal].
+
+-   Open to the possibility of correlation within the data (contrary to most methodologies that assume independence of observations)
+
+## Introduction - When to use GEE?
+
+-   Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). [@Mcculloch2008]
+
+-   GEE does not require a specified distribution
+
+-   GEE does require a specified relationship between mean and variance
+
+-   The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
+
 
 ## Methods
 
--   Estimating Equations
+-   [Estimating Equations]{.underline} - Quasilikelihood approach to estimating parameters
 
--   Iterative Algorithm
+-   [Iterative Algorithm]{.underline} - Using IRLS to iterate estimates of $a$ to get new estimates for $\beta$ until convergence
 
--   Data Structure
+-   [Data Structure]{.underline} - Used for analyzing correlated, such as longitudinal or panel data
 
--   Model Specification
+-   [Model Specification]{.underline} - Extension of GLM, models can be for countinuous, binary or count outcomes
 
--   Correlation Structures
+-   [Correlation Structures]{.underline} - Flexible working correlation structures available based on data
 
-## Methodology - Model Specification
+## Methods - Model Specification
 
 ![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
@@ -144,4 +157,10 @@ GEE provides robust standard errors for the estimated regression parameters, tak
 
 ## Conclusion
 
-GEE is a valid choice of statistical modeling to be used in cases when assumptions for linear regression models and generalized linear models do not hold such as datasets with non-normal data, dependence in observations, longitudinal or panel data, clustered or correlated data. In addition, when there are large amounts of higher dimensional data and finding the likelihood functions is very difficult computationally, GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations. GEE can be used for continuous, binary or count responses.
+-   Use GEE in cases when assumptions for linear regression models and generalized linear models do not hold (non-normal data, dependence in observations, longitudinal or panel data, clustered data, correlated data, etc.)
+
+-   Use GEE when there are large amounts of higher dimensional data (finding the likelihood functions is very difficult computationally)
+
+-   GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.
+
+-   GEE can be used for continuous, binary or count responses.
