@@ -190,8 +190,7 @@ other methods available [@wang2014generalized].
 In this review of GEE, the 'geepack' package for R with a respiratory
 dataset included was used to showcase an example [@Hojsgaard2006, @Yan2004, @Yan2002]. The respiratory dataset included in the packet is
 an example of longitudinal or panel data as data is from a clinical
-study of 111 patients receiving treatment for a respiratory illness.
-[@koch1990categorical]
+study of 111 patients receiving treatment for a respiratory illness [@koch1990categorical].
 
 | Variable | Description                    |
 |----------|--------------------------------|
@@ -249,7 +248,7 @@ The points on the plot indicate the outcome of treatment and represent a
 patient's respiratory status per visit where 1 indicates a "good"
 respiratory status and 0 indicates a "poor" respiratory status. Note
 that this graphic is a truncated form of the complete dataset and
-excludes both a treatment center and 52 other patients.
+excludes both a treatment center and 52 other patients [@Schwartz2023].
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Data transformation for "wide" data [record per visit] #######
@@ -266,7 +265,7 @@ resp_transformed <- respiratory %>%
 'resp_transformed' is a data frame that has been transformed based on
 the original data set. This transformation manipulates the data such
 that there is one line per participant in the data. This method will
-allow for analyzing the metrics between repeated observations.
+allow for analyzing the metrics between repeated observations [@Schwartz2023].
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Table of data breakdown - respiratory outcome over time #######
@@ -283,9 +282,9 @@ resp_transformed %>%
                     test = TRUE)
 ```
 
-Figure 5 "Respiratory Outcome Over Time" shows a breakdown of visits and
-the corresponding statistics. N is the total number of patients in the
-study, "A" represents the treatment, and "P" represents the placebo.
+Figure 5 "'Good' Respiratory Outcome Over Time" shows a breakdown of visits and
+the corresponding statistics for patients with a 'good' outcome. N is the total number of patients in the
+study, 'A' represents the treatment, and 'P' represents the placebo [@Schwartz2023].
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Graph of Number of Visits with Poor Outcome #######
@@ -310,7 +309,7 @@ respective patients had a 'poor' outcome (or poor respiration status) as
 a number out of the four total visits. The larger circles indicate a
 higher number of poor outcomes in total, while the smaller circles
 indicate a smaller number of poor outcomes in total. This visual does
-not display patients who had all 'good' outcomes.
+not display patients who had all 'good' outcomes [@Schwartz2023].
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 ###### Correlation between repeated observations #######
@@ -326,7 +325,7 @@ The preceding graphic, figure 7, shows the correlation matrix between
 repeated observations. It's noted that there is a medium to high
 correlation between the observations. This is showing the necessity for
 a statistical model that can account for these levels of correlation
-between the observations.
+between the observations [@Schwartz2023].
 
 ### Statistical Modeling
 
