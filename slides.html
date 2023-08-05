@@ -30,7 +30,26 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -342,17 +361,17 @@ Dosch, Muller, Stawiery
 <h2>Introduction - What is GEE?</h2>
 <ul>
 <li><p>Generalized Estimating Equations (GEE) is a statistical methodology that expands upon generalized linear models.</p></li>
-<li><p>The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">[@Liang1986longitudinal]</span>.</p></li>
+<li><p>The method was first introduced by Liang and Zeger in a paper in 1986. <span class="citation" data-cites="Liang1986longitudinal">(<a href="#/references" role="doc-biblioref" onclick="">Liang and Zeger 1986</a>)</span>.</p></li>
 <li><p>Open to the possibility of correlation within the data (contrary to most methodologies that assume independence of observations)</p></li>
 </ul>
 </section>
 <section id="introduction---when-to-use-gee" class="slide level2">
 <h2>Introduction - When to use GEE?</h2>
 <ul>
-<li><p>Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). <span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span></p></li>
+<li><p>Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). <span class="citation" data-cites="Mcculloch2008">(<a href="#/references" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></p></li>
 <li><p>GEE does not require a specified distribution</p></li>
 <li><p>GEE does require a specified relationship between mean and variance</p></li>
-<li><p>The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">[@wang2014generalized]</span></p></li>
+<li><p>The method uses a quasilikelihood approach and yields population averaged estimates of parameters. <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></li>
 </ul>
 </section>
 <section id="methods" class="slide level2">
@@ -365,15 +384,25 @@ Dosch, Muller, Stawiery
 <li><p><u>Correlation Structures</u> - Flexible working correlation structures available based on data</p></li>
 </ul>
 </section>
+<section id="methods---estimating-equations" class="slide level2">
+<h2>Methods - Estimating Equations</h2>
+<p>In Wang’s review of GEE method, a marginal model specifying a relationship between <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(X_{ij}\)</span> is given by the equation <span class="math inline">\(g(\mu_{ij})=X'_{ij} \beta\)</span>, where <span class="math inline">\(g\)</span> is the link function and <span class="math inline">\(\beta\)</span> is a vector of regression coefficients and then shows the mathematical calculations to get to the equation</p>
+<p><span class="math inline">\(U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0\)</span></p>
+<p>that when solved will give estimates of <span class="math inline">\(\beta_i\)</span> used in the generated models.<span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p>
+</section>
+<section id="methods---estimating-equations-continued" class="slide level2">
+<h2>Methods - Estimating Equations, continued</h2>
+<p>In this equation <span class="math inline">\(D_i=\partial\mu_i/\partial\beta^{\prime}\)</span> and <span class="math inline">\({V_i}^{-1}\)</span> is the inverse of the variance-covariance matrix for <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}\)</span> , <span class="math inline">\(A_i\)</span> is a diagonal matrix with elements that are known variance functions of <span class="math inline">\(\mu_{ij}\)</span> times a scaling parameter <span class="math inline">\(\phi\)</span>, and <span class="math inline">\(R_i(a)\)</span> is the correlation structure. <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p>
+</section>
 <section id="methods---model-specification" class="slide level2">
 <h2>Methods - Model Specification</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="Model_Comparison_Table.jpg"></p>
-<figcaption>Figure 1: Model Comparision and Summary <span class="citation" data-cites="Mcculloch2008">[@Mcculloch2008]</span></figcaption>
+<figcaption>Figure 1: Model Comparision and Summary <span class="citation" data-cites="Mcculloch2008">(<a href="#/references" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></figcaption>
 </figure>
 </div>
-<p><img data-src="Formula_GEE_Multivariate_Logit.jpg"></p>
+<p><img data-src="Formula_GEE_Multivariate_Logit.jpg"> <span class="citation" data-cites="Mcculloch2008">(<a href="#/references" role="doc-biblioref" onclick="">S. McCulloch C. 2008</a>)</span></p>
 </section>
 <section id="methods---correlation-structures-in-geepack" class="slide level2">
 <h2>Methods - Correlation Structures in ‘geepack’</h2>
@@ -387,15 +416,15 @@ Dosch, Muller, Stawiery
 <section id="methods---correlation-structures" class="slide level2">
 <h2>Methods - Correlation Structures</h2>
 
-<img data-src="corr-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">[@wang2014generalized]</span></p></section>
+<img data-src="corr-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 2: Correlation Structures Comparison Table <span class="citation" data-cites="wang2014generalized">(<a href="#/references" role="doc-biblioref" onclick="">M. Wang 2014</a>)</span></p></section>
 <section id="analysis-and-results---dataset" class="slide level2">
 <h2>Analysis and Results - Dataset</h2>
 
-<img data-src="Respiratory_Dataset_Description.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3: Respiratory Variable Summary <span class="citation" data-cites="Hojsgaard2006">[@Hojsgaard2006]</span></p></section>
+<img data-src="Respiratory_Dataset_Description.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3: Respiratory Variable Summary <span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
 <section id="analysis-and-results-sample-data-plot" class="slide level2">
 <h2>Analysis and Results: Sample Data Plot</h2>
 
-<img data-src="Figure_4_Respiratory_Treatment_Outcomes.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits <span class="citation" data-cites="Hojsgaard2006">[@Hojsgaard2006]</span></p></section>
+<img data-src="Figure_4_Respiratory_Treatment_Outcomes.jpg" class="r-stretch quarto-figure-center"><p class="caption">Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits <span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p></section>
 <section id="analysis-and-results-outcomes-over-time" class="slide level2">
 <h2>Analysis and Results: Outcomes Over Time</h2>
 
@@ -479,6 +508,7 @@ alpha    0.329  0.0838
 Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 </div>
 </div>
+<p><span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p>
 </section>
 <section id="statistical-modeling-gg-wautoregressive-correlation-structure" class="slide level2">
 <h2>Statistical Modeling: GG w/Autoregressive Correlation Structure</h2>
@@ -513,6 +543,7 @@ alpha    0.457  0.0896
 Number of clusters:   111  Maximum cluster size: 4 </code></pre>
 </div>
 </div>
+<p><span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p>
 </section>
 <section id="statistical-modeling-gg-wunstructured-correlation-structure" class="slide level2">
 <h2>Statistical Modeling: GG w/Unstructured Correlation Structure</h2>
@@ -556,13 +587,14 @@ Number of clusters:   111  Maximum cluster size: 4 </code></pre>
     0.321     0.206     0.284     0.424     0.343     0.380 </code></pre>
 </div>
 </div>
+<p><span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p>
 </section>
 <section id="statistical-modeling-model-assessment" class="slide level2">
 <h2>Statistical Modeling: Model Assessment</h2>
 <p>The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model.</p>
 <p><span class="math display">\[
 \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
-\]</span></p>
+\]</span> <span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p>
 </section>
 <section id="statistical-modeling-qic-for-model-selection" class="slide level2">
 <h2>Statistical Modeling: QIC for Model Selection</h2>
@@ -575,10 +607,11 @@ gee_unstructured 512  500      -244 12.4      6  520
 gee_ar1          513  500      -244 12.7      6  516</code></pre>
 </div>
 </div>
+<p><span class="citation" data-cites="Hojsgaard2006">(<a href="#/references" role="doc-biblioref" onclick="">Halekoh, Højsgaard, and Yan 2006</a>)</span></p>
 </section>
 <section id="statistical-modeling-inference" class="slide level2">
 <h2>Statistical Modeling: Inference</h2>
-<p>GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it’s important to consider the correlation between observations in order to perform accurate statistical inference of the model’s output. <span class="citation" data-cites="seals2016analysis">[@seals2016analysis]</span> Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. <span class="citation" data-cites="shao2023comparison">[@shao2023comparison]</span></p>
+<p>GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it’s important to consider the correlation between observations in order to perform accurate statistical inference of the model’s output. <span class="citation" data-cites="seals2016analysis">(<a href="#/references" role="doc-biblioref" onclick="">Seals and Aban 2016</a>)</span> Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. <span class="citation" data-cites="shao2023comparison">(<a href="#/references" role="doc-biblioref" onclick="">Shao et al. 2023</a>)</span></p>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
@@ -588,8 +621,148 @@ gee_ar1          513  500      -244 12.7      6  516</code></pre>
 <li><p>GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.</p></li>
 <li><p>GEE can be used for continuous, binary or count responses.</p></li>
 </ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 <div class="footer footer-default">
 
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-agresti2015foundations" class="csl-entry" role="listitem">
+Agresti, Alan. 2015. <em>Foundations of Linear and Generalized Linear Models</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-barnhart1998goodness" class="csl-entry" role="listitem">
+Barnhart, Huiman X, and John M Williamson. 1998. <span>“Goodness-of-Fit Tests for GEE Modeling with Binary Responses.”</span> <em>Biometrics</em>, 720–29.
+</div>
+<div id="ref-Burton1998" class="csl-entry" role="listitem">
+Burton, Lyle Gurrin, Paul, and Peter Sly. 1998. <span>“Extending the Simple Linear Regression Model to Account for Correlated Responses: An Introduction to Generalized Estimating Equations and Multi-Level Mixed Modelling.”</span> <em>Statistics in Medicine</em> 17 (11): 1261–91. <a href="https://doi.org/10.1002/(SICI)1097-0258(19980615)17:11<1261::AID-SIM846>3.0.CO;2-Z">https://doi.org/10.1002/(SICI)1097-0258(19980615)17:11&lt;1261::AID-SIM846&gt;3.0.CO;2-Z</a>.
+</div>
+<div id="ref-crespi2009using" class="csl-entry" role="listitem">
+Crespi, Catherine M, Weng Kee Wong, and Shiraz I Mishra. 2009. <span>“Using Second-Order Generalized Estimating Equations to Model Heterogeneous Intraclass Correlation in Cluster-Randomized Trials.”</span> <em>Statistics in Medicine</em> 28 (5): 814–27.
+</div>
+<div id="ref-d2011generalized" class="csl-entry" role="listitem">
+D’Angelo, Gina M, Nicole A Lazar, William F Eddy, John C Morris, and Yvette I Sheline. 2011. <span>“A Generalized Estimating Equations Approach for Resting-State Functional MRI Group Analysis.”</span> In <em>2011 Annual International Conference of the IEEE Engineering in Medicine and Biology Society</em>, 5064–67. IEEE.
+</div>
+<div id="ref-donald2006longitudinal" class="csl-entry" role="listitem">
+Donald, Hedeker, and D Gibbons Robert. 2006. <span>“Longitudinal Data Analysis.”</span> <em>John Wiley &amp; Sons, Inc., Hoboken, NJ. DOI</em> 10: 0470036486.
+</div>
+<div id="ref-garson2013generalized" class="csl-entry" role="listitem">
+Garson, GD. 2013. <span>“Generalized Linear Models/Generalized Estimating Equations. 2013 Ed.”</span> <em>Asheboro, NC: Statistical Associates Publishers</em>.
+</div>
+<div id="ref-gayen2018generalized" class="csl-entry" role="listitem">
+Gayen, Atin, and M Ashok Kumar. 2018. <span>“Generalized Estimating Equation for the Student-t Distributions.”</span> In <em>2018 IEEE International Symposium on Information Theory (ISIT)</em>, 571–75. IEEE.
+</div>
+<div id="ref-Hojsgaard2006" class="csl-entry" role="listitem">
+Halekoh, Ulrich, Søren Højsgaard, and Jun Yan. 2006. <span>“The r Package Geepack for Generalized Estimating Equations.”</span> <em>Journal of Statistical Software</em> 15/2: 1–11.
+</div>
+<div id="ref-hanley2003statistical" class="csl-entry" role="listitem">
+Hanley, James A, Abdissa Negassa, Michael D deB Edwardes, and Janet E Forrester. 2003. <span>“Statistical Analysis of Correlated Data Using Generalized Estimating Equations: An Orientation.”</span> <em>American Journal of Epidemiology</em> 157 (4): 364–75.
+</div>
+<div id="ref-hardin2013generalized" class="csl-entry" role="listitem">
+Hardin, J, and J Hilbe. 2013. <span>“Generalized Estimating Equations (Second.).”</span> New York: CRC Press.
+</div>
+<div id="ref-hin2009working" class="csl-entry" role="listitem">
+Hin, Lin-Yee, and You-Gan Wang. 2009. <span>“Working-Correlation-Structure Identification in Generalized Estimating Equations.”</span> <em>Statistics in Medicine</em> 28 (4): 642–58.
+</div>
+<div id="ref-homish2010analyzing" class="csl-entry" role="listitem">
+Homish, Gregory G, Ellen P Edwards, Rina D Eiden, and Kenneth E Leonard. 2010. <span>“Analyzing Family Data: A GEE Approach for Substance Use Researchers.”</span> <em>Addictive Behaviors</em> 35 (6): 558–63.
+</div>
+<div id="ref-Huang2022" class="csl-entry" role="listitem">
+Huang, Francis L. 2022. <span>“Analyzing Cross-Sectionally Clustered Data Using Generalized Estimating Equations.”</span> <em>Journal of Educational and Behavioral Statistics</em> 47 (1): 101–25. <a href="https://doi.org/10.3102/10769986211017480">https://doi.org/10.3102/10769986211017480</a>.
+</div>
+<div id="ref-hubbard2010gee" class="csl-entry" role="listitem">
+Hubbard, Alan E, Jennifer Ahern, Nancy L Fleischer, Mark Van der Laan, Sheri A Satariano, Nicholas Jewell, Tim Bruckner, and William A Satariano. 2010. <span>“To GEE or Not to GEE: Comparing Population Average and Mixed Models for Estimating the Associations Between Neighborhood Risk Factors and Health.”</span> <em>Epidemiology</em>, 467–74.
+</div>
+<div id="ref-huh2012optimizing" class="csl-entry" role="listitem">
+Huh, David, Brian P Flaherty, and Jane M Simoni. 2012. <span>“Optimizing the Analysis of Adherence Interventions Using Logistic Generalized Estimating Equations.”</span> <em>AIDS and Behavior</em> 16: 422–31.
+</div>
+<div id="ref-ito2022grouped" class="csl-entry" role="listitem">
+Ito, Tsubasa, and Shonosuke Sugasawa. 2022. <span>“Grouped Generalized Estimating Equations for Longitudinal Data Analysis.”</span> <em>Biometrics</em>.
+</div>
+<div id="ref-koch1990categorical" class="csl-entry" role="listitem">
+Koch, Gary G, Gregory J Carr, Ingrid A Amara, Maura E Stokes, and Thomas J Uryniak. 1990. <span>“Categorical Data Analysis.”</span> <em>Statistical Methodology in the Pharmaceutical Sciences</em> 13: 389–470.
+</div>
+<div id="ref-koper2009generalized" class="csl-entry" role="listitem">
+Koper, Nicola, and Micheline Manseau. 2009. <span>“Generalized Estimating Equations and Generalized Linear Mixed-Effects Models for Modelling Resource Selection.”</span> <em>Journal of Applied Ecology</em>, 590–99.
+</div>
+<div id="ref-Liang1986longitudinal" class="csl-entry" role="listitem">
+Liang, Kung-Yee, and Scott L Zeger. 1986. <span>“Longitudinal Data Analysis Using Generalized Linear Models.”</span> <em>Biometrika</em> 73 (1): 13–22.
+</div>
+<div id="ref-lin2011impact" class="csl-entry" role="listitem">
+Lin, Meng-Lung, and Cheng-Hwang Perng. 2011. <span>“The Impact of Terrain on NDVI Dynamics of Corn Field Using Generalized Estimating Equations and Time-Series MODIS Images.”</span> In <em>2011 IEEE International Geoscience and Remote Sensing Symposium</em>, 3342–45. IEEE.
+</div>
+<div id="ref-luo2022conditional" class="csl-entry" role="listitem">
+Luo, Renwen, and Jianxin Pan. 2022. <span>“Conditional Generalized Estimating Equations of Mean-Variance-Correlation for Clustered Data.”</span> <em>Computational Statistics &amp; Data Analysis</em> 168: 107386.
+</div>
+<div id="ref-mcculloch1996introduction" class="csl-entry" role="listitem">
+McCulloch, Charles E. 1996. <span>“An Introduction to Generalized Linear Mixed Models.”</span>
+</div>
+<div id="ref-Mcculloch2008" class="csl-entry" role="listitem">
+McCulloch, Searle, C. 2008. <em>Generalized, Linear, and Mixed Models, 2nd Edition</em>. Wiley Series in Probability and Statistics. Wiley New Jersey. <a href="https://www.wiley.com/en-us/Generalized%2C+Linear%2C+and+Mixed+Models%2C+2nd+Edition-p-9780470073711">https://www.wiley.com/en-us/Generalized%2C+Linear%2C+and+Mixed+Models%2C+2nd+Edition-p-9780470073711</a>.
+</div>
+<div id="ref-mcdaniel2013fast" class="csl-entry" role="listitem">
+McDaniel, Lee S, Nicholas C Henderson, and Paul J Rathouz. 2013. <span>“Fast Pure r Implementation of GEE: Application of the Matrix Package.”</span> <em>The R Journal</em> 5 (1): 181.
+</div>
+<div id="ref-nam2017factors" class="csl-entry" role="listitem">
+Nam, Ju-Hyun, Myeong-Seob Lim, Hyun-Kyeong Choi, Jae-Yeop Kim, Sung-Kyeong Kim, Sung-Soo Oh, Sang-Baek Koh, and Hee-Tae Kang. 2017. <span>“Factors Increasing the Risk for Psychosocial Stress Among Korean Adults Living in Rural Areas: Using Generalized Estimating Equations and Mixed Models.”</span> <em>Annals of Occupational and Environmental Medicine</em> 29: 1–12.
+</div>
+<div id="ref-overall2004robustness" class="csl-entry" role="listitem">
+Overall, John E, and Scott Tonidandel. 2004. <span>“Robustness of Generalized Estimating Equation (GEE) Tests of Significance Against Misspecification of the Error Structure Model.”</span> <em>Biometrical Journal: Journal of Mathematical Methods in Biosciences</em> 46 (2): 203–13.
+</div>
+<div id="ref-paik1988repeated" class="csl-entry" role="listitem">
+Paik, Myunghee C. 1988. <span>“Repeated Measurement Analysis for Nonnormal Data in Small Samples.”</span> <em>Communications in Statistics-Simulation and Computation</em> 17 (4): 1155–71.
+</div>
+<div id="ref-pan2001akaike" class="csl-entry" role="listitem">
+Pan, Wei. 2001. <span>“Akaike’s Information Criterion in Generalized Estimating Equations.”</span> <em>Biometrics</em> 57 (1): 120–25.
+</div>
+<div id="ref-paradis2002analysis" class="csl-entry" role="listitem">
+Paradis, Emmanuel, and Julien Claude. 2002. <span>“Analysis of Comparative Data Using Generalized Estimating Equations.”</span> <em>Journal of Theoretical Biology</em> 218 (2): 175–85.
+</div>
+<div id="ref-pekar2018generalized" class="csl-entry" role="listitem">
+Pekár, Stano, and Marek Brabec. 2018. <span>“Generalized Estimating Equations: A Pragmatic and Flexible Approach to the Marginal GLM Modelling of Correlated Data in the Behavioural Sciences.”</span> <em>Ethology</em> 124 (2): 86–93.
+</div>
+<div id="ref-salazar2016simple" class="csl-entry" role="listitem">
+Salazar, Alejandro, Begoña Ojeda, Marı́a Dueñas, Fernando Fernández, and Inmaculada Failde. 2016. <span>“Simple Generalized Estimating Equations (GEEs) and Weighted Generalized Estimating Equations (WGEEs) in Longitudinal Studies with Dropouts: Guidelines and Implementation in r.”</span> <em>Statistics in Medicine</em> 35 (19): 3424–48.
+</div>
+<div id="ref-Schwartz2023" class="csl-entry" role="listitem">
+Schwartz S, Barrett T. 2023. <span>“Encyclopedia of Quantitative Methods in r, Vol 5, 15-19: GEE.”</span> 2023. <a href="https://cehs-research.github.io/eBook_multilevel/gee-binary-outcome-respiratory-illness.html">https://cehs-research.github.io/eBook_multilevel/gee-binary-outcome-respiratory-illness.html</a>.
+</div>
+<div id="ref-seals2016analysis" class="csl-entry" role="listitem">
+Seals, Samantha R, and Inmaculada B Aban. 2016. <span>“Analysis of the 17-Segment Left Ventricle Model Using Generalized Estimating Equations.”</span> <em>Journal of Nuclear Cardiology</em>. Springer.
+</div>
+<div id="ref-sepato2014generalized" class="csl-entry" role="listitem">
+Sepato, Sandra Moepeng. 2014. <span>“Generalized Linear Mixed Model and Generalized Estimating Equation for Binary Longitudinal Data.”</span> PhD thesis, University of Pretoria.
+</div>
+<div id="ref-shao2023comparison" class="csl-entry" role="listitem">
+Shao, Sijing, Judith E Canner, Rebecca A Everett, Kidist Bekele-Maxwell, Alexis Kuerbis, Lyric Stephenson, Jennifer Menda, Jon Morgenstern, and HT Banks. 2023. <span>“A Comparison of Mathematical and Statistical Modeling with Longitudinal Data: An Application to Ecological Momentary Assessment of Behavior Change in Individuals with Alcohol Use Disorder.”</span> <em>Bulletin of Mathematical Biology</em> 85 (1): 5.
+</div>
+<div id="ref-PSU2023" class="csl-entry" role="listitem">
+Statistics, Penn State Department of. 2023. <span>“Analysis of Discrete Data, 12: Advanced Topics II.”</span> 2023. <a href="https://online.stat.psu.edu/stat504/lesson/12/12.2">https://online.stat.psu.edu/stat504/lesson/12/12.2</a>.
+</div>
+<div id="ref-touloumis2014r" class="csl-entry" role="listitem">
+Touloumis, Anestis. 2014. <span>“R Package Multgee: A Generalized Estimating Equations Solver for Multinomial Responses.”</span> <em>arXiv Preprint arXiv:1410.5232</em>.
+</div>
+<div id="ref-Carey2022" class="csl-entry" role="listitem">
+V, Carey. 2022. <span>“Gee: Generalized Estimation Equation Solver.”</span> 2022. <a href="https://cran.r-project.org/package=gee">https://cran.r-project.org/package=gee</a>.
+</div>
+<div id="ref-wang2012penalized" class="csl-entry" role="listitem">
+Wang, Lan, Jianhui Zhou, and Annie Qu. 2012. <span>“Penalized Generalized Estimating Equations for High-Dimensional Longitudinal Data Analysis.”</span> <em>Biometrics</em> 68 (2): 353–60.
+</div>
+<div id="ref-wang2014generalized" class="csl-entry" role="listitem">
+Wang, Ming. 2014. <span>“Generalized Estimating Equations in Longitudinal Data Analysis: A Review and Recent Developments.”</span> <em>Advances in Statistics</em> 2014.
+</div>
+<div id="ref-warton2011regularized" class="csl-entry" role="listitem">
+Warton, David I. 2011. <span>“Regularized Sandwich Estimators for Analysis of High-Dimensional Data Using Generalized Estimating Equations.”</span> <em>Biometrics</em> 67 (1): 116–23.
+</div>
+<div id="ref-Yan2002" class="csl-entry" role="listitem">
+Yan, Jun. 2002. <span>“Geepack: Yet Another Package for Generalized Estimating Equations.”</span> <em>R-News</em> 2/3: 12–14.
+</div>
+<div id="ref-Yan2004" class="csl-entry" role="listitem">
+Yan, Jun, and Jason P. Fine. 2004. <span>“Estimating Equations for Association Structures.”</span> <em>Statistics in Medicine</em> 23: 859–80.
+</div>
+<div id="ref-zeileis2019package" class="csl-entry" role="listitem">
+Zeileis, Achim, Thomas Lumley, Susanne Berger, Nathaniel Graham, and Maintainer Achim Zeileis. 2019. <span>“Package <span>‘Sandwich’</span>.”</span> <em>R Package Version</em>, 2–5.
+</div>
 </div>
 </section>
     </div>

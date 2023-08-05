@@ -364,6 +364,7 @@ gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data
                   family = binomial(), corstr="independence")
 summary(gee_independence)
 ```
+[@Hojsgaard2006]
 
 The GEE model summary with an independent correlation structure
 specified shows that there are no estimated correlation parameters.
@@ -380,6 +381,7 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
                   family = binomial(), corstr="exchangeable")
 summary(gee_exchangeable)
 ```
+[@Hojsgaard2006]
 
 The GEE model summary with an exchangeable correlation structure
 specified shows that there is one estimated correlation parameter. One
@@ -397,6 +399,7 @@ gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data
                   family = binomial(), corstr="unstructured")
 summary(gee_unstructured)
 ```
+[@Hojsgaard2006]
 
 The GEE model summary with an unstructured correlation structure
 specified shows that there are six individual estimated correlation
@@ -408,6 +411,7 @@ correspond to a specific location within the working correlation matrix.
 ```{r}
 gee_unstructured$geese$alpha
 ```
+[@Hojsgaard2006]
 
 For this model summary, the $\alpha$ values above demonstrate the
 estimated correlation value between observations, where the 'alpha.1:2'
@@ -422,6 +426,7 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
                   family = binomial(), corstr="ar1")
 summary(gee_ar1)
 ```
+[@Hojsgaard2006]
 
 The GEE model summary with an autoregressive (AR1) correlation structure
 specified shows that there is one estimated correlation parameter for
@@ -452,6 +457,7 @@ statistically insignificant regressor variables.
 $$
 g(\mu) = \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
+[@Hojsgaard2006]
 
 #### QIC (Quasi Information Criterion) for Model Selection\*\*
 
@@ -460,6 +466,7 @@ $$
 # correlation structure
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 ```
+[@Hojsgaard2006]
 
 In order to evaluate which correlation structure is best to use with GEE
 models, QIC, quasilikelihood information criterion, must be used instead

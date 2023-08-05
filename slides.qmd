@@ -3,6 +3,9 @@ title: "Generalized Estimating Equations"
 author: "Dosch, Muller, Stawiery"
 date:  "July 31, 2023"
 format: revealjs
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+nocite: '@*'
 editor: visual
 ---
 
@@ -24,7 +27,6 @@ editor: visual
 
 -   The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
 
-
 ## Methods
 
 -   [Estimating Equations]{.underline} - Quasilikelihood approach to estimating parameters
@@ -37,11 +39,24 @@ editor: visual
 
 -   [Correlation Structures]{.underline} - Flexible working correlation structures available based on data
 
+## Methods - Estimating Equations
+
+In Wang's review of GEE method, a marginal model specifying a relationship between $\mu_i$ and $X_{ij}$ is given by the equation $g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$ is a vector of regression coefficients and then shows the mathematical calculations to get to the equation
+
+$U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
+
+that when solved will give estimates of $\beta_i$ used in the generated models.[@wang2014generalized]
+
+## Methods - Estimating Equations, continued
+
+In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$, $V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}$ , $A_i$ is a diagonal matrix with elements that are known variance functions of $\mu_{ij}$ times a scaling parameter $\phi$, and $R_i(a)$ is the correlation structure. [@wang2014generalized]
+
 ## Methods - Model Specification
 
 ![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
 ![](Formula_GEE_Multivariate_Logit.jpg)
+   [@Mcculloch2008]
 
 ## Methods - Correlation Structures in 'geepack'
 
@@ -112,6 +127,7 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_exchangeable)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: GG w/Autoregressive Correlation Structure
 
@@ -122,6 +138,7 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
 summary(gee_ar1)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: GG w/Unstructured Correlation Structure
 
@@ -134,6 +151,8 @@ gee_unstructured$geese$alpha
 
 ```
 
+[@Hojsgaard2006]
+
 ## Statistical Modeling: Model Assessment
 
 The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model.
@@ -141,6 +160,8 @@ The following formula is the logistic regression model unique to the respiratory
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
+[@Hojsgaard2006]
+
 
 ## Statistical Modeling: QIC for Model Selection
 
@@ -150,6 +171,7 @@ $$
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: Inference
 
@@ -164,3 +186,6 @@ GEE provides robust standard errors for the estimated regression parameters, tak
 -   GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.
 
 -   GEE can be used for continuous, binary or count responses.
+
+## References
+
