@@ -56,6 +56,7 @@ In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is 
 ![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
 
 ![](Formula_GEE_Multivariate_Logit.jpg)
+   [@Mcculloch2008]
 
 ## Methods - Correlation Structures in 'geepack'
 
@@ -126,6 +127,7 @@ gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data
 summary(gee_exchangeable)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: GG w/Autoregressive Correlation Structure
 
@@ -136,6 +138,7 @@ gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respirat
 summary(gee_ar1)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: GG w/Unstructured Correlation Structure
 
@@ -148,6 +151,8 @@ gee_unstructured$geese$alpha
 
 ```
 
+[@Hojsgaard2006]
+
 ## Statistical Modeling: Model Assessment
 
 The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model.
@@ -155,6 +160,8 @@ The following formula is the logistic regression model unique to the respiratory
 $$
  \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
 $$
+[@Hojsgaard2006]
+
 
 ## Statistical Modeling: QIC for Model Selection
 
@@ -164,6 +171,7 @@ $$
 QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
 
 ```
+[@Hojsgaard2006]
 
 ## Statistical Modeling: Inference
 
