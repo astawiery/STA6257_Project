@@ -1,0 +1,191 @@
+---
+title: "Generalized Estimating Equations"
+author: "Dosch, Muller, Stawiery"
+date:  "July 31, 2023"
+format: revealjs
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+nocite: '@*'
+editor: visual
+---
+
+## Introduction - What is GEE?
+
+-   Generalized Estimating Equations (GEE) is a statistical methodology that expands upon generalized linear models.
+
+-   The method was first introduced by Liang and Zeger in a paper in 1986. [@Liang1986longitudinal].
+
+-   Open to the possibility of correlation within the data (contrary to most methodologies that assume independence of observations)
+
+## Introduction - When to use GEE?
+
+-   Usually longitudinal data or cluster data (epidemiology, social sciences, clinical trials, etc.). [@Mcculloch2008]
+
+-   GEE does not require a specified distribution
+
+-   GEE does require a specified relationship between mean and variance
+
+-   The method uses a quasilikelihood approach and yields population averaged estimates of parameters. [@wang2014generalized]
+
+## Methods
+
+-   [Estimating Equations]{.underline} - Quasilikelihood approach to estimating parameters
+
+-   [Iterative Algorithm]{.underline} - Using IRLS to iterate estimates of $a$ to get new estimates for $\beta$ until convergence
+
+-   [Data Structure]{.underline} - Used for analyzing correlated, such as longitudinal or panel data
+
+-   [Model Specification]{.underline} - Extension of GLM, models can be for countinuous, binary or count outcomes
+
+-   [Correlation Structures]{.underline} - Flexible working correlation structures available based on data
+
+## Methods - Estimating Equations
+
+In Wang's review of GEE method, a marginal model specifying a relationship between $\mu_i$ and $X_{ij}$ is given by the equation $g(\mu_{ij})=X'_{ij} \beta$, where $g$ is the link function and $\beta$ is a vector of regression coefficients and then shows the mathematical calculations to get to the equation
+
+$U(\beta) = \sum_{i=1}^K {D_i}^{\prime} {V_i}^{-1}(Y_i-\mu_i)=0$
+
+that when solved will give estimates of $\beta_i$ used in the generated models.[@wang2014generalized]
+
+## Methods - Estimating Equations, continued
+
+In this equation $D_i=\partial\mu_i/\partial\beta^{\prime}$ and ${V_i}^{-1}$ is the inverse of the variance-covariance matrix for $Y_i$, $V_i = \phi{A_i}^{1/2}R_i(a){A_i}^{1/2}$ , $A_i$ is a diagonal matrix with elements that are known variance functions of $\mu_{ij}$ times a scaling parameter $\phi$, and $R_i(a)$ is the correlation structure. [@wang2014generalized]
+
+## Methods - Model Specification
+
+![Figure 1: Model Comparision and Summary [@Mcculloch2008]](Model_Comparison_Table.jpg)
+
+![](Formula_GEE_Multivariate_Logit.jpg)
+   [@Mcculloch2008]
+
+## Methods - Correlation Structures in 'geepack'
+
+-   [Independent]{.underline} - Assumption that all individual observations are independent
+-   [Exchangeable]{.underline} - Assumption there is equality of time between observations
+-   [Autoregressive (AR1]{.underline}) - Assumption that there are more than one set of equality of times between observations
+-   [Unstructured]{.underline} - Most general and takes into account all possible times possible between observations
+
+## Methods - Correlation Structures
+
+![Figure 2: Correlation Structures Comparison Table [@wang2014generalized]](corr-table.jpg)
+
+## Analysis and Results - Dataset
+
+![Figure 3: Respiratory Variable Summary [@Hojsgaard2006]](Respiratory_Dataset_Description.jpg)
+
+## Analysis and Results: Sample Data Plot
+
+![Figure 4: Respiratory Treatment Outcomes Over (4) Patient Visits [@Hojsgaard2006]](Figure_4_Respiratory_Treatment_Outcomes.jpg)
+
+## Analysis and Results: Outcomes Over Time
+
+![](Figure_5_Respiratory_Outcome_Over_Time.jpg)
+
+## Analysis and Results: 'Poor' Outcomes for Total Visits
+
+![](Poor_Outcomes.jpg)
+
+## Analysis and Results: Correlation Matrix For Repeated Visits
+
+![](Figure_7_Correlation_Matrix.jpg)
+
+## Statistical Modeling
+
+-   GEE Model(s)
+
+-   Model Assessment
+
+-   QIC (Quasi Information Criterion) for Model
+
+-   Inference
+
+## Statistical Modeling: GG w/Independent Correlation Structure
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(geepack)
+library(lme4)   # For fitting linear mixed models
+library(glmmTMB)  # For fitting GLMMs with different distributions
+library(ggeffects)
+library(dplyr)
+library(ggplot2)
+library(furniture)
+
+# GEE with independent correlation structure
+gee_independence <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="independence")
+summary(gee_independence)
+```
+
+## Statistical Modeling: GG w/Exchangeable Correlation Structure
+
+```{r}
+# GEE with exchangeable correlation structure
+gee_exchangeable <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="exchangeable")
+summary(gee_exchangeable)
+
+```
+[@Hojsgaard2006]
+
+## Statistical Modeling: GG w/Autoregressive Correlation Structure
+
+```{r}
+# GEE with Auto-Regressive Order 1 correlation structure
+gee_ar1 <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="ar1")
+summary(gee_ar1)
+
+```
+[@Hojsgaard2006]
+
+## Statistical Modeling: GG w/Unstructured Correlation Structure
+
+```{r}
+# GEE with unstructured correlation structure
+gee_unstructured <- geeglm(outcome ~ center + treat + age + baseline + sex, data=respiratory, id=id, 
+                  family = binomial(), corstr="unstructured")
+summary(gee_unstructured)
+gee_unstructured$geese$alpha
+
+```
+
+[@Hojsgaard2006]
+
+## Statistical Modeling: Model Assessment
+
+The following formula is the logistic regression model unique to the respiratory data set. This formula was translated into the four different models above with a different correlation structure specified per model.
+
+$$
+ \log\left(\dfrac{\pi_{ij}}{1-\pi_{ij}}\right)=\beta_0+Center_{ij}\beta_1+Treat_i\beta_2+Age_i\beta_3+Sex_i\beta_4+Baseline_i\beta_5
+$$
+[@Hojsgaard2006]
+
+
+## Statistical Modeling: QIC for Model Selection
+
+```{r}
+# Displays table of QIC between all 4 different types of GEE models with different
+# correlation structure
+QIC(gee_independence, gee_exchangeable, gee_unstructured, gee_ar1)
+
+```
+[@Hojsgaard2006]
+
+## Statistical Modeling: Inference
+
+GEE provides robust standard errors for the estimated regression parameters, taking into account the correlation structure. When comparing multiple different techniques, it's important to consider the correlation between observations in order to perform accurate statistical inference of the model's output. [@seals2016analysis] Hypothesis tests and confidence intervals can be constructed to assess the statistical significance of the variables and make inferences about the population-level effects. [@shao2023comparison]
+
+## Conclusion
+
+-   Use GEE in cases when assumptions for linear regression models and generalized linear models do not hold (non-normal data, dependence in observations, longitudinal or panel data, clustered data, correlated data, etc.)
+
+-   Use GEE when there are large amounts of higher dimensional data (finding the likelihood functions is very difficult computationally)
+
+-   GEE provides an easy alternative and gives stable, consistent estimates for parameters without the need for the possibly intense likelihood calculations.
+
+-   GEE can be used for continuous, binary or count responses.
+
+## References
+
